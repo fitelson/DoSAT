@@ -4,8 +4,7 @@ A Decision Procedure for Do Calculus.
 
 Updated October 11, 2026. **Phase 3 complete. Consensus phase gate: PASS
 (Opus 5.5 / xhigh; GPT-6.1 Sol / xhigh).**
-Final checks: 1,041 unit tests, 72 Chromium tests and all 607 native semantic
-replay cases pass. Public repository: https://github.com/fitelson/DoSAT.
+The PrSAT-style UI phase is also complete with scoped consensus **PASS**. Latest checks: 1,123 unit tests and 81 Chromium tests pass; the unchanged Phase 3 reduction/solver retain their 607-case native audit approval. See [UI_FINAL_STATUS.md](reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md). Public repository: https://github.com/fitelson/DoSAT.
 Website https://fitelson.org/DoSAT/ is published and verified. See
 [PHASE3_PUBLICATION.md](reviews/PHASE3_PUBLICATION.md) for the commit and live checks.
 Phase 1 implements the first milestone discussed with
@@ -248,3 +247,34 @@ Remaining cosmetic limitations: error columns refer to substituted input, and
 older unreferenced bundles are retained in dist/. The copied deployment command
 remains disabled; DoSAT publication uses its own explicitly authorized target.
 These were explicitly nonblocking in the phase consensus.
+
+## UI-only review against PrSAT, October 11
+
+At Branden's request, Claude reviewed the published interface against the live
+PrSAT 3.0 UI. The default-model consensus review concluded **UI alignment:
+Not aligned**. The mathematical/solver Phase 3 PASS remains unchanged.
+Read [UI_REVIEW_SUMMARY.md](reviews/ui_prsat_alignment_2026-10-11T21-49-47Z/UI_REVIEW_SUMMARY.md)
+and its linked agreed design/transcript. All 13 UI-source snapshot hashes stayed
+unchanged; no application or server changes were made during this review.
+
+The agreed first pass restores PrSAT's familiar row editor, live mathematical
+previews, header/panels, toolbar, compact action/options and visible probability
+table. It retains DoSAT's graph, task distinction, empty-premise validity,
+complete saved problems, precise outcomes and mobile containment. Inline error
+locations and pending batch-edit behavior need explicit handling. The new model
+evaluator is a separate capability. This records a design direction, not an
+implemented redesign; later development uses the same scoped review gate.
+
+## UI alignment implementation, October 11
+
+The requested first pass is implemented. The [implementation record](reviews/ui_implementation_2026-10-11T22-41-54Z/UI_IMPLEMENTATION_STATUS.md) lists the new editor/renderer/witness modules, behavioral obligations, frozen source hashes and package captures. Current verification: 1,106 passing unit tests (one inherited skip and one todo), 78 passing Chromium tests, TypeScript, lint and production build PASS. The prepared package passes 31 headless checks across three widths; actual Source Sans Pro SemiBold is rendered and Z3 remains 5.1.0. Main action Y meets the agreed desktop/390px targets; 320px remains contained but requires additional scrolling.
+
+The required default-model scoped UI consensus gate is running. No updated files have been uploaded or pushed yet. Compiler and runtime solver hashes match the approved Phase 3 sources. Optional model evaluation, decimal mode, image export and graphical drawing remain outside this UI pass.
+
+### UI audit repairs and recheck
+
+The first implementation audit reached consensus **UI phase gate: FAIL**, with mobile formula clipping (F1/F3) and loaded-text normalization (F2) as the required repairs. Both groups are implemented and have real-browser regressions. See [REPAIRS.md](reviews/ui_implementation_2026-10-11T22-41-54Z/recheck_2026-10-11T23-04-19Z/REPAIRS.md). Current full verification is 1,123 passing unit tests, 81 passing Chromium tests, TypeScript/lint/build PASS, and 37 passing production-package checks. The recheck source snapshot is frozen; the default-model scoped recheck is running. No publication of the redesign yet. The older mathematical Phase 3 PASS remains unchanged.
+
+### UI gate closed
+
+The repair recheck reached explicit consensus **UI phase gate: PASS**. Source and release hashes match the frozen snapshot. The approved redesign is ready for the authorized commit/push/upload; [UI_FINAL_STATUS.md](reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md) is the current record. Earlier running/FAIL notes above preserve the development history.

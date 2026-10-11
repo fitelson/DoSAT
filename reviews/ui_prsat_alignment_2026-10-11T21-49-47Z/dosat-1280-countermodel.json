@@ -1,0 +1,292 @@
+{
+  "label": "dosat-1280-countermodel",
+  "url": "https://fitelson.org/DoSAT/dist/decision.html",
+  "title": "DoSAT 1.0 — A Decision Procedure for Do Calculus.",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "pageSize": {
+    "width": 1280,
+    "height": 2459
+  },
+  "bodyText": "DoSAT 1.0\n\nA Decision Procedure for Do Calculus.\n\nDecide causal satisfiability or whether premises entail a conclusion.\n\nThe model class is a supplied acyclic graph of observed Boolean variables with independent private disturbances. Interventions share the same causal mechanisms, so the do-calculus rules apply wherever their conditional terms are defined.\n\nOpen causal model finder\n·\nCheck a do-calculus step\nLoad an example \nObservation differs from intervention\nAn incorrect intervention claim\nUndefined conditioning prevents entailment\nDo-calculus exchange with positive support\nInconsistent premises\nA compatible intervened model\nImpossible constraints\nSimpson’s paradox: treatment and recovery\nBack-door adjustment identity\nQuestion\nEntailment\nSatisfiability\nCausal graph\n\nOne edge or isolated variable per declaration; semicolons or newlines separate declarations. Up to six Boolean variables.\n\nPremises / constraints\n\nOne constraint per line. Empty premises are allowed. Use Pr(Y | do(X)) to set X true, Pr(Y | do(~X)) to set it false, or Pr(Y | do(X), Z) to observe Z after intervention. Simultaneous interventions use do(X, ~Z). Numeric assignments such as do(X=1) remain supported.\n\nConclusion (entailment only)\n\nOne constraint, including arithmetic and logical combinations. A conditional at zero evidence mass is undefined. Countermodels include cases where required undefined terms prevent the conclusion from holding.\n\n Require strictly positive observational mechanisms\n\nEvery observational row then has positive probability. Interventions can still force some rows to have probability zero.\n\nSearch mode\nDecision procedure (no time limit)\nSearch with a time limit\n\nDecision mode has no overall time limit. Each stage first tries a QF_NRA strategy with a budget of up to 60 seconds, then uses the complete NLSat procedure if needed. Finite resources can still prevent an answer. A time limit stops accepting results at the requested deadline; cancellation and cleanup can take longer to settle.\n\nTime limit in seconds \n3 observed Boolean variables; 4 premises. Independent causal disturbances are assumed.\nZ3 ready.\nCheck entailment\nCancel\nSave problem\nSave solver input\nDOES NOT ENTAIL — a countermodel was found.\nAn exact countermodel\n\nThis model satisfies the premises and fails the conclusion under the stated rules for undefined terms.\n\nInput probabilities\nProbability\tExact value\nPr(Z)\t1/2\nPr(X | Z)\t3/4\nPr(X | ~Z)\t1/4\nPr(Y <-> Z)\t1\nPr(Y | do(X))\t1/2\nShared causal mechanisms\nVariable\tParent values\tProbability of value 1\nZ\tnone\t1/2\nX\tZ=0\t1/4\nX\tZ=1\t3/4\nY\tZ=0\t0\nY\tZ=1\t1\nObservational\ndo(X=1)",
+  "controls": [
+    {
+      "tag": "SELECT",
+      "type": "select-one",
+      "text": "Observation differs from intervention\nAn incorrect intervention claim\nUndefined conditioning prevents entailment\nDo-calculus exchange with positive support\nInconsistent premises\nA compatible intervened model\nImpossible constraints\nSimpson’s paradox: treatment and recovery\nBack-door adjustment identity",
+      "testid": "decision-example",
+      "id": null,
+      "x": 270.953125,
+      "y": 311.296875,
+      "width": 292.78125,
+      "height": 31.78125,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgb(255, 255, 255)",
+      "disabled": false
+    },
+    {
+      "tag": "SELECT",
+      "type": "select-one",
+      "text": "Entailment\nSatisfiability",
+      "testid": "decision-task",
+      "id": "decision-task",
+      "x": 140,
+      "y": 391.0625,
+      "width": 105.78125,
+      "height": 31.78125,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgb(255, 255, 255)",
+      "disabled": false
+    },
+    {
+      "tag": "TEXTAREA",
+      "type": "textarea",
+      "text": "Z -> X; Z -> Y",
+      "testid": "decision-graph",
+      "id": "decision-graph",
+      "x": 140,
+      "y": 470.828125,
+      "width": 1000,
+      "height": 96.375,
+      "font": "16px / 24px \"Source Code Pro\", monospace",
+      "fontSize": "16px",
+      "background": "rgb(255, 255, 255)",
+      "disabled": false
+    },
+    {
+      "tag": "TEXTAREA",
+      "type": "textarea",
+      "text": "Pr(Z) = 1/2\nPr(X | Z) = 3/4\nPr(X | ~Z) = 1/4\nPr(Y <-> Z) = 1",
+      "testid": "decision-premises",
+      "id": "decision-premises",
+      "x": 140,
+      "y": 643.03125,
+      "width": 1000,
+      "height": 168.375,
+      "font": "16px / 24px \"Source Code Pro\", monospace",
+      "fontSize": "16px",
+      "background": "rgb(255, 255, 255)",
+      "disabled": false
+    },
+    {
+      "tag": "TEXTAREA",
+      "type": "textarea",
+      "text": "Pr(Y | do(X)) = 3/4",
+      "testid": "decision-conclusion",
+      "id": "decision-conclusion",
+      "x": 140,
+      "y": 910.28125,
+      "width": 1000,
+      "height": 96.375,
+      "font": "16px / 24px \"Source Code Pro\", monospace",
+      "fontSize": "16px",
+      "background": "rgb(255, 255, 255)",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "text": "on",
+      "testid": "decision-regular",
+      "id": null,
+      "x": 144,
+      "y": 1078.546875,
+      "width": 13,
+      "height": 13,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgba(0, 0, 0, 0)",
+      "disabled": false
+    },
+    {
+      "tag": "SELECT",
+      "type": "select-one",
+      "text": "Decision procedure (no time limit)\nSearch with a time limit",
+      "testid": "decision-mode",
+      "id": "decision-mode",
+      "x": 140,
+      "y": 1176.5625,
+      "width": 233.78125,
+      "height": 31.78125,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgb(255, 255, 255)",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "type": "number",
+      "text": "30",
+      "testid": "decision-seconds",
+      "id": null,
+      "x": 303.34375,
+      "y": 1301.28125,
+      "width": 63,
+      "height": 21,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgba(239, 239, 239, 0.3)",
+      "disabled": true
+    },
+    {
+      "tag": "BUTTON",
+      "type": "button",
+      "text": "Check entailment",
+      "testid": "decision-run",
+      "id": null,
+      "x": 140,
+      "y": 1423.0625,
+      "width": 132.59375,
+      "height": 35,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgb(239, 239, 239)",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "type": "button",
+      "text": "Cancel",
+      "testid": "decision-cancel",
+      "id": null,
+      "x": 282.1875,
+      "y": 1423.0625,
+      "width": 71.09375,
+      "height": 35,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgba(239, 239, 239, 0.3)",
+      "disabled": true
+    },
+    {
+      "tag": "BUTTON",
+      "type": "button",
+      "text": "Save problem",
+      "testid": "decision-save",
+      "id": null,
+      "x": 140,
+      "y": 1474.0625,
+      "width": 111.84375,
+      "height": 35,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgb(239, 239, 239)",
+      "disabled": false
+    },
+    {
+      "tag": "INPUT",
+      "type": "file",
+      "text": "Load saved decision problem",
+      "testid": "decision-load",
+      "id": null,
+      "x": 261.4375,
+      "y": 1474.40625,
+      "width": 253,
+      "height": 34.3125,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgba(0, 0, 0, 0)",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "type": "button",
+      "text": "Save solver input",
+      "testid": "decision-save-smt",
+      "id": null,
+      "x": 524.03125,
+      "y": 1474.0625,
+      "width": 131.859375,
+      "height": 35,
+      "font": "13.3333px Arial",
+      "fontSize": "13.3333px",
+      "background": "rgb(239, 239, 239)",
+      "disabled": false
+    },
+    {
+      "tag": "SUMMARY",
+      "type": null,
+      "text": "Observational",
+      "testid": null,
+      "id": null,
+      "x": 140,
+      "y": 2343.703125,
+      "width": 1000,
+      "height": 25.59375,
+      "font": "600 16px / 25.6px \"Source Sans Pro\", -apple-system, \"system-ui\", sans-serif",
+      "fontSize": "16px",
+      "background": "rgba(0, 0, 0, 0)",
+      "disabled": false
+    },
+    {
+      "tag": "SUMMARY",
+      "type": null,
+      "text": "do(X=1)",
+      "testid": null,
+      "id": null,
+      "x": 140,
+      "y": 2385.296875,
+      "width": 1000,
+      "height": 25.59375,
+      "font": "600 16px / 25.6px \"Source Sans Pro\", -apple-system, \"system-ui\", sans-serif",
+      "fontSize": "16px",
+      "background": "rgba(0, 0, 0, 0)",
+      "disabled": false
+    }
+  ],
+  "headings": [
+    {
+      "level": "H1",
+      "text": "DoSAT 1.0",
+      "y": 53.4375
+    },
+    {
+      "level": "H2",
+      "text": "An exact countermodel",
+      "y": 1570.5625
+    },
+    {
+      "level": "H3",
+      "text": "Input probabilities",
+      "y": 1673.171875
+    },
+    {
+      "level": "H3",
+      "text": "Shared causal mechanisms",
+      "y": 2009.796875
+    }
+  ],
+  "tables": [
+    {
+      "rows": 6,
+      "text": "Probability\tExact value\nPr(Z)\t1/2\nPr(X | Z)\t3/4\nPr(X | ~Z)\t1/4\nPr(Y <-> Z)\t1\nPr(Y | do(X))\t1/2"
+    },
+    {
+      "rows": 6,
+      "text": "Variable\tParent values\tProbability of value 1\nZ\tnone\t1/2\nX\tZ=0\t1/4\nX\tZ=1\t3/4\nY\tZ=0\t0\nY\tZ=1\t1"
+    },
+    {
+      "rows": 9,
+      "text": ""
+    },
+    {
+      "rows": 9,
+      "text": ""
+    }
+  ],
+  "details": [
+    {
+      "open": false,
+      "title": "Observational"
+    },
+    {
+      "open": false,
+      "title": "do(X=1)"
+    }
+  ],
+  "errors": []
+}

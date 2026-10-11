@@ -1,0 +1,18 @@
+{
+  "commit": "9ad6e1de01188135b8507a45ab43c4c56fa0c7fd",
+  "files": {
+    "src/causal_decision_ui.ts": "8b61faa0843c9a21f1788e14eb028a2f53f0d01f339dede35511dcb91a88e6a0",
+    "src/causal_decision_style.css": "da9eb1b123686e2dab75cf523616fd9b3f4528c9853b027e15221e353e1d0466",
+    "src/causal_style.css": "cf13d46a8cef1cbd36d9d5467fb789418dd73fd57af4f52675c51b767dc6080d",
+    "src/style.css": "aa8c335e239776c28ed5d25fddd483f2cc35deebebb938d189a97daaf2e97059",
+    "src/block_playground.ts": "273d5d4c2cbb52d454818bb7127358c0e9101ac0bf770f8e9ec146f26c9405fe",
+    "src/display_logic.ts": "5cfc21244f6e54df0b9cd156c172b97b2f65f695857bc2c2514bd414c5af856f",
+    "src/text_to_display.ts": "c191010da8b9e6c787ef570fb31d39137f716a562b8fbc75a434deb3bb334b62",
+    "src/prsat_to_html.ts": "cccff7ea153ff9f86b71c3b44cd6ffaa44e58766ca197de6eb3e96a993b76d39",
+    "src/el.ts": "68c1412d61e3040190f18f47ff1bdd907a112ec14e82378eba30280d54d096c5",
+    "decision.html": "8aa5a1239e25cebfc5b8e8a88646cb7684cce44ba7709f3b0788f6d9647c878a",
+    "index.html": "79cb9547fcbd95a69bec46eed47c8360745377ee20e7792d9b3f5d14b3ee474a",
+    "src/causal_decision_ui.spec.ts": "a9181d9df2fb5b2d8f32cdab9c3c33f4a7c0ed63ee447c699224447904d2f9a9",
+    "tests/causal_decision.spec.ts": "56b6c7b50f861b2a09c482f9ada99767d77fb0f9ab476ad8a39c84dc34091c03"
+  }
+}

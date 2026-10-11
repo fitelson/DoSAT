@@ -1,0 +1,36 @@
+[
+  {
+    "kind": "initial-polish-document-origin",
+    "width": 390,
+    "runY": 929.640625,
+    "gap": 122.796875
+  },
+  {
+    "kind": "backdoor-formula-keyboard-from-zero",
+    "width": 390,
+    "arrows": 7,
+    "left": 181,
+    "client": 328,
+    "scroll": 510
+  },
+  {
+    "kind": "initial-polish-document-origin",
+    "width": 320,
+    "runY": 1078.84375,
+    "gap": 140.46875
+  },
+  {
+    "kind": "backdoor-formula-keyboard-from-zero",
+    "width": 320,
+    "arrows": 9,
+    "left": 251,
+    "client": 258,
+    "scroll": 510
+  },
+  {
+    "kind": "initial-polish-document-origin",
+    "width": 1280,
+    "runY": 766.625,
+    "gap": 103.84375
+  }
+]

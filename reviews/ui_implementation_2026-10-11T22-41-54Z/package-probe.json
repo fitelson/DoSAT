@@ -1,0 +1,296 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "checks": 31,
+  "rows": [
+    {
+      "kind": "initial",
+      "width": 1280,
+      "runY": 760.625,
+      "fonts": [
+        {
+          "familyName": "Source Sans Pro SemiBold",
+          "postScriptName": "SourceSansPro-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "version": "5.1.0"
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 5,
+      "expected": "SAT —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 6,
+      "expected": "UNSAT —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "initial",
+      "width": 390,
+      "runY": 932.59375,
+      "fonts": [
+        {
+          "familyName": "Source Sans Pro SemiBold",
+          "postScriptName": "SourceSansPro-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "version": "5.1.0"
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 5,
+      "expected": "SAT —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 6,
+      "expected": "UNSAT —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "initial",
+      "width": 320,
+      "runY": 1062.203125,
+      "fonts": [
+        {
+          "familyName": "Source Sans Pro SemiBold",
+          "postScriptName": "SourceSansPro-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "version": "5.1.0"
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 5,
+      "expected": "SAT —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 6,
+      "expected": "UNSAT —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "batch-error-clear-task",
+      "width": 390,
+      "passed": true
+    }
+  ]
+}

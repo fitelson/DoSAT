@@ -61,6 +61,14 @@ NLSat for several minutes. These are instance-specific observations. Save the
 problem and reload the page to obtain a fresh context when useful; this does
 not guarantee a particular runtime. See the review for details.
 
+## PrSAT-style decision interface
+
+The main editor has one premise per row with causal MathML previews, a single conclusion, and an explicit entailment/satisfiability choice. Enter splits a row, Up/Down moves between rows, and Backspace at the start merges with the previous row. Show Batch Input enables bulk editing; Parse applies those edits to premises only, while Discard restores the applied rows. Unapplied batch edits block Run and saving and invalidate previous results. Clear premises preserves the graph, conclusion and options.
+
+Save to File, Load From File and Copy to Clipboard use the same version 1 whole-problem JSON, including empty premises and a retained inactive conclusion draft. SAT mode hides and ignores that draft. Empty-premise entailment tests validity. Graph, physical premise rows and conclusion errors are linked and announced near Run.
+
+An exact model or countermodel shows a visible observational/intervention probability table with ⊤/⊥ assignments, rendered input terms and exact values. Countermodels display the submitted conclusion beside witness term values; undefined terms are marked explicitly. User-named real variables remain visible, with shared mechanisms in expandable details. A preview confirms parsing, not numerical definedness. Long formulas scroll in their own named keyboard regions. Loaded line endings are normalized before validation. The separate [UI consensus gate](reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md) is PASS; latest checks are 1,123 passing unit tests and 81 passing Chromium tests.
+
 ## Inherited PrSAT 3.0 README
 
 ## Contributors

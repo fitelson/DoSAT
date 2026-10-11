@@ -30,6 +30,10 @@ journals are private diagnostics. No recursive debates or model delegation insid
 the review. This gate is separate from publication; the fork remains local until
 Branden requests otherwise.
 
+## UI alignment phase, October 11
+
+Implement the agreed first pass in reviews/ui_prsat_alignment_2026-10-11T21-49-47Z/UI_AGREED_DESIGN.md. Scope this gate to the UI delta from 9ad6e1d: row editing and batch state, causal MathML, exact witness presentation, task/draft distinction, JSON controls, validation/accessibility, and responsive PrSAT styling. The Phase 3 compiler and runtime solver are unchanged and their mathematical PASS remains closed. Arbitrary returned-model evaluation is a later capability. Before publication require explicit scoped consensus PASS and verify the prepared package and live site. The UI gate is PASS after the scoped repair recheck. Current status: reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md; approved recheck: recheck_2026-10-11T23-04-19Z/consensus.md in that folder. Later code changes require their own scoped gate.
+
 ## Phase 2 scope
 
 Phase2 adds single-step graphical checking of Pearl Rules1–3 using d-separation

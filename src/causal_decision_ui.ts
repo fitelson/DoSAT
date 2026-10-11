@@ -1,8 +1,11 @@
 import { el, tel } from './el'
 import { compile_decision_problem, parse_decision_input, type DecisionProblemInput, type CompiledDecisionProblem } from './causal_decision'
-import { CausalDecisionSolver, type CausalDecisionResult, type DecisionWitness } from './causal_decision_solver'
+import { CausalDecisionSolver, type CausalDecisionResult } from './causal_decision_solver'
+import { create_decision_editor } from './causal_decision_editor'
+import { render_causal_constraint } from './causal_to_html'
+import { render_decision_witness } from './causal_decision_results'
+import { validate_decision_fields } from './causal_decision_validation'
 import { init_z3 } from './z3_integration'
-import { format_exact_value } from './causal_format'
 import { download } from './download'
 import './style.css'
 import './causal_style.css'
@@ -20,84 +23,121 @@ const examples = [
   { name: 'Back-door adjustment identity', task: 'entailment', graph: 'Z -> X; Z -> Y; X -> Y', premises: '', conclusion: 'Pr(Y | do(X)) = Pr(Y | X & Z)*Pr(Z) + Pr(Y | X & ~Z)*Pr(~Z)', regular: true },
 ] as const
 const root = document.getElementById('app')!
-const graph = tel('decision-graph', 'textarea', { id: 'decision-graph', rows: '3', spellcheck: 'false' }) as HTMLTextAreaElement
-const premises = tel('decision-premises', 'textarea', { id: 'decision-premises', rows: '6', spellcheck: 'false' }) as HTMLTextAreaElement
-const conclusion = tel('decision-conclusion', 'textarea', { id: 'decision-conclusion', rows: '3', spellcheck: 'false' }) as HTMLTextAreaElement
-const task = tel('decision-task', 'select', { id: 'decision-task' }, el('option', { value: 'entailment' }, 'Entailment'), el('option', { value: 'satisfiability' }, 'Satisfiability')) as HTMLSelectElement
-const mode = tel('decision-mode', 'select', { id: 'decision-mode' }, el('option', { value: 'complete' }, 'Decision procedure (no time limit)'), el('option', { value: 'bounded' }, 'Search with a time limit')) as HTMLSelectElement
+const graph = tel('decision-graph', 'textarea', { id: 'decision-graph', rows: '1', spellcheck: 'false', 'aria-describedby': 'decision-graph-error decision-graph-nodes' }) as HTMLTextAreaElement
+const graphError = el('div', { id: 'decision-graph-error', class: 'error decision-field-error' })
+const nodes = el('span', { id: 'decision-graph-nodes', class: 'decision-note' })
+const conclusion = tel('decision-conclusion', 'textarea', { id: 'decision-conclusion', rows: '1', spellcheck: 'false', 'aria-describedby': 'decision-conclusion-error decision-definedness' }) as HTMLTextAreaElement
+const conclusionError = el('div', { id: 'decision-conclusion-error', class: 'error decision-field-error' })
+const conclusionPreview = el('div', { class: 'constraint decision-preview', tabindex: '0', role: 'region', 'aria-label': 'Conclusion preview' })
+const conclusionInfo = tel('decision-conclusion-info', 'button', { type: 'button', 'aria-label': 'Syntax help for the conclusion', 'aria-expanded': 'false', 'aria-controls': 'decision-conclusion-help' }, 'ⓘ')
+const conclusionHelp = el('p', { id: 'decision-conclusion-help', class: 'input-instructions' }, 'Enter one constraint. Arithmetic and logical combinations of constraints are allowed. Use do(X), do(~X) or simultaneous interventions; a rendered preview confirms parsing only, not definedness.')
+conclusionHelp.hidden = true
+const conclusionBlock = el('section', { class: 'decision-conclusion-block' },
+  el('div', { class: 'decision-conclusion-heading' }, el('label', { for: 'decision-conclusion' }, 'Conclusion (exactly one constraint)'), conclusionInfo),
+  el('div', { class: 'single-input decision-conclusion-row' }, conclusion, conclusionPreview, conclusionError),
+  el('p', { id: 'decision-definedness', class: 'decision-note' }, 'Required undefined terms may prevent entailment.'), conclusionHelp)
+const entailment = tel('decision-task-entailment', 'input', { type: 'radio', name: 'decision-task', id: 'decision-task-entailment', value: 'entailment', checked: 'true' }) as HTMLInputElement
+const satisfiability = tel('decision-task-satisfiability', 'input', { type: 'radio', name: 'decision-task', id: 'decision-task-satisfiability', value: 'satisfiability' }) as HTMLInputElement
+const taskValue = (): DecisionProblemInput['task'] => satisfiability.checked ? 'satisfiability' : 'entailment'
+const mode = tel('decision-mode', 'input', { type: 'checkbox', id: 'decision-mode' }) as HTMLInputElement
 const seconds = tel('decision-seconds', 'input', { type: 'number', min: '0.1', max: '120', step: '0.1', value: '30', 'aria-label': 'Time limit in seconds' }) as HTMLInputElement
-const regular = tel('decision-regular', 'input', { type: 'checkbox' }) as HTMLInputElement
-const sample = tel('decision-example', 'select', { 'aria-label': 'Decision example' }) as HTMLSelectElement
+const regular = tel('decision-regular', 'input', { type: 'checkbox', id: 'decision-regular' }) as HTMLInputElement
+const sample = tel('decision-example', 'select', { 'aria-label': 'Examples' }) as HTMLSelectElement
+sample.append(el('option', { value: '' }, 'Choose an example…'))
 examples.forEach((example, index) => sample.append(el('option', { value: String(index) }, example.name)))
-const run = tel('decision-run', 'button', { type: 'button', disabled: 'true' }, 'Check entailment') as HTMLButtonElement
+const run = tel('decision-run', 'button', { type: 'button', class: 'generate', disabled: 'true' }, 'Check entailment') as HTMLButtonElement
 const cancel = tel('decision-cancel', 'button', { type: 'button', disabled: 'true' }, 'Cancel') as HTMLButtonElement
-const save = tel('decision-save', 'button', { type: 'button' }, 'Save problem') as HTMLButtonElement
+const save = tel('decision-save', 'button', { type: 'button' }, 'Save to File') as HTMLButtonElement
+const copy = tel('decision-copy', 'button', { type: 'button' }, 'Copy to Clipboard') as HTMLButtonElement
 const saveSmt = tel('decision-save-smt', 'button', { type: 'button', disabled: 'true' }, 'Save solver input') as HTMLButtonElement
-const load = tel('decision-load', 'input', { type: 'file', accept: '.json,application/json', 'aria-label': 'Load saved decision problem' }) as HTMLInputElement
-const validation = tel('decision-validation', 'div', { class: 'causal-validation' })
-const runtime = tel('decision-runtime', 'div', { role: 'status' }, 'Loading Z3…')
+const load = tel('decision-load', 'input', { type: 'file', hidden: 'true', accept: '.json,application/json', 'aria-label': 'Load saved decision problem' }) as HTMLInputElement
+const loadButton = tel('decision-load-button', 'button', { type: 'button' }, 'Load From File')
+const batchButton = tel('decision-batch-toggle', 'button', { type: 'button' }, 'Show Batch Input')
+const clearButton = tel('decision-clear', 'button', { type: 'button' }, 'Clear premises')
+const validation = tel('decision-validation', 'div', { class: 'decision-validation', role: 'status', 'aria-live': 'polite' })
+const runtime = tel('decision-runtime', 'span', { role: 'status' }, 'Loading Z3…')
 const status = tel('decision-status', 'div', { role: 'status', 'aria-live': 'polite' }, 'Choose a decision problem.')
-const results = tel('decision-results', 'div', {})
+const results = tel('decision-results', 'div', { class: 'model-container' })
 let solver: CausalDecisionSolver | undefined
 let revision = 0, loadToken = 0
 let running = false
 let active: AbortController | undefined
 let lastCompiled: CompiledDecisionProblem | undefined
-const input = (): DecisionProblemInput => ({ graph: graph.value, premises: premises.value, conclusion: task.value === 'entailment' ? conclusion.value : undefined, regular: regular.checked, task: task.value as DecisionProblemInput['task'] })
+const editor = create_decision_editor(() => invalidate())
+const input = (): DecisionProblemInput => ({ graph: graph.value, premises: editor.getValue(), conclusion: taskValue() === 'entailment' ? conclusion.value : undefined, regular: regular.checked, task: taskValue() })
 const timeLimit = (): number => {
-  if (mode.value === 'complete') return 0
-  if (mode.value !== 'bounded') throw new Error('Choose a supported search mode.')
+  if (!mode.checked) return 0
   const value = Number(seconds.value)
   if (!Number.isFinite(value) || value < 0.1 || value > 120) throw new Error('Choose a time limit from 0.1 to 120 seconds.')
   return Math.round(value * 1000)
 }
+const linkError = (container: HTMLElement, label: string, target: string): void => container.append(el('a', { href: `#${target}` }, label), ' ')
 const valid = (): boolean => {
-  try {
-    timeLimit()
-    const parsed = parse_decision_input(input())
-    validation.textContent = `${parsed.document.graph.nodes.length} observed Boolean variables; ${parsed.premiseCount} premises. Independent causal disturbances are assumed.`
-    return true
-  } catch (error) { validation.textContent = error instanceof Error ? error.message : String(error); return false }
+  const fields = validate_decision_fields(input())
+  graphError.textContent = fields.graphError ? `Graph: ${fields.graphError}` : ''
+  graph.setAttribute('aria-invalid', String(!!fields.graphError))
+  nodes.textContent = fields.nodes.length ? `${fields.nodes.length} variables: ${fields.nodes.join(', ')}` : 'A causal graph is required.'
+  editor.setGraph(graph.value)
+  editor.setErrors(fields.premiseErrors)
+  conclusionError.textContent = fields.conclusionError ? `Conclusion: ${fields.conclusionError}` : ''
+  conclusion.setAttribute('aria-invalid', String(!!fields.conclusionError))
+  conclusionPreview.replaceChildren()
+  if (taskValue() === 'entailment' && !fields.graphError && !fields.conclusionError) {
+    try { conclusionPreview.append(render_causal_constraint(graph.value, conclusion.value)) } catch { /* Field error above is authoritative. */ }
+  }
+  const nextValidation = el('div', {})
+  if (fields.graphError) linkError(nextValidation, 'Fix the graph.', 'decision-graph')
+  for (const index of fields.premiseErrors.keys()) linkError(nextValidation, `Fix ${taskValue() === 'entailment' ? 'Premise' : 'Constraint'} ${index + 1}.`, (editor.element.querySelector(`[data-testid="decision-premise-${index + 1}"]`) as HTMLInputElement).id)
+  if (fields.conclusionError) linkError(nextValidation, 'Fix the conclusion.', 'decision-conclusion')
+  if (fields.problemError) nextValidation.append(fields.problemError)
+  let okay = fields.valid
+  try { timeLimit() } catch (error) { nextValidation.append(error instanceof Error ? error.message : String(error)); okay = false }
+  if (editor.pending()) { nextValidation.append(editor.element.dataset.batchOpen === 'true' ? 'Batch edits are unapplied. Parse or Discard them before running or saving.' : 'Batch edits are unapplied. Show Batch Input to Parse or Discard them.'); okay = false }
+  if (okay) nextValidation.textContent = fields.premiseCount ? `${fields.premiseCount} ${taskValue() === 'entailment' ? (fields.premiseCount === 1 ? 'premise' : 'premises') : (fields.premiseCount === 1 ? 'constraint' : 'constraints')} ready.` : taskValue() === 'entailment' ? 'No premises: checks validity.' : 'No constraints: finds a model of the graph.'
+  const signature = JSON.stringify([nextValidation.textContent, [...nextValidation.querySelectorAll('a')].map(link => link.getAttribute('href'))])
+  if (validation.dataset.signature !== signature) { validation.replaceChildren(...nextValidation.childNodes); validation.dataset.signature = signature }
+  return okay
 }
 const refresh = (): void => {
-  conclusion.disabled = task.value !== 'entailment'
-  seconds.disabled = mode.value !== 'bounded'
-  run.textContent = task.value === 'entailment' ? 'Check entailment' : 'Decide satisfiability'
+  conclusionBlock.hidden = taskValue() !== 'entailment'
+  conclusion.disabled = taskValue() !== 'entailment'
+  editor.setLabel(taskValue() === 'entailment' ? 'Premises (may be empty)' : 'Constraints (may be empty)')
+  clearButton.textContent = taskValue() === 'entailment' ? 'Clear premises' : 'Clear constraints'
+  seconds.disabled = !mode.checked
+  run.textContent = taskValue() === 'entailment' ? 'Check entailment' : 'Find Model'
+  batchButton.textContent = editor.element.dataset.batchOpen === 'true' ? 'Hide Batch Input' : 'Show Batch Input'
+  batchButton.setAttribute('aria-expanded', String(editor.element.dataset.batchOpen === 'true'))
   const okay = valid()
   run.disabled = !okay || !solver || running
-  save.disabled = !okay
+  save.disabled = !okay; copy.disabled = !okay
   cancel.disabled = !running || !active || active.signal.aborted
   saveSmt.disabled = !lastCompiled
 }
 const invalidate = (): void => {
-  revision++; active?.abort(); results.replaceChildren(); lastCompiled = undefined
+  revision++; active?.abort(); results.replaceChildren(); lastCompiled = undefined; sample.value = ''
   status.textContent = running ? 'Input changed; cancelling the previous decision…' : 'Input changed; decide the current problem.'
   refresh()
 }
-for (const field of [graph, premises, conclusion, task, mode, seconds, regular]) field.addEventListener('input', invalidate)
+for (const field of [graph, conclusion, entailment, satisfiability, mode, seconds, regular]) field.addEventListener('input', invalidate)
+loadButton.addEventListener('click', () => load.click())
+batchButton.addEventListener('click', () => { editor.toggleBatch(); refresh() })
+clearButton.addEventListener('click', () => editor.clear())
+conclusionInfo.addEventListener('click', () => { conclusionHelp.hidden = !conclusionHelp.hidden; conclusionInfo.setAttribute('aria-expanded', String(!conclusionHelp.hidden)) })
+conclusion.addEventListener('keydown', event => { if (event.key === 'Enter') event.preventDefault() })
 sample.addEventListener('change', () => {
-  const example = examples[Number(sample.value)]
+  if (sample.value === '') return
+  const index = Number(sample.value)
+  const example = examples[index]
   if (!example) return
-  graph.value = example.graph; premises.value = example.premises; conclusion.value = example.conclusion
-  task.value = example.task; regular.checked = example.regular
-  invalidate()
+  graph.value = example.graph; editor.setValue(example.premises); conclusion.value = example.conclusion
+  entailment.checked = example.task === 'entailment'; satisfiability.checked = !entailment.checked; regular.checked = example.regular
+  invalidate(); sample.value = String(index)
 })
-const table = (id: string, headings: string[], rows: string[][]): HTMLElement => el('div', { class: 'causal-table-scroll' }, tel(id, 'table', { class: 'causal-table' }, el('thead', {}, el('tr', {}, ...headings.map(value => el('th', { scope: 'col' }, value)))), el('tbody', {}, ...rows.map(row => el('tr', {}, ...row.map(value => el('td', {}, value)))))))
-const showWitness = (witness: DecisionWitness, countermodel: boolean): void => {
-  results.append(el('h2', {}, countermodel ? 'An exact countermodel' : 'A compatible causal model'), el('p', {}, countermodel ? 'This model satisfies the premises and fails the conclusion under the stated rules for undefined terms.' : 'This is one model satisfying the constraints; its values need not be uniquely determined.'))
-  results.append(el('h3', {}, 'Input probabilities'), table('decision-query-table', ['Probability', 'Exact value'], witness.queries.map(query => [query.source, query.defined && query.value !== undefined ? format_exact_value(query.value) : 'undefined (zero denominator)'])))
-  results.append(el('h3', {}, 'Shared causal mechanisms'), table('decision-mechanism-table', ['Variable', 'Parent values', 'Probability of value 1'], witness.mechanisms.map(mechanism => [mechanism.node, Object.entries(mechanism.parents).map(([name, value]) => `${name}=${Number(value)}`).join(', ') || 'none', format_exact_value(mechanism.value)])))
-  if (witness.freeParameters.length) results.append(el('h3', {}, 'Other real variables'), table('decision-real-table', ['Variable', 'Exact value'], witness.freeParameters.map(parameter => [parameter.variable, format_exact_value(parameter.value)])))
-  for (const distribution of witness.distributions) {
-    const nodes = Object.keys(distribution.rows[0]?.assignment ?? {})
-    results.append(el('details', {}, el('summary', {}, distribution.label), table('decision-distribution-table', [...nodes, 'Probability'], distribution.rows.map(row => [...nodes.map(name => String(Number(row.assignment[name]))), format_exact_value(row.value)]))))
-  }
-}
 const show = (output: CausalDecisionResult): void => {
   switch (output.status) {
-    case 'sat': status.textContent = 'SAT — a compatible causal model was found.'; showWitness(output.witness, false); break
+    case 'sat': status.textContent = 'SAT — a compatible causal model was found.'; results.append(render_decision_witness(output.witness, false, graph.value, conclusion.value)); break
     case 'unsat': status.textContent = 'UNSAT — no compatible causal model satisfies the constraints.'; break
-    case 'not-entailed': status.textContent = 'DOES NOT ENTAIL — a countermodel was found.'; showWitness(output.witness, true); break
+    case 'not-entailed': status.textContent = 'DOES NOT ENTAIL — a countermodel was found.'; results.append(render_decision_witness(output.witness, true, graph.value, conclusion.value)); break
     case 'entailed': status.textContent = 'ENTAILS — every compatible model of the premises satisfies the conclusion.'; results.append(el('p', {}, 'The premises are satisfiable. Searching for a model that satisfies them but fails the conclusion returned UNSAT.')); break
     case 'inconsistent-premises': status.textContent = 'INCONSISTENT PREMISES — no compatible model satisfies the premises.'; results.append(el('p', {}, 'Entailment holds vacuously because there are no models of the premises. This does not establish the conclusion for a possible model.')); break
     case 'unknown': status.textContent = `UNRESOLVED — ${output.reason}`; break
@@ -125,11 +165,17 @@ cancel.addEventListener('click', () => {
   if (running) status.textContent = 'Cancelling; waiting for the solver to settle…'
   refresh()
 })
-save.addEventListener('click', () => {
-  if (save.disabled || !valid()) return
+const savedProblem = (): string => {
   const value = Number(seconds.value)
-  download(JSON.stringify({ version: 1, kind: 'DoSAT-decision', task: task.value, graph: graph.value, premises: premises.value, conclusion: conclusion.value, regular: regular.checked, mode: mode.value, seconds: Number.isFinite(value) && value >= 0.1 && value <= 120 ? value : 30 }, null, 2), 'DoSAT-problem.json', 'application/json')
-})
+  return JSON.stringify({ version: 1, kind: 'DoSAT-decision', task: taskValue(), graph: graph.value, premises: editor.getValue(), conclusion: conclusion.value, regular: regular.checked, mode: mode.checked ? 'bounded' : 'complete', seconds: Number.isFinite(value) && value >= 0.1 && value <= 120 ? value : 30 }, null, 2)
+}
+save.addEventListener('click', () => { if (!save.disabled && valid()) download(savedProblem(), 'DoSAT-problem.json', 'application/json') })
+copy.addEventListener('click', () => { void (async () => {
+  if (copy.disabled || !valid()) return
+  const version = revision
+  try { await navigator.clipboard.writeText(savedProblem()); if (revision === version) status.textContent = 'Whole problem copied as DoSAT JSON.' }
+  catch (error) { if (revision === version) status.textContent = `Copy failed: ${error instanceof Error ? error.message : String(error)}` }
+})() })
 saveSmt.addEventListener('click', () => {
   if (!lastCompiled) return
   const check = '\n(check-sat-using qfnra-nlsat)\n'
@@ -148,31 +194,41 @@ load.addEventListener('change', () => {
       if (!value || typeof value !== 'object') throw new Error('Expected a saved decision problem.')
       const data = value as Record<string, unknown>
       if (data.version !== 1 || data.kind !== 'DoSAT-decision' || (data.task !== 'satisfiability' && data.task !== 'entailment') || (data.mode !== 'complete' && data.mode !== 'bounded') || typeof data.graph !== 'string' || typeof data.premises !== 'string' || typeof data.conclusion !== 'string' || typeof data.regular !== 'boolean' || typeof data.seconds !== 'number' || !Number.isFinite(data.seconds) || data.seconds < 0.1 || data.seconds > 120) throw new Error('Expected a version 1 DoSAT decision problem with valid fields.')
-      parse_decision_input({ graph: data.graph, premises: data.premises, conclusion: data.task === 'entailment' ? data.conclusion : undefined, regular: data.regular, task: data.task })
-      graph.value = data.graph; premises.value = data.premises; conclusion.value = data.conclusion
-      task.value = data.task; regular.checked = data.regular; mode.value = data.mode; seconds.value = String(data.seconds)
+      // Textareas normalize line endings. Validate exactly the representable text before any mutation.
+      const loadedGraph = data.graph.replace(/\r\n?/g, '\n')
+      const loadedPremises = data.premises.replace(/\r\n?/g, '\n')
+      const loadedConclusion = data.conclusion.replace(/\r\n?/g, '\n')
+      parse_decision_input({ graph: loadedGraph, premises: loadedPremises, conclusion: data.task === 'entailment' ? loadedConclusion : undefined, regular: data.regular, task: data.task })
+      graph.value = loadedGraph; editor.setValue(loadedPremises); conclusion.value = loadedConclusion
+      entailment.checked = data.task === 'entailment'; satisfiability.checked = !entailment.checked
+      regular.checked = data.regular; mode.checked = data.mode === 'bounded'; seconds.value = String(data.seconds)
       invalidate()
     } catch (error) { if (token === loadToken && version === revision) status.textContent = `Load error: ${error instanceof Error ? error.message : String(error)}` }
     finally { if (token === loadToken) load.value = '' }
   })()
 })
+const help = (title: string, text: string): HTMLElement => el('details', { class: 'decision-help' }, el('summary', {}, title), el('p', {}, text))
 root.append(el('main', { class: 'causal-ui decision-ui' },
-  el('header', {}, el('h1', {}, 'DoSAT 1.0'), el('p', { class: 'decision-subtitle' }, 'A Decision Procedure for Do Calculus.'), el('p', {}, 'Decide causal satisfiability or whether premises entail a conclusion.'), el('p', {}, 'The model class is a supplied acyclic graph of observed Boolean variables with independent private disturbances. Interventions share the same causal mechanisms, so the do-calculus rules apply wherever their conditional terms are defined.'), el('nav', {}, el('a', { href: './causal.html' }, 'Open causal model finder'), ' · ', el('a', { href: './do_calculus.html' }, 'Check a do-calculus step'))),
-  el('label', {}, 'Load an example ', sample),
-  el('label', { for: 'decision-task' }, 'Question'), task,
-  el('label', { for: 'decision-graph' }, 'Causal graph'), graph,
-  el('p', { class: 'causal-help' }, 'One edge or isolated variable per declaration; semicolons or newlines separate declarations. Up to six Boolean variables.'),
-  el('label', { for: 'decision-premises' }, 'Premises / constraints'), premises,
-  el('p', { class: 'causal-help' }, 'One constraint per line. Empty premises are allowed. Use Pr(Y | do(X)) to set X true, Pr(Y | do(~X)) to set it false, or Pr(Y | do(X), Z) to observe Z after intervention. Simultaneous interventions use do(X, ~Z). Numeric assignments such as do(X=1) remain supported.'),
-  el('label', { for: 'decision-conclusion' }, 'Conclusion (entailment only)'), conclusion,
-  el('p', { class: 'causal-help' }, 'One constraint, including arithmetic and logical combinations. A conditional at zero evidence mass is undefined. Countermodels include cases where required undefined terms prevent the conclusion from holding.'),
-  el('label', {}, regular, ' Require strictly positive observational mechanisms'),
-  el('p', { class: 'causal-help' }, 'Every observational row then has positive probability. Interventions can still force some rows to have probability zero.'),
-  el('label', { for: 'decision-mode' }, 'Search mode'), mode,
-  el('p', { class: 'causal-help' }, 'Decision mode has no overall time limit. Each stage first tries a QF_NRA strategy with a budget of up to 60 seconds, then uses the complete NLSat procedure if needed. Finite resources can still prevent an answer. A time limit stops accepting results at the requested deadline; cancellation and cleanup can take longer to settle.'),
-  el('label', {}, 'Time limit in seconds ', seconds), validation, runtime,
-  el('div', { class: 'causal-controls' }, run, cancel), el('div', { class: 'causal-controls' }, save, load, saveSmt), status, results,
+  el('header', { class: 'header' }, el('h1', {}, 'DoSAT 1.0'), el('p', { class: 'decision-subtitle' }, 'A Decision Procedure for Do Calculus.'),
+    el('p', { class: 'decision-assumptions' }, 'Observed Boolean DAG · independent private disturbances · shared mechanisms across interventions'),
+    el('nav', {}, el('a', { href: '#decision-help' }, 'Help'), ' · ', el('a', { href: './causal.html', 'aria-label': 'Open causal model finder' }, 'Model finder'), ' · ', el('a', { href: './do_calculus.html', 'aria-label': 'Check a do-calculus step' }, 'Rule checker'))),
+  el('section', { class: 'generic-input-block decision-input-panel', 'aria-label': 'Decision problem editor' },
+    el('fieldset', { class: 'decision-task' }, el('legend', {}, 'Task'), el('label', {}, entailment, ' Check entailment'), el('label', {}, satisfiability, ' Satisfiability')),
+    el('div', { class: 'decision-toolbar' }, loadButton, load, batchButton, clearButton, el('label', {}, 'Examples ', sample)),
+    el('div', { class: 'decision-graph-block' }, el('label', { for: 'decision-graph' }, 'Causal graph'), graph, nodes, graphError,
+      help('ⓘ Graph syntax', 'Declare edges such as Z -> X; Z -> Y or isolated variables. Semicolons and newlines are supported. Acyclic graphs with up to six observed Boolean variables are allowed. No latent confounders or cross-world counterfactuals.')),
+    editor.element, conclusionBlock,
+    el('div', { class: 'decision-toolbar decision-save-toolbar' }, save, copy, el('span', { class: 'decision-note' }, 'Save, Load and Copy use the whole problem.'))),
+  el('section', { class: 'model-finder decision-action-panel', 'aria-label': 'Run decision and results' },
+    el('div', { class: 'decision-run-line' }, run, cancel, runtime),
+    el('div', { class: 'decision-options' },
+      el('div', {}, el('label', {}, regular, ' Regular'), el('span', { class: 'decision-note' }, 'Positive observational rows; interventions can still force zeros.')),
+      el('div', {}, el('label', {}, mode, ' Time limit: ', seconds, ' seconds'), el('span', { class: 'decision-note' }, 'Off: no overall limit. A deadline ends result acceptance; cancellation and cleanup can take longer.'))),
+    validation, status, results, el('div', { class: 'decision-export' }, saveSmt)),
+  el('section', { id: 'decision-help' },
+    help('ⓘ Probability and do syntax', 'One premise per row; blank and # comment rows are ignored. Use Pr(Y | do(X)) or do(~X) for Boolean interventions, do(X, ~Z) for simultaneous interventions, and Pr(Y | do(X), Z) to observe Z after intervention. Numeric forms do(X=1) and do(X=0) are also supported. A rendered preview confirms parsing, not numerical definedness. Empty premises are allowed. Enter splits a premise; Up/Down move between rows; Backspace at its start merges with the previous row. Batch Parse replaces premises only.'),
+    help('ⓘ Decision scope and solver', 'The supplied observed Boolean DAG defines a family of causal models with independent private disturbances and shared mechanisms across interventions. Every stage first tries a QF_NRA strategy with a budget of up to 60 seconds, then complete NLSat if needed. Finite resources may still prevent an answer. UNRESOLVED and cancellation establish no decision. Regular requires positive observational mechanisms; hard interventions may force zeros. Inconsistent premises entail vacuously. The app does not infer latent confounders, search for do-calculus derivations, or evaluate new expressions in a returned model.')),
 ))
-graph.value = examples[0].graph; premises.value = examples[0].premises; conclusion.value = examples[0].conclusion
+graph.value = examples[0].graph; editor.setValue(examples[0].premises); conclusion.value = examples[0].conclusion; sample.value = '0'
 refresh()
 void init_z3().then(value => { solver = new CausalDecisionSolver(value); runtime.dataset.z3Version = value.getVersionString(); runtime.textContent = 'Z3 ready.'; refresh() }).catch((error: unknown) => { runtime.textContent = `Z3 failed to load: ${error instanceof Error ? error.message : String(error)}`; refresh() })

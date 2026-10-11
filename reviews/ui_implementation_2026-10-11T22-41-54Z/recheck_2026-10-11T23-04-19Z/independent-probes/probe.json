@@ -1,0 +1,348 @@
+{
+  "checks": 16,
+  "rows": [
+    {
+      "kind": "keyboard-only-formula-end",
+      "width": 390,
+      "name": "Premise 1 preview",
+      "presses": 23,
+      "before": {
+        "client": 328,
+        "scroll": 1145,
+        "left": 0,
+        "end": 1173.4375,
+        "bound": 359.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 359.21875,
+        "panelLeft": 16,
+        "panelRight": 374,
+        "tabindex": 0
+      },
+      "after": {
+        "client": 328,
+        "scroll": 1145,
+        "left": 817,
+        "end": 356.4375,
+        "bound": 359.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 359.21875,
+        "panelLeft": 16,
+        "panelRight": 374,
+        "tabindex": 0
+      },
+      "panel": {
+        "left": 0,
+        "client": 356,
+        "scroll": 356
+      },
+      "actionX": 26.59375
+    },
+    {
+      "kind": "keyboard-only-formula-end",
+      "width": 390,
+      "name": "Premise 1 preview",
+      "presses": 1,
+      "before": {
+        "client": 328,
+        "scroll": 510,
+        "left": 182,
+        "end": 356,
+        "bound": 359.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 359.21875,
+        "panelLeft": 16,
+        "panelRight": 374,
+        "tabindex": 0
+      },
+      "after": {
+        "client": 328,
+        "scroll": 510,
+        "left": 182,
+        "end": 356,
+        "bound": 359.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 359.21875,
+        "panelLeft": 16,
+        "panelRight": 374,
+        "tabindex": 0
+      },
+      "panel": {
+        "left": 0,
+        "client": 356,
+        "scroll": 356
+      },
+      "actionX": 26.59375
+    },
+    {
+      "kind": "keyboard-only-formula-end",
+      "width": 390,
+      "name": "Conclusion preview",
+      "presses": 7,
+      "before": {
+        "client": 328,
+        "scroll": 501,
+        "left": 0,
+        "end": 529.5625,
+        "bound": 359.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 359.21875,
+        "panelLeft": 16,
+        "panelRight": 374,
+        "tabindex": 0
+      },
+      "after": {
+        "client": 328,
+        "scroll": 501,
+        "left": 173,
+        "end": 356.5625,
+        "bound": 359.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 359.21875,
+        "panelLeft": 16,
+        "panelRight": 374,
+        "tabindex": 0
+      },
+      "panel": {
+        "left": 0,
+        "client": 356,
+        "scroll": 356
+      },
+      "actionX": 26.59375
+    },
+    {
+      "kind": "keyboard-only-formula-end",
+      "width": 390,
+      "name": "Submitted conclusion formula",
+      "presses": 7,
+      "before": {
+        "client": 337,
+        "scroll": 496,
+        "left": 0,
+        "end": 522.984375,
+        "bound": 363.40625,
+        "regionLeft": 26.59375,
+        "regionRight": 363.40625,
+        "panelLeft": 16,
+        "panelRight": 374,
+        "tabindex": 0
+      },
+      "after": {
+        "client": 337,
+        "scroll": 496,
+        "left": 159,
+        "end": 363.984375,
+        "bound": 363.40625,
+        "regionLeft": 26.59375,
+        "regionRight": 363.40625,
+        "panelLeft": 16,
+        "panelRight": 374,
+        "tabindex": 0
+      },
+      "panel": {
+        "left": 0,
+        "client": 356,
+        "scroll": 356
+      },
+      "actionX": 26.59375
+    },
+    {
+      "kind": "keyboard-only-formula-end",
+      "width": 320,
+      "name": "Premise 1 preview",
+      "presses": 25,
+      "before": {
+        "client": 258,
+        "scroll": 1145,
+        "left": 0,
+        "end": 1173.4375,
+        "bound": 289.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 289.21875,
+        "panelLeft": 16,
+        "panelRight": 304,
+        "tabindex": 0
+      },
+      "after": {
+        "client": 258,
+        "scroll": 1145,
+        "left": 887,
+        "end": 286.4375,
+        "bound": 289.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 289.21875,
+        "panelLeft": 16,
+        "panelRight": 304,
+        "tabindex": 0
+      },
+      "panel": {
+        "left": 0,
+        "client": 286,
+        "scroll": 286
+      },
+      "actionX": 26.59375
+    },
+    {
+      "kind": "keyboard-only-formula-end",
+      "width": 320,
+      "name": "Premise 1 preview",
+      "presses": 1,
+      "before": {
+        "client": 258,
+        "scroll": 510,
+        "left": 252,
+        "end": 286,
+        "bound": 289.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 289.21875,
+        "panelLeft": 16,
+        "panelRight": 304,
+        "tabindex": 0
+      },
+      "after": {
+        "client": 258,
+        "scroll": 510,
+        "left": 252,
+        "end": 286,
+        "bound": 289.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 289.21875,
+        "panelLeft": 16,
+        "panelRight": 304,
+        "tabindex": 0
+      },
+      "panel": {
+        "left": 0,
+        "client": 286,
+        "scroll": 286
+      },
+      "actionX": 26.59375
+    },
+    {
+      "kind": "keyboard-only-formula-end",
+      "width": 320,
+      "name": "Conclusion preview",
+      "presses": 8,
+      "before": {
+        "client": 258,
+        "scroll": 501,
+        "left": 0,
+        "end": 529.5625,
+        "bound": 289.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 289.21875,
+        "panelLeft": 16,
+        "panelRight": 304,
+        "tabindex": 0
+      },
+      "after": {
+        "client": 258,
+        "scroll": 501,
+        "left": 243,
+        "end": 286.5625,
+        "bound": 289.21875,
+        "regionLeft": 30.78125,
+        "regionRight": 289.21875,
+        "panelLeft": 16,
+        "panelRight": 304,
+        "tabindex": 0
+      },
+      "panel": {
+        "left": 0,
+        "client": 286,
+        "scroll": 286
+      },
+      "actionX": 26.59375
+    },
+    {
+      "kind": "keyboard-only-formula-end",
+      "width": 320,
+      "name": "Submitted conclusion formula",
+      "presses": 9,
+      "before": {
+        "client": 267,
+        "scroll": 496,
+        "left": 0,
+        "end": 522.984375,
+        "bound": 293.40625,
+        "regionLeft": 26.59375,
+        "regionRight": 293.40625,
+        "panelLeft": 16,
+        "panelRight": 304,
+        "tabindex": 0
+      },
+      "after": {
+        "client": 267,
+        "scroll": 496,
+        "left": 229,
+        "end": 293.984375,
+        "bound": 293.40625,
+        "regionLeft": 26.59375,
+        "regionRight": 293.40625,
+        "panelLeft": 16,
+        "panelRight": 304,
+        "tabindex": 0
+      },
+      "panel": {
+        "left": 0,
+        "client": 286,
+        "scroll": 286
+      },
+      "actionX": 26.59375
+    },
+    {
+      "kind": "rejected-load-preserves-live-result-and-export",
+      "field": "graph",
+      "passed": true
+    },
+    {
+      "kind": "rejected-load-preserves-live-result-and-export",
+      "field": "premises",
+      "passed": true
+    },
+    {
+      "kind": "rejected-load-preserves-live-result-and-export",
+      "field": "conclusion",
+      "passed": true
+    },
+    {
+      "kind": "rejected-load-preserves-pending-draft",
+      "passed": true
+    },
+    {
+      "kind": "normalized-load-and-whole-json-roundtrip",
+      "newline": "\r",
+      "physicalRows": [
+        "",
+        "# comment",
+        "Pr(A)=1/2",
+        "",
+        "Pr(B)=1/3",
+        ""
+      ],
+      "passed": true
+    },
+    {
+      "kind": "normalized-load-and-whole-json-roundtrip",
+      "newline": "\r\n",
+      "physicalRows": [
+        "",
+        "# comment",
+        "Pr(A)=1/2",
+        "",
+        "Pr(B)=1/3",
+        ""
+      ],
+      "passed": true
+    },
+    {
+      "kind": "inactive-conclusion-normalized-draft-is-not-submitted",
+      "passed": true
+    },
+    {
+      "kind": "listed-polish",
+      "runY": 899.578125,
+      "inputToRunGap": 60.96875,
+      "passed": true
+    }
+  ]
+}

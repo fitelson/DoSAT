@@ -2,36 +2,14 @@
 
 Subtitle: **A Decision Procedure for Do Calculus.**
 
-Target proposed from Branden's October 11 naming/hosting request:
-`https://fitelson.org/DoSAT/`. Follow the existing PrSAT arrangement:
+The published target is https://fitelson.org/DoSAT/; the primary application is /DoSAT/dist/decision.html. Public repository: https://github.com/fitelson/DoSAT. Branden authorized public creation, commit, push and publication on October 11. The original publication is recorded in reviews/PHASE3_PUBLICATION.md; the approved PrSAT-style UI release is recorded in reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md.
 
-- `webpage/dosat.html` becomes `/DoSAT/index.html`.
-- The built application is under `/DoSAT/dist/`; its primary entry is
-  `/DoSAT/dist/decision.html`.
-- Preserve the inherited classical `dist/index.html` so existing internal links
-  and classical regressions remain valid.
-- Apache headers in `dist/.htaccess` enable cross-origin isolation for Z3's
-  SharedArrayBuffer/worker runtime and set the WebAssembly MIME type.
-- Upload only current referenced build assets plus stable Z3/COI runtime files.
-  Do not upload node_modules, private journals, review diagnostics or stale bundles.
-- Release only after Phase 3 is complete and its scoped consensus gate passes.
-  Existing deploy commands remain disabled until an explicit scoped DoSAT
-  publication command is prepared; never run the copied PrSAT deployment target.
-- Preserve existing remote files; do not delete stale files as a release step.
-  Compare uploaded files with local sources and verify the live headers and
-  actual browser solver after publication.
+- webpage/dosat.html becomes /DoSAT/index.html; four built entry pages are under /DoSAT/dist/.
+- Keep the inherited classical dist/index.html for internal links and regressions.
+- dist/.htaccess supplies COOP/COEP and the WebAssembly MIME type; stable Z3 assets revalidate.
+- Upload current referenced build assets and stable Z3/COI files first, application HTML next, landing index last.
+- Publish only after the current scoped consensus gate passes. The copied deploy command stays disabled; never run the inherited PrSAT target.
+- Preserve remote files and older local releases/bundles. Do not clean directories as a release step.
+- Verify remote file SHA256 and bytes, HTTPS bytes/headers, actual browser Z3 and live UI behaviors.
 
-The local landing page can be inspected at `/webpage/dosat.html` on the dev
-server. The public repository https://github.com/fitelson/DoSAT was created
-after the Phase 3 consensus PASS. Website publication is complete and verified;
-see reviews/PHASE3_PUBLICATION.md. The final package's 21 remote file hashes,
-20 HTTPS file hashes, headers, actual Z3 5.1.0 and 32 live browser checks match.
-
-Read-only server check: SSH access to the existing web root succeeded;
-`/home/fitelson/www/www/DoSAT` does not yet exist. No remote file was written.
-
-`npm run prepare:release` builds and writes a fresh, preserved local release
-under releases/. It contains the landing page, current referenced assets and
-stable runtime files, with a checksum manifest. It performs no deployment and
-never cleans existing directories. A candidate package was verified through
-its landing-page launch link in headless Chromium; see phase3 release probe.
+npm run prepare:release creates a fresh preserved package under releases/, including a checksum manifest. It does not deploy or delete anything. The latest approved UI package has 22 files and passes 37 headless package checks. Use the scoped publish.py helper in the UI review folder only after its PASS; it targets /home/fitelson/www/www/DoSAT exclusively. The server directory already exists from the first publication. Ports 5173/4173/5174 are strict local development/preview/test ports; 5317 is unrelated and must remain untouched.
