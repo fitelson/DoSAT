@@ -1,0 +1,37 @@
+# Consensus progress — 2026-10-11 11:09
+
+Question: Perform the required consensus code-and-mathematics review of PrSATdo phase1. Use the consensus skill defaults selected by the runner: Claude Opus5.5/xhigh and GPT6.1Sol/xhigh. This exchange IS the requested phase gate; no recursive reviews/debates, model calls or delegation. Audit read-only: no implementation/doc edits, commits, deletions, pushes, deployments or service changes. Ordinary inspection and necessary tests are allowed. Do not use port5317; browser tests use strict5174 and only one test process at a time.
+
+Project: /Users/fitelson/Library/CloudStorage/Dropbox/non-MUSIC/todo/PrSAT/do-calculus
+Read PROJECT.md, AGENTS.md, CAUSAL_SEMANTICS.md, PHASE1_VERIFICATION.md and reviews/phase1_snapshot.json. Inspect implementation and tests; compare initial baseline724655b. This phase implements satisfiability of observational and hard-interventional probability constraints on supplied acyclic graphs of observed Boolean variables with independent private disturbances, using shared CPTs. ID/IDC identification, latent confounding and cross-world counterfactuals are outside this phase.
+
+Review src/causal_syntax.ts, src/causal.ts, src/causal_ui.ts, src/causal_format.ts, the exact evaluator addition in src/z3_integration.ts, causal.html, build/browser configs, new causal tests and retained classical regression integration. Assess the soundness/completeness representation argument, normalization, intervention surgery, shared mechanisms, missing observational support, postintervention conditioning, zero-denominator/branch-local definedness, graph/query/identifier validation, exact numbers and exponents, resource bounds, lifecycle/cancellation/timeouts/reload/input/file races, model witness completeness and exactness, and independent test coverage. Be adversarial and give concrete reproductions/source locations for findings.
+
+Current candidate checks: lint and build pass;716 active unit tests pass with1 inherited skip and1 todo across18 files;28 headless Chromium tests pass; production causal bundle smoke gives correct intervention1/2, no page errors, fits desktop/phone widths. No publishing. Earlier internal checks caught and fixed exact exponent rounding, cancelling during final evaluation, search gating during delayed Z3 reload, stale asynchronous file responses, and free-real witness omission. Independently check rather than accept those fixes.
+
+Return a compressed report at most40000 output tokens (and within the runner's conservative40000-UTF8-byte delivery guard), preserving decisive proofs, counterexamples, qualifications and verdict. Follow the runner's six-field checkpoint/stream/session protocol. Include a scoped mathematical assessment, concrete numbered severity findings, checks actually performed, and explicit remaining phase boundaries.
+
+Give an explicit separate **Phase gate: PASS** or **Phase gate: FAIL**. PASS requires a complete audit with no unresolved material issue within phase1. FAIL includes confirmed material findings or an incomplete audit. Consensus on FAIL/fixes is not approval to advance. Your normal final VERDICT: AGREE/DISAGREE indicates agreement with the best-supported review, not automatically phase approval. If corrections are needed, specify bounded concrete repairs and acceptance checks; root will implement and seek consensus recheck before starting phase2.
+
+Models: Claude claude-opus-5-5/xhigh; Codex gpt-6.1-sol/xhigh.
+
+Claude: claude-opus-5-5/xhigh; stream activity interval: 300s; absolute turn deadline: 1800s; recovery deadline: 300s; maximum consecutive misses: 5
+
+## 2026-10-11 11:09:32 — Claude session started
+
+session_id: b06bcb3f-e390-44d8-87ac-8d4ef8b6e08b
+recovery: no
+
+## 2026-10-11 11:09:41 — Claude semantic checkpoint
+
+elapsed: 0m
+tentative_verdict: pending
+new_results: NONE: starting audit
+current_obstruction: none
+next_bounded_step: read PROJECT.md, AGENTS.md, snapshot, source files
+token_cost: unavailable
+
+## 2026-10-11 11:11:00 — Run interrupted
+
+Termination requested; owned cleanup completed.
+

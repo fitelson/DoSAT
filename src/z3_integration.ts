@@ -736,6 +736,8 @@ export type WrappedSolverResult =
     status: 'sat'
     state_assignments: Record<number, ModelAssignmentOutput>
     evaluate(tt: TruthTable, c_or_re: ConstraintOrRealExpr): Promise<FancyEvaluatorOutput>
+    /** Evaluate an already translated expression without rounding Z3 numerals. */
+    evaluate_exact(expr: PrSat['RealExpr']): Promise<{ defined: boolean, value?: string }>
   }
   | { status: 'unsat' }
   | { status: 'unknown' }
@@ -945,8 +947,17 @@ export class WrappedSolver {
             const evaluate = async (tt: TruthTable, c_or_re: ConstraintOrRealExpr): Promise<FancyEvaluatorOutput> => {
               return await fancy_evaluate_constraint_or_real_expr(used_ctx, model, tt, c_or_re)
             }
+            const evaluate_exact = async (expr: PrSat['RealExpr']): Promise<{ defined: boolean, value?: string }> => {
+              for (const guard of div0_conditions_in_constraint_or_real_expr({ tag: 'real_expr', real_expr: expr })) {
+                if (model.eval(constraint_to_bool(used_ctx, model, guard), true).sexpr() !== 'true') {
+                  return { defined: false }
+                }
+              }
+              const evaluated = model.eval(real_expr_to_arith(used_ctx, model, expr), true)
+              return { defined: true, value: (await used_ctx.simplify(evaluated)).sexpr() }
+            }
             const state_assignments = await model_to_assignments(used_ctx, model)
-            return { status: 'sat', evaluate, state_assignments }
+            return { status: 'sat', evaluate, evaluate_exact, state_assignments }
           } else {
             return { status: result }
           }

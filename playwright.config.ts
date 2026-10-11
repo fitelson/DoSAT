@@ -8,7 +8,7 @@ import { defineConfig, devices } from '@playwright/test';
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-const PORT = 5173
+const PORT = 5174
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -18,7 +18,7 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: true,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: 0,
   /* Opt out of parallel tests on CI. */
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */

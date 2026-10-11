@@ -1,11 +1,42 @@
 # AGENTS.md
 
+## Development phase review gate
+
+Before moving to the next development phase, run the **consensus debate skill**
+with its defaults: **Claude Opus 5.5 / xhigh** and **GPT-6.1 Sol / xhigh**.
+This workflow was requested by Branden on 2026-10-11 and applies to every phase
+of this project. A standalone Claude consultation does not fulfill this gate.
+
+**Scope every debate to the current phase.** Review the changes, new mathematical
+claims, and integration obligations introduced in that phase. Existing code is
+reference material only where a current change depends on its behavior. Do not
+reopen a general audit of untouched older code or treat unrelated inherited
+issues as phase findings. Any such observation should be clearly out of scope.
+
+Give both participants the actual completed implementation, tests, precise
+semantics/scope, verification results, and source snapshot. Review mathematical
+faithfulness, soundness, exact arithmetic, input validation, resource/lifecycle
+handling, integration and test coverage. Use the installed skill's authoritative
+runner, streamed fsynced journals, stable resumable sessions, checkpoints, and
+compressed-report protocol. Keep defaults unless Branden requests overrides.
+
+Ask for an explicit **Phase gate: PASS or FAIL**. Agreement on a list of required
+repairs is consensus on the review, not approval to advance. Fix material findings,
+rerun affected checks, and obtain a consensus recheck of those fixes. An incomplete
+audit, no-consensus outcome, or unresolved material finding keeps the gate open.
+Record transcript, resolutions, verification, and gate status in reviews/ and
+PROJECT.md for both tools and the laptop. Share Markdown transcripts; raw JSONL
+journals are private diagnostics. No recursive debates or model delegation inside
+the review. This gate is separate from publication; the fork remains local until
+Branden requests otherwise.
+
 ## Do-calculus research fork (2026-10-11)
 
 Read PROJECT.md first. This is the independent PrSAT 3.0 do-calculus extension
 workspace. Inherited documentation below describes the original baseline;
 its production deployment instructions do not apply to this fork.
-No causal syntax or semantics have been implemented yet. Do not push or deploy
+The first observed-Boolean-DAG causal satisfiability phase is implemented.
+See PROJECT.md and CAUSAL_SEMANTICS.md for its exact scope. Do not push or deploy
 without a later request. The family hub is ../PROJECT.md.
 The copied production deploy command has been disabled. Development/preview
 use strict loopback ports 5173/4173; never use permanent service port 5317.

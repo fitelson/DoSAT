@@ -36,3 +36,10 @@ dist-ssr
 /graphify-out/
 /tmp/
 /output/
+
+# Private streamed review diagnostics and Python caches
+/reviews/**/*.stream.jsonl
+/scripts/__pycache__/
+
+# Consensus raw stream journals are private diagnostics
+/reviews/**/*-stream.jsonl

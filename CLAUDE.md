@@ -1,11 +1,14 @@
 # CLAUDE.md
 
+Read AGENTS.md for the required consensus debate review gate at the end of every development phase.
+
 ## Do-calculus research fork (2026-10-11)
 
 Read PROJECT.md first. This is the independent PrSAT 3.0 do-calculus extension
 workspace. Inherited documentation below describes the original baseline;
 its production deployment instructions do not apply to this fork.
-No causal syntax or semantics have been implemented yet. Do not push or deploy
+The first observed-Boolean-DAG causal satisfiability phase is implemented.
+See PROJECT.md and CAUSAL_SEMANTICS.md for its exact scope. Do not push or deploy
 without a later request. The family hub is ../PROJECT.md.
 The copied production deploy command has been disabled. Development/preview
 use strict loopback ports 5173/4173; never use permanent service port 5317.

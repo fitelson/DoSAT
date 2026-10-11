@@ -1912,7 +1912,8 @@ const main = (): HTMLElement => {
 
   return el('div', {},
     el('div', { class: 'header' },
-      el('div', { style: 'font-weight: bold; font-size: 1.5em;' }, 'PrSAT 3.0'),
+      el('div', { style: 'font-weight: bold; font-size: 1.5em;' }, 'PrSATdo — classical PrSAT 3.0'),
+      el('p', {}, el('a', { href: './causal.html' }, 'Open the causal model finder')),
       el('br', {}),
       el('div', {},
         'For more information regarding syntax, usage, etc., see the ',

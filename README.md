@@ -2,7 +2,9 @@
 
 Research workspace starting from the current PrSAT 3.0 code. Read
 [PROJECT.md](PROJECT.md) for scope and [FORK_PROVENANCE.json](FORK_PROVENANCE.json)
-for source provenance. Do-calculus support has not yet been added.
+for source provenance. The first causal model finder is available at `/causal.html`: Boolean acyclic
+graphs, shared mechanisms, hard interventions, and regime-specific conditioning.
+Symbolic do-calculus derivations and latent confounding remain later phases.
 
 ## Inherited PrSAT 3.0 README
 
@@ -35,3 +37,10 @@ npm run dev
 ```
 
 A link to PrSAT running locally will appear in your terminal.
+
+## Phase 1 review
+
+The [scoped consensus recheck](reviews/phase1_recheck_consensus.md) passed after
+query-token and timeout fixes. Latest checks:748 active unit tests pass;32 browser
+tests pass on the identical runtime;lint,TypeScript and build pass. Read PROJECT.md
+for scope and qualifications. Later phases require the same consensus review gate.
