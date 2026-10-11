@@ -23,7 +23,9 @@ Target proposed from Branden's October 11 naming/hosting request:
 
 The local landing page can be inspected at `/webpage/dosat.html` on the dev
 server. The public repository https://github.com/fitelson/DoSAT was created
-after the Phase 3 consensus PASS. Website publication is in progress.
+after the Phase 3 consensus PASS. Website publication is complete and verified;
+see reviews/PHASE3_PUBLICATION.md. The final package's 21 remote file hashes,
+20 HTTPS file hashes, headers, actual Z3 5.1.0 and 32 live browser checks match.
 
 Read-only server check: SSH access to the existing web root succeeded;
 `/home/fitelson/www/www/DoSAT` does not yet exist. No remote file was written.

@@ -6,7 +6,8 @@ Updated October 11, 2026. **Phase 3 complete. Consensus phase gate: PASS
 (Opus 5.5 / xhigh; GPT-6.1 Sol / xhigh).**
 Final checks: 1,041 unit tests, 72 Chromium tests and all 607 native semantic
 replay cases pass. Public repository: https://github.com/fitelson/DoSAT.
-Website publication at https://fitelson.org/DoSAT/ is in progress.
+Website https://fitelson.org/DoSAT/ is published and verified. See
+[PHASE3_PUBLICATION.md](reviews/PHASE3_PUBLICATION.md) for the commit and live checks.
 Phase 1 implements the first milestone discussed with
 Branden: observational and hard-interventional probability constraints on a
 user-specified acyclic graph of observed Boolean variables, with independent

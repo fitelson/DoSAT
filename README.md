@@ -44,7 +44,9 @@ causal graph resolves Simpson's paradox. Saved solver input uses explicit
 also tries its finite QF_NRA optimization first.
 
 Public repository: [fitelson/DoSAT](https://github.com/fitelson/DoSAT).
-Website target: [DoSAT 1.0](https://fitelson.org/DoSAT/); publication is in progress.
+Live website: [DoSAT 1.0](https://fitelson.org/DoSAT/). The
+[publication record](reviews/PHASE3_PUBLICATION.md) confirms uploaded checksums,
+actual Z3 5.1.0 and successful live examples/cancellation.
 
 For local development, clone `https://github.com/fitelson/DoSAT.git`, use
 Node 26.11.1 and npm 12.2.0, then run

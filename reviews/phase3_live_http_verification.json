@@ -1,0 +1,411 @@
+{
+  "target": "https://fitelson.org/DoSAT/",
+  "verified": 20,
+  "results": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "sha256": "23938e9e10a01bec917eb8f9eeda59945044dd3a06ba09e591bb64963627c5ca",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/html",
+        "Content-Length": "4722",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:10:24 GMT",
+        "ETag": "\"1272-65d97028952f9\"",
+        "Surecache-Status": "MISS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/causal-CICGGsBM.js",
+      "status": 200,
+      "sha256": "96d4e8536d40d44d4ebd54f195eaf9758c6c8ba3703a23d57c23825557031308",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "8991",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"231f-65d96feaa289d\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/causal_format-C13h3xqW.js",
+      "status": 200,
+      "sha256": "11588266a93bd380a5df2ea5921d7b2597db6ed842ad1f47e7f4c4c923807ed9",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "7808",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"1e80-65d96feb35041\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/causal_style-IaSUxDDb.css",
+      "status": 200,
+      "sha256": "6522e8bfaef1052150e5bdbdcf479b5731e20997e2027570031c9d493853b33b",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/css",
+        "Content-Length": "1178",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"49a-65d96fead0ec4\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/causal_style-MSA2jREb.js",
+      "status": 200,
+      "sha256": "936565516efc95b4b6b3a374a0a42110d0492ce78926fc0abdae00d1cb8b91dd",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "5795",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"16a3-65d96feb1f0b5\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/classical-DjQ0sDRE.js",
+      "status": 200,
+      "sha256": "ac0cb8088e4893f35caee1ba562869b637f653f371781743211490c096664bda",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "54348",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"d44c-65d96fea7b7a4\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/decision--ezzmyIH.js",
+      "status": 200,
+      "sha256": "de1d1fc3d6b3f25432b10faec6f941b9c6dba394d2e2a14723fe5ecb255f3fac",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "23067",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"5a1b-65d96fea65818\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/decision-BDdo2dpA.css",
+      "status": 200,
+      "sha256": "c3e152279a122cc724e53d886f7914f85494745e042f5cdd45fbe75f82ccb142",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/css",
+        "Content-Length": "343",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"157-65d96feaf58ad\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/doCalculus-2YXKoFfG.js",
+      "status": 200,
+      "sha256": "3c3d0589a43e4888bee2df4ee8df1387fb194a09a27b8014fffb909349e978d3",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:04 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "17937",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"4611-65d96feb0b839\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/doCalculus-DB_gIekx.css",
+      "status": 200,
+      "sha256": "11782ae250e0caa390ca836397fe43d5e9f12b2a5134ea738b43370fbd145ef3",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/css",
+        "Content-Length": "769",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:18 GMT",
+        "ETag": "\"301-65d96fea4d17d\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/style-Bw0WqSJS.js",
+      "status": 200,
+      "sha256": "e8ad715b3bef5f2580fd438618a6a08b72d74b01c39141f6841f08d649f8a29b",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "47979",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"bb6b-65d96feae4740\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/style-C3YySg3g.css",
+      "status": 200,
+      "sha256": "4e08d156159675d7c4866269fe8b150fca6f8dc87c24070499fa08be6a508a42",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/css",
+        "Content-Length": "6690",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"1a22-65d96fea8f020\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/assets/z3_integration-Dty4QGQh.js",
+      "status": 200,
+      "sha256": "025dc7be0408bd9f8c4630ed2fa6c379497ec6eaf7601d6e650bfb6ea9f11d61",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "168569",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:19 GMT",
+        "ETag": "\"29279-65d96feabd648\"",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Surecache-Status": "BYPASS",
+        "Accept-Ranges": "bytes",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/causal.html",
+      "status": 200,
+      "sha256": "020cf1b9d5c570bf7f36dc8d81d61fcd92096432296ef0f1c10bd3c4a9eedc56",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/html",
+        "Content-Length": "1534",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:10:19 GMT",
+        "ETag": "\"5fe-65d9702460933\"",
+        "Accept-Ranges": "bytes",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Cache-Control": "no-cache",
+        "Surecache-Status": "MISS",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/coi-serviceworker.js",
+      "status": 200,
+      "sha256": "e35c3d4758ef522584c5608b9ebf7e0b19df4bd6857f8ac16f2e2febde119881",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "6027",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:30 GMT",
+        "ETag": "\"178b-65d96ff58b610\"",
+        "Accept-Ranges": "bytes",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Service-Worker-Allowed": "/",
+        "Cache-Control": "no-cache",
+        "Surecache-Status": "BYPASS",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/decision.html",
+      "status": 200,
+      "sha256": "04cf771630b04aee8aa0a7ad404ee9884ee959dc629bbd434806ec8edbef2732",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/html",
+        "Content-Length": "1093",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:10:20 GMT",
+        "ETag": "\"445-65d970249166a\"",
+        "Accept-Ranges": "bytes",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Cache-Control": "no-cache",
+        "Surecache-Status": "MISS",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/do_calculus.html",
+      "status": 200,
+      "sha256": "a85673fa39d6afc2c061df5020843ed22b8e25be6326dd9b85ddebe8cb38ff31",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/html",
+        "Content-Length": "1285",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:10:19 GMT",
+        "ETag": "\"505-65d9702478fcf\"",
+        "Accept-Ranges": "bytes",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Cache-Control": "no-cache",
+        "Surecache-Status": "MISS",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/index.html",
+      "status": 200,
+      "sha256": "a47b60ed41486a7b0b4be8849a51da38a97cf0351496ca7504f122f44add60d4",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/html",
+        "Content-Length": "1291",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:10:19 GMT",
+        "ETag": "\"50b-65d9702448298\"",
+        "Accept-Ranges": "bytes",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Cache-Control": "no-cache",
+        "Surecache-Status": "MISS",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/z3-built.js",
+      "status": 200,
+      "sha256": "0c6cc2a4a8461b0ffa73e792f97c9749a0c7a2ad5c647b43ec7f630c82b16ee1",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "text/javascript",
+        "Content-Length": "353813",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:30 GMT",
+        "ETag": "\"56615-65d96ff5bc347\"",
+        "Accept-Ranges": "bytes",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Cache-Control": "no-cache",
+        "Surecache-Status": "BYPASS",
+        "Connection": "close"
+      }
+    },
+    {
+      "file": "dist/z3-built.wasm",
+      "status": 200,
+      "sha256": "2765f5443a5a3a41aace71a82dd954e3b8c885a7d621b50122b1aede0dc8348a",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 21:13:05 GMT",
+        "Server": "Apache",
+        "Content-Type": "application/wasm",
+        "Content-Length": "34938413",
+        "Vary": "X-Surecache",
+        "Last-Modified": "Sun, 11 Oct 2026 21:09:32 GMT",
+        "ETag": "\"2151e2d-65d96ff70d1a7\"",
+        "Accept-Ranges": "bytes",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Cache-Control": "no-cache",
+        "Surecache-Status": "MISS",
+        "Connection": "close"
+      }
+    }
+  ]
+}

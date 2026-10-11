@@ -76,7 +76,9 @@ can obtain a fresh browser context; its effect depends on the problem.
 Public repository: https://github.com/fitelson/DoSAT.
 Website target: https://fitelson.org/DoSAT/.
 The repository was created after PASS; commit/push/upload and live verification
-are in progress. The release uses the new DoSAT directory only. Inherited PrSAT
+are complete. See [PHASE3_PUBLICATION.md](PHASE3_PUBLICATION.md): all 21 remote
+checksums, 20 HTTPS files and 32 live browser checks pass, with actual Z3 5.1.0.
+The release uses the new DoSAT directory only. Inherited PrSAT
 deploy commands remain disabled, and port 5317 and original PrSAT checkouts
 remain untouched.
 

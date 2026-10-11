@@ -1,0 +1,22 @@
+{
+  "url": "https://fitelson.org/DoSAT/dist/decision.html",
+  "results": [
+    {
+      "action": "cancel",
+      "status": "Cancelled — no decision established.",
+      "searchPendingAtAction": true,
+      "actionToObservedSettlementMs": 2783.7050000429153,
+      "reuseStatus": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "errors": []
+    },
+    {
+      "action": "edit",
+      "status": "Input changed; decide the current problem.",
+      "searchPendingAtAction": true,
+      "actionToObservedSettlementMs": 2739.725000023842,
+      "reuseStatus": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "errors": []
+    }
+  ],
+  "qualification": "Task-scheduled actions and measured timings on these instances; no universal physical bound."
+}
