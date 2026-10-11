@@ -41,6 +41,27 @@ review baseline is local commit09da858; phase1 code is reference/integration
 material only. Phase2 is complete and its scoped default-model consensus recheck
 passed; see reviews/PHASE2_FINAL_STATUS.md. The same gate applies to Phase3.
 
+## Phase 3 scope
+
+Phase3 adds an audited SAT/entailment decision procedure, not derivation chains.
+Read DECISION_SEMANTICS.md. Countermodels complement the already guarded
+conclusion and include required undefined terms. Default solving uses a finite
+60-second QF_NRA attempt per stage, then explicit NLSat with no overall time
+limit; resource/timeout/cancellation outcomes prove
+nothing. Scope the phase3 review to the delta from approved Phase2 commit
+fa7d9bd0deccc2c01da04883c1ae55fb0d74a30c and the new obligations. The gate is
+PASS; see reviews/PHASE3_FINAL_STATUS.md and phase3_final_recheck_consensus.md.
+Do not reopen unrelated older code. Model class remains finite observed
+Boolean DAGs with independent disturbances; ID/IDC and latent models are outside.
+Boolean `do(X)` / `do(~X)` aliases preserve numeric hard-intervention semantics.
+Deadline claims concern accepted verdicts, not physical settlement or cleanup.
+Nonblocking followups added one permanent witness-error regression and neutral
+help wording; no runtime solver or reduction change. Context-reuse performance
+is instance dependent. A later phase requires a new scoped consensus gate.
+Branden explicitly authorized public repository creation, commit, push and
+publication on October 11. The new target is fitelson/DoSAT and /DoSAT/;
+never execute inherited PrSAT deployment commands.
+
 ## Do-calculus research fork (2026-10-11)
 
 Read PROJECT.md first. This is the independent PrSAT 3.0 do-calculus extension

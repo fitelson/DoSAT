@@ -1,0 +1,238 @@
+{
+  "entry": "DoSAT landing -> dist/decision.html",
+  "port": 4173,
+  "errors": [],
+  "results": [
+    {
+      "width": 320,
+      "example": 0,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": 1,
+      "status": "DOES NOT ENTAIL — a countermodel was found.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": 2,
+      "status": "DOES NOT ENTAIL — a countermodel was found.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": 3,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": 4,
+      "status": "INCONSISTENT PREMISES — no compatible model satisfies the premises.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": 5,
+      "status": "SAT — a compatible causal model was found.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": 6,
+      "status": "UNSAT — no compatible causal model satisfies the constraints.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": 7,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": 8,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 320,
+      "example": "Simpson exact four rates",
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion."
+    },
+    {
+      "width": 390,
+      "example": 0,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": 1,
+      "status": "DOES NOT ENTAIL — a countermodel was found.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": 2,
+      "status": "DOES NOT ENTAIL — a countermodel was found.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": 3,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": 4,
+      "status": "INCONSISTENT PREMISES — no compatible model satisfies the premises.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": 5,
+      "status": "SAT — a compatible causal model was found.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": 6,
+      "status": "UNSAT — no compatible causal model satisfies the constraints.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": 7,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": 8,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 390,
+      "example": "Simpson exact four rates",
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion."
+    },
+    {
+      "width": 1280,
+      "example": 0,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": 1,
+      "status": "DOES NOT ENTAIL — a countermodel was found.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": 2,
+      "status": "DOES NOT ENTAIL — a countermodel was found.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": 3,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": 4,
+      "status": "INCONSISTENT PREMISES — no compatible model satisfies the premises.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": 5,
+      "status": "SAT — a compatible causal model was found.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": 6,
+      "status": "UNSAT — no compatible causal model satisfies the constraints.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": 7,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": 8,
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "crossOriginIsolated": true
+    },
+    {
+      "width": 1280,
+      "example": "Simpson exact four rates",
+      "status": "ENTAILS — every compatible model of the premises satisfies the conclusion."
+    }
+  ]
+}

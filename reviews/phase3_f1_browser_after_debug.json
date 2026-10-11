@@ -1,0 +1,18 @@
+[
+  {
+    "action": "cancel",
+    "cancelMs": 0.33000004291534424,
+    "status": "Cancelled — no decision established.",
+    "runEnabled": true,
+    "reuseStatus": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+    "pageErrors": []
+  },
+  {
+    "action": "edit",
+    "cancelMs": 0.48500001430511475,
+    "status": "Input changed; decide the current problem.",
+    "runEnabled": true,
+    "reuseStatus": "ENTAILS — every compatible model of the premises satisfies the conclusion.",
+    "pageErrors": []
+  }
+]

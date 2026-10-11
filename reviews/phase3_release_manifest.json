@@ -1,0 +1,96 @@
+{
+  "package": "releases/DoSAT-1.0-2026-10-11T18-23-26-008Z-268637f8",
+  "manifest": {
+    "product": "DoSAT 1.0",
+    "subtitle": "A Decision Procedure for Do Calculus.",
+    "target": "https://fitelson.org/DoSAT/",
+    "state": "prepared; publication requires completed phase review",
+    "createdAt": "2026-10-11T18:23:26.043Z",
+    "files": {
+      "index.html": {
+        "bytes": 3587,
+        "sha256": "475118543bce6c7d9794e51598df5d9d3301d2989754207d2c5f0b1aa192df83"
+      },
+      "dist/.htaccess": {
+        "bytes": 1132,
+        "sha256": "73cf781f7ed7d3ab9680101971a5f720268e7bb9e1e2085984feb3bbe95c15cb"
+      },
+      "dist/assets/causal-DOOx9t0F.js": {
+        "bytes": 9012,
+        "sha256": "c5e69877cd5ff6bd1283f3b89695fc63861e634aae2bcb4dfd731145da1ada18"
+      },
+      "dist/assets/causal_format-CRPi3mUx.js": {
+        "bytes": 7809,
+        "sha256": "e419f8f9ae85b4af51595f20bdf0d80513c5df2d3fcaf25e56a2c2e27d2dc7ec"
+      },
+      "dist/assets/causal_style-C6Fdu5pm.js": {
+        "bytes": 5705,
+        "sha256": "03bc3d8bc94086ea238737651140b5dfc1bcaeae24e4183ec30ce9622b5023be"
+      },
+      "dist/assets/causal_style-IaSUxDDb.css": {
+        "bytes": 1178,
+        "sha256": "6522e8bfaef1052150e5bdbdcf479b5731e20997e2027570031c9d493853b33b"
+      },
+      "dist/assets/classical-DckjyXCL.js": {
+        "bytes": 54435,
+        "sha256": "68d179d4bf98e224033384412a22613937c9d436bbae9b9a0a9ddd5dfc6ec77f"
+      },
+      "dist/assets/decision-BDdo2dpA.css": {
+        "bytes": 343,
+        "sha256": "c3e152279a122cc724e53d886f7914f85494745e042f5cdd45fbe75f82ccb142"
+      },
+      "dist/assets/decision-CHmeboX3.js": {
+        "bytes": 20595,
+        "sha256": "fdf8e13a5268cc4867c0d7638155eca1822e77fe0723ca59060c74cc7f567965"
+      },
+      "dist/assets/doCalculus-D5moHarn.js": {
+        "bytes": 17939,
+        "sha256": "f75804598a6866a3bdffcda99626d5a751267869781c9e6ef075eeee26dc5683"
+      },
+      "dist/assets/doCalculus-DB_gIekx.css": {
+        "bytes": 769,
+        "sha256": "11782ae250e0caa390ca836397fe43d5e9f12b2a5134ea738b43370fbd145ef3"
+      },
+      "dist/assets/style-C3YySg3g.css": {
+        "bytes": 6690,
+        "sha256": "4e08d156159675d7c4866269fe8b150fca6f8dc87c24070499fa08be6a508a42"
+      },
+      "dist/assets/style-D46Ctiq_.js": {
+        "bytes": 48580,
+        "sha256": "a44438ec36de9cc41efd4b9cc31482bd5b2428dea2611cf9ae6bbf3d7bb42498"
+      },
+      "dist/assets/z3_integration-BgPGWkHg.js": {
+        "bytes": 168656,
+        "sha256": "e08632a7215652b06a58d8d674b0ad84376fbfb645da15458e3207dff53a9cc2"
+      },
+      "dist/causal.html": {
+        "bytes": 1534,
+        "sha256": "449982520839bbc75923a1c23ed3b9e0f3407bd35efcc75b9955cb3a693576ec"
+      },
+      "dist/coi-serviceworker.js": {
+        "bytes": 6027,
+        "sha256": "e35c3d4758ef522584c5608b9ebf7e0b19df4bd6857f8ac16f2e2febde119881"
+      },
+      "dist/decision.html": {
+        "bytes": 1093,
+        "sha256": "ca2b324d3609d899485d1bf94bec87ee8828d909252f1ac7ecef94097ac3d2ad"
+      },
+      "dist/do_calculus.html": {
+        "bytes": 1285,
+        "sha256": "3ab0622430e412ed605d1a0ccb9c895b3682bf9ae8f856382a156221961bcfdb"
+      },
+      "dist/index.html": {
+        "bytes": 1291,
+        "sha256": "6bbc2a84cb6ef0f888332c4e39092735a4eecb1adc261c0936fb8770d14c9cbf"
+      },
+      "dist/z3-built.js": {
+        "bytes": 353813,
+        "sha256": "0c6cc2a4a8461b0ffa73e792f97c9749a0c7a2ad5c647b43ec7f630c82b16ee1"
+      },
+      "dist/z3-built.wasm": {
+        "bytes": 34938413,
+        "sha256": "2765f5443a5a3a41aace71a82dd954e3b8c885a7d621b50122b1aede0dc8348a"
+      }
+    }
+  }
+}

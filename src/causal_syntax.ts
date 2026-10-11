@@ -209,17 +209,22 @@ const conditional_separator = (source: string): number | undefined => {
 }
 
 const parse_interventions = (graph: CausalGraph, source: string): Intervention[] => {
-  if (!source.trim()) throw new Error('do(...) requires at least one assignment, such as do(X=1).')
+  if (!source.trim()) throw new Error('do(...) requires at least one assignment, such as do(X).')
   const intervention: Intervention[] = []
   for (const assignment of source.split(',')) {
-    const match = /^\s*([A-Z](?:[1-9][0-9]*)?)\s*=\s*([01])\s*$/.exec(assignment)
-    if (!match) throw new Error(`Invalid intervention "${assignment.trim()}". do(...) accepts only assignments such as X=0 or X=1.`)
-    const variable = normalize_causal_variable(match[1])
+    const explicit = /^\s*([A-Z](?:[1-9][0-9]*)?)\s*=\s*([01])\s*$/.exec(assignment)
+    // These are hard Boolean assignments, not interventions on arbitrary
+    // propositional formulas. Keep this grammar separate from sentence parsing.
+    const literal = /^\s*(~)?\s*([A-Z](?:[1-9][0-9]*)?)\s*$/.exec(assignment)
+    if (!explicit && !literal) {
+      throw new Error(`Invalid intervention "${assignment.trim()}". do(...) accepts only literal assignments such as X, ~X, X=0 or X=1.`)
+    }
+    const variable = normalize_causal_variable(explicit ? explicit[1] : literal![2])
     if (!graph.nodes.includes(variable)) throw new Error(`Intervention variable ${variable} is not declared in the graph.`)
     if (intervention.some((entry) => entry.variable === variable)) {
       throw new Error(`Repeated intervention assignment for ${variable}; assign each variable only once.`)
     }
-    intervention.push({ variable, value: match[2] === '1' })
+    intervention.push({ variable, value: explicit ? explicit[2] === '1' : literal![1] !== '~' })
   }
   return intervention
 }
@@ -241,7 +246,7 @@ const parse_probability = (graph: CausalGraph, inner: string, source: string): C
   const tail = condition.slice(closing + 1).trim()
   if (!tail) return { event, intervention, source }
   if (!tail.startsWith(',')) {
-    throw new Error('Place observational conditioning after the intervention with a comma, such as Pr(Y | do(X=1), Z).')
+    throw new Error('Place observational conditioning after the intervention with a comma, such as Pr(Y | do(X), Z).')
   }
   const given = parse_causal_sentence(graph, tail.slice(1), 'conditioning event after do(...)')
   return { event, given, intervention, source }

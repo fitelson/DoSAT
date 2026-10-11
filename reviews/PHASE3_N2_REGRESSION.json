@@ -1,0 +1,13 @@
+{
+  "status": "N2 permanent regression completed",
+  "runtimeSolverSourceUnchanged": true,
+  "runtimeSolverSHA256": "9e2f6760a6e360d6b59da2d08c848d13d821f22efaa6dd7788de01f8c918d396",
+  "targetedSolverTestsPassed": 63,
+  "typecheckExit": 0,
+  "scopedLintExit": 0,
+  "mutation": "S2 removes checking && only through an outside-checkout Vite transform",
+  "mutationExit": 1,
+  "mutationEvidence": "/tmp/dosat-n2-s2-mutation-20261011-1656/S2_MUTATION.log",
+  "mutationConfig": "/tmp/dosat-n2-s2-mutation-20261011-1656/vitest.config.mjs",
+  "qualification": "Only the permanent solver spec changed; no runtime source was mutated."
+}

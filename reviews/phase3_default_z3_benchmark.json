@@ -1,0 +1,78 @@
+{
+  "runtimeVersion": "5.1.0",
+  "input": {
+    "graph": "A -> B; A -> C; A -> D; A -> E; A -> F; B -> C; B -> D; B -> E; B -> F; C -> D; C -> E; C -> F; D -> E; D -> F; E -> F",
+    "premises": "",
+    "conclusion": "Pr(F | do(A=1)) = Pr(F | A)",
+    "regular": true,
+    "task": "entailment"
+  },
+  "baselineReviewer": {
+    "ms": 69043,
+    "status": "entailed",
+    "source": "/tmp/dosat-p3-claude-71wOuU/probe5.json"
+  },
+  "timeoutMs": 300000,
+  "results": [
+    {
+      "variant": "default",
+      "totalMs": 29146.5235,
+      "stages": [
+        {
+          "stage": "premises",
+          "status": "sat",
+          "loadMs": 18.448459000000014,
+          "checkMs": 180.014583,
+          "totalMs": 198.463042
+        },
+        {
+          "stage": "counterexample",
+          "status": "unsat",
+          "loadMs": 5.918624999999963,
+          "checkMs": 28936.941334,
+          "totalMs": 28942.859959
+        }
+      ]
+    },
+    {
+      "variant": "QF_NRA",
+      "totalMs": 28946.73075,
+      "stages": [
+        {
+          "stage": "premises",
+          "status": "sat",
+          "loadMs": 5.560916999998881,
+          "checkMs": 113.71674999999959,
+          "totalMs": 119.27766699999847
+        },
+        {
+          "stage": "counterexample",
+          "status": "unsat",
+          "loadMs": 4.912125000002561,
+          "checkMs": 28820.463333999996,
+          "totalMs": 28825.375459
+        }
+      ]
+    },
+    {
+      "variant": "qfnra-nlsat",
+      "totalMs": 69849.228084,
+      "stages": [
+        {
+          "stage": "premises",
+          "status": "sat",
+          "loadMs": 2.1279170000052545,
+          "checkMs": 110.6615829999937,
+          "totalMs": 112.78949999999895
+        },
+        {
+          "stage": "counterexample",
+          "status": "unsat",
+          "loadMs": 1.7577080000046408,
+          "checkMs": 69734.06345799999,
+          "totalMs": 69735.82116600001
+        }
+      ]
+    }
+  ]
+}

@@ -96,6 +96,38 @@ describe('causal probability syntax', () => {
     expect(document.constraints[0]).toEqual(assert_parse_constraint('CausalQueryA + CausalQueryB = CausalQueryC'))
   })
 
+  test('Boolean intervention literals are exactly the existing hard assignments', () => {
+    const document = parse_causal_document(graph, 'Pr(Y | do(X)) = Pr(Y | do(X=1))\nPr(Y | do(~X)) = Pr(Y | do(X=0))')
+    expect(Object.values(document.probabilities).map(query => query.intervention)).toEqual([
+      [{ variable: 'X', value: true }], [{ variable: 'X', value: true }],
+      [{ variable: 'X', value: false }], [{ variable: 'X', value: false }],
+    ])
+    expect(document.probabilities.CausalQueryA.source).toBe('Pr(Y | do(X))')
+    expect(document.probabilities.CausalQueryC.source).toBe('Pr(Y | do(~X))')
+  })
+
+  test('accepts simultaneous literals, mixed numeric assignments and surrounding whitespace', () => {
+    const document = parse_causal_document(graph, 'P(Y | do ( X , ~ Z )) = p (Y | do(X=1, Z=0))\nPr(Y | do(~ X, Z=1)) = 1/2')
+    expect(Object.values(document.probabilities).map(query => query.intervention)).toEqual([
+      [{ variable: 'X', value: true }, { variable: 'Z', value: false }],
+      [{ variable: 'X', value: true }, { variable: 'Z', value: false }],
+      [{ variable: 'X', value: false }, { variable: 'Z', value: true }],
+    ])
+  })
+
+  test('intervention literals preserve exact canonical indexed-variable names', () => {
+    const document = parse_causal_document('X1 -> Y; Z9007199254740991', 'Pr(Y | do(X1, ~Z9007199254740991)) = 1/2')
+    expect(document.probabilities.CausalQueryA.intervention).toEqual([
+      { variable: 'X1', value: true }, { variable: 'Z9007199254740991', value: false },
+    ])
+  })
+
+  test('ordinary conditioning after a literal intervention still accepts propositional formulas', () => {
+    const document = parse_causal_document(graph, 'Pr(Y | do(X), (Z v ~Y)) = 1/2')
+    expect(document.probabilities.CausalQueryA.intervention).toEqual([{ variable: 'X', value: true }])
+    expect(document.probabilities.CausalQueryA.given).toEqual(assert_parse_sentence('Z v ~Y'))
+  })
+
   test('preserves exact numerals, fractions, arithmetic, free reals, and constraint Boolean structure', () => {
     const source = '~(Pr(Y | do(X=1)) = 9007199254740993/100000000000000000000) & (q + Pr(Y)^2 > 0.10000000000000000001 -> p = 2)'
     const expected = '~(CausalQueryA = 9007199254740993/100000000000000000000) & (q + CausalQueryB^2 > 0.10000000000000000001 -> p = 2)'
@@ -176,15 +208,38 @@ describe('causal probability syntax', () => {
     ['Pr(U) = 1', /U.*not declared/],
     ['Pr(Y | U) = 1', /U.*not declared/],
     ['Pr(Y | do(U=1)) = 1', /U.*not declared/],
+    ['Pr(Y | do(U)) = 1', /U.*not declared/],
+    ['Pr(Y | do(~U)) = 1', /U.*not declared/],
     ['Pr(Y | do(X=1), U) = 1', /U.*not declared/],
     ['Pr(Y | do()) = 1', /at least one assignment/],
-    ['Pr(Y | do(X)) = 1', /only assignments/],
-    ['Pr(Y | do(X v Z)) = 1', /only assignments/],
-    ['Pr(Y | do(~X)) = 1', /only assignments/],
-    ['Pr(Y | do(X=2)) = 1', /only assignments/],
-    ['Pr(Y | do(X=true)) = 1', /only assignments/],
-    ['Pr(Y | do(X=1.0)) = 1', /only assignments/],
-    ['Pr(Y | do(X=1,)) = 1', /only assignments/],
+    ['Pr(Y | do(X & Z)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X v Z)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X -> Z)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X <-> Z)) = 1', /only literal assignments/],
+    ['Pr(Y | do(~(X & Z))) = 1', /only literal assignments/],
+    ['Pr(Y | do((X))) = 1', /only literal assignments/],
+    ['Pr(Y | do(~(X))) = 1', /only literal assignments/],
+    ['Pr(Y | do(~~X)) = 1', /only literal assignments/],
+    ['Pr(Y | do(!X)) = 1', /only literal assignments/],
+    ['Pr(Y | do(-X)) = 1', /only literal assignments/],
+    ['Pr(Y | do(x)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X0)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X01)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X9007199254740992)) = 1', /too large/],
+    ['Pr(Y | do(~X9007199254740992)) = 1', /too large/],
+    ['Pr(Y | do(~X=0)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X=2)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X=true)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X=1.0)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X=1,)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X,)) = 1', /only literal assignments/],
+    ['Pr(Y | do(,~X)) = 1', /only literal assignments/],
+    ['Pr(Y | do(X, X)) = 1', /Repeated intervention/],
+    ['Pr(Y | do(X, ~X)) = 1', /Repeated intervention/],
+    ['Pr(Y | do(~X, ~X)) = 1', /Repeated intervention/],
+    ['Pr(Y | do(X, X=1)) = 1', /Repeated intervention/],
+    ['Pr(Y | do(~X, X=0)) = 1', /Repeated intervention/],
+    ['Pr(Y | do(X=0, X)) = 1', /Repeated intervention/],
     ['Pr(Y | do(X=1, X=0)) = 1', /Repeated intervention/],
     ['Pr(Y | do(X=1, X=1)) = 1', /Repeated intervention/],
     ['Pr(Y | do(X=1) & Z) = 1', /with a comma/],

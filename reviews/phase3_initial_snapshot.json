@@ -1,0 +1,31 @@
+{
+  "captured_at": "2026-10-11T18:26:40.862135+00:00",
+  "baseline_commit": "fa7d9bd0deccc2c01da04883c1ae55fb0d74a30c",
+  "files": {
+    "src/causal_decision.ts": "3060d949f5783101e745f9d16adf3c486e0f845a45a6f213a5ee330130bd7349",
+    "src/causal_decision.spec.ts": "ae0f5f27301f8f9164844ae5a82eb94736438f6cb53502c11f840aabadc08185",
+    "src/causal_decision_solver.ts": "21b23ac15b43aead07d57fabb3b862683c5f0860b5d798632de06e03235ff1fc",
+    "src/causal_decision_solver.spec.ts": "422bfdc285016def8a8ab1579de5d56888d0239ed37448084d8a6876969ba62f",
+    "src/causal_decision_audit.spec.ts": "cf13f20eda79e67cd29387ea08668c5f2c36b2686c2ec7e593911fa3348e2e7c",
+    "src/causal_decision_ui.ts": "a7a7dc3e8efa8a6433adb51fc657216d69981404d674b70c049d1836ee2ad88f",
+    "src/causal_decision_ui.spec.ts": "e34e1ba386a33e09b042cfe8f82fa700393c04b78e7ad798bfad1dde75cef8f5",
+    "src/causal_decision_style.css": "da9eb1b123686e2dab75cf523616fd9b3f4528c9853b027e15221e353e1d0466",
+    "src/causal_ui.ts": "661fb32d6a354e6ea197fa31792a6ed0fe22df51b9207dce4af1d09835b9b5f0",
+    "src/do_calculus_ui.ts": "f40675f009a8837b1e817399d27b2e5af4650b5e61733858e751a3c0842b5880",
+    "tests/causal_decision.spec.ts": "42752e9321c31e4994ee8bb05888d0ec07ff6d0bfd396676d4e8eec50a063f90",
+    "decision.html": "8aa5a1239e25cebfc5b8e8a88646cb7684cce44ba7709f3b0788f6d9647c878a",
+    "DECISION_SEMANTICS.md": "0d163fb4a60d13564a82ebd3e951eed38fc84e123e0b02c322c9a9c379cdefa0",
+    "CAUSAL_SEMANTICS.md": "3fd739b0ef7218ca518629f7bda1ae6225a87baf3f2abbe3c6e2ad399a494f09",
+    "PROJECT.md": "b62ad282477720b85b71daee0b55719de90f8d0fc4125793f35836ed557e9efc",
+    "AGENTS.md": "b89780f4efc1a3ee8e59fc019e2813872bb1a8cc58097e67341069bea7818083",
+    "README.md": "fcd569a07f84de51f16319da1f6573c98202c93d195d1146e76431233ddf6dd7",
+    "HOSTING.md": "35df3c5b393541b406775a493b50865ed6b4b873ecd6be452120b7795ef53bbb",
+    "vite.config.ts": "5281df840c6357602f9a9289b850bf7be5f717f5e57b8e604d6f6da18708bbea",
+    "package.json": "8ab22d5c039e156e4e55ae8c02dc26054bb3180dabe885c3d89e285afabfd095",
+    "package-lock.json": "76caa3aca2de1fa7d70922578522e7d2224c29b6c3964830ccfd8d80b4fe71fd",
+    ".gitignore": "56dbfd49312e354fb2123d856aee0cc5d852121b3777a9b53d24a295f82512ee",
+    "scripts/prepare-dosat-release.mjs": "4f17730189dc4bd64ec41ed79f9bd38f556f4a85e72ce0df5fe2450e4aecd557",
+    "webpage/dosat.html": "475118543bce6c7d9794e51598df5d9d3301d2989754207d2c5f0b1aa192df83"
+  },
+  "git_status": " M .gitignore\n M AGENTS.md\n M CAUSAL_SEMANTICS.md\n M PROJECT.md\n M README.md\n M dist/causal.html\n M dist/do_calculus.html\n M dist/index.html\n M package-lock.json\n M package.json\n M src/causal_ui.ts\n M src/do_calculus_ui.ts\n M vite.config.ts\n?? DECISION_SEMANTICS.md\n?? HOSTING.md\n?? decision.html\n?? dist/assets/causal-DOOx9t0F.js\n?? dist/assets/causal_format-CRPi3mUx.js\n?? dist/assets/classical-DckjyXCL.js\n?? dist/assets/decision-BDdo2dpA.css\n?? dist/assets/decision-CHmeboX3.js\n?? dist/assets/decision-D8KGV20Y.js\n?? dist/assets/decision-_yGIjvah.js\n?? dist/assets/decision-ovro0fOL.css\n?? dist/assets/doCalculus-BGYfSg8r.css\n?? dist/assets/doCalculus-BUUT_s_k.js\n?? dist/assets/doCalculus-C6THQ9JH.js\n?? dist/assets/doCalculus-D5moHarn.js\n?? dist/assets/doCalculus-Dy5sFuNJ.js\n?? dist/assets/z3_integration-BgPGWkHg.js\n?? dist/decision.html\n?? reviews/PHASE3_CONSENSUS_PROMPT.md\n?? reviews/PHASE3_DELTA.md\n?? reviews/PHASE3_INDEPENDENT_AUDIT.md\n?? reviews/PHASE3_VERIFICATION.md\n?? reviews/phase1-claude-initial/\n?? reviews/phase3_baseline.json\n?? reviews/phase3_current_build_assets.json\n?? reviews/phase3_native_audit.json\n?? reviews/phase3_native_audit.smt2\n?? reviews/phase3_native_audit_with_unpinned.json\n?? reviews/phase3_native_audit_with_unpinned.smt2\n?? reviews/phase3_production_probe.json\n?? reviews/phase3_release_manifest.json\n?? reviews/phase3_release_probe.json\n?? scripts/claude_phase_review.py\n?? scripts/prepare-dosat-release.mjs\n?? src/causal_decision.spec.ts\n?? src/causal_decision.ts\n?? src/causal_decision_audit.spec.ts\n?? src/causal_decision_solver.spec.ts\n?? src/causal_decision_solver.ts\n?? src/causal_decision_style.css\n?? src/causal_decision_ui.spec.ts\n?? src/causal_decision_ui.ts\n?? tests/causal_decision.spec.ts\n?? webpage/dosat.html\n"
+}

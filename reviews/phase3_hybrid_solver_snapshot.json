@@ -1,0 +1,14 @@
+{
+  "status": "owned solver source frozen after targeted verification",
+  "sha256": {
+    "src/causal_decision_solver.ts": "9e2f6760a6e360d6b59da2d08c848d13d821f22efaa6dd7788de01f8c918d396",
+    "src/causal_decision_solver.spec.ts": "495429426238b1d85a7460fdf795710bff94fd79c7de83bb99096f437eb8893c"
+  },
+  "verification": {
+    "typecheck": 0,
+    "scopedLint": 0,
+    "targetedTestsPassed": 62,
+    "testFileDurationSeconds": 7.55
+  },
+  "measurements": "reviews/phase3_hybrid_solver_native_probe.json"
+}

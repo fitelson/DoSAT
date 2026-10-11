@@ -43,3 +43,6 @@ dist-ssr
 
 # Consensus raw stream journals are private diagnostics
 /reviews/**/*-stream.jsonl
+
+# Preserved local website packages; source and manifests live separately
+/releases/

@@ -1,0 +1,9 @@
+# F1 browser boundary repair
+
+The first operation-scoped 100 ms retry repair successfully delivered interrupts, but the logic-specific QF_NRA browser search sometimes needed approximately three seconds to finish its early preprocessing. An instrumented headless run recorded 28 retry ticks and an unknown result about 2861 ms after the MutationObserver cancellation. This timing left the required 3-second acceptance fragile. See phase3_f1_browser_before_debug.json. The debug instrumentation lived in a retained /tmp Vite transform, not the project source.
+
+The solver now yields one microtask after announcing the counterexample stage, before creating or loading its next native session. This delivers queued on_stage cancellations and browser MutationObserver callbacks before unnecessary native work begins. Pending native checks and witness evaluations still retain operation-scoped interrupt retries, settle-before-release ownership, and protected cleanup.
+
+Verified on the refreshed toolchain: TypeScript 7 compile status 0; scoped ESLint status 0; 40 solver tests passed; both actual Chromium countermodel-startup tests passed, including cancellation, input-edit abort, and same-wrapper reuse. The complete browser test durations were 558 ms and 521 ms, respectively, including setup and the subsequent valid entailment query. A subsequent uninstrumented headless capture measured actual action-to-terminal-status times of 0.330 ms for Cancel and 0.485 ms for input edit, with both wrappers reusing successfully and no page errors; see phase3_f1_browser_after_debug.json. These measured examples are not universal physical timing bounds. The native tests also retain actual already-running six-node cancellation at a 50 ms delayed abort, alongside fake pending-check and pending-evaluation retry tests.
+
+All owned development servers were stopped, and port 5174 was free after verification. Root-owned full checks and the consensus recheck remain required.

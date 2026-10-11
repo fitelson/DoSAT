@@ -1,0 +1,5 @@
+.decision-ui select, .decision-ui input, .decision-ui button { max-width: 100%; box-sizing: border-box; }
+.decision-ui nav { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+[data-testid=decision-status] { margin-top: 1rem; font-weight: 600; overflow-wrap: anywhere; }
+.decision-ui .causal-table td { overflow-wrap: anywhere; }
+.decision-subtitle { font-size: 1.2rem; margin-top: 0.4rem; }

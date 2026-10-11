@@ -1,0 +1,63 @@
+{
+  "status": "supplementary reused-context benchmark stopped unresolved",
+  "runtime": "z3-solver WebAssembly in Node.js",
+  "runtimeVersion": "5.1.0",
+  "systemNativeZ3": false,
+  "fastDefaultMs": 60000,
+  "measurements": [
+    {
+      "label": "forced real fallback model",
+      "status": "sat",
+      "totalMs": 414.659583,
+      "engines": [
+        "premises:fast",
+        "premises:complete"
+      ],
+      "query": "Pr(F)",
+      "exactValue": "(/ 1.0 2.0)",
+      "reuseStatus": "unsat"
+    },
+    {
+      "label": "cancel pending explicit NLSat fallback",
+      "status": "cancelled",
+      "totalMs": 198.70074999999997,
+      "cancelToSettlementMs": 13.724375000000009,
+      "engines": [
+        "premises:fast",
+        "premises:complete",
+        "counterexample:fast",
+        "counterexample:complete"
+      ],
+      "reuseStatus": "unsat"
+    },
+    {
+      "label": "whole requested deadline during explicit fallback",
+      "status": "unknown",
+      "requestedDeadlineMs": 5000,
+      "totalMs": 5036.126417,
+      "engines": [
+        "premises:fast",
+        "premises:complete",
+        "counterexample:fast",
+        "counterexample:complete"
+      ],
+      "reuseStatus": "unsat"
+    }
+  ],
+  "qualification": "Measurements on these inputs and this machine. Requested deadlines govern decision eligibility; physical cleanup can finish later. The previous fresh-context 29/69-second comparison is a separate one-instance measurement. This final probe uses a context reused after the first three measurements.",
+  "stop": {
+    "method": "SIGTERM sent only to the owned Node diagnostic process",
+    "pid": 71779,
+    "processElapsedBeforeStop": "08:23",
+    "scope": "Supplementary performance diagnostic; not the production solver or required tests",
+    "reason": "The additional unbounded performance query was not a required correctness gate and had run for more than six minutes.",
+    "abortController": "Closure-owned controller unavailable to the external runner",
+    "lastEngineTrace": "Not captured: the helper buffered the final query trace and wrote it only after settlement.",
+    "verdict": "unresolved; no SAT, UNSAT, entailment, or performance advantage established for this run"
+  },
+  "lastBenchmark": {
+    "label": "default hybrid same six-node benchmark on reused context",
+    "status": "unresolved",
+    "engineTraceAvailable": false
+  }
+}

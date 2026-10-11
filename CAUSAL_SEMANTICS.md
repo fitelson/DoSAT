@@ -153,8 +153,12 @@ npx vitest --run src/causal_solver.spec.ts
 
 SAT supplies a model within the stated class. UNSAT rules out such a model for
 the supported input. A timeout or `unknown` does not establish either result.
-To establish a consequence, first check that the assumptions are satisfiable,
-then check that the assumptions together with the negated conclusion are UNSAT.
+For entailment, use the Phase 3 decision interface described in
+DECISION_SEMANTICS.md. It checks premise consistency, then searches for failure
+of the already interpreted conclusion. This includes required undefined terms.
+Explicit source negation alone can exclude those cases and is not a general
+substitute for that countermodel search. When all required terms are defined,
+the familiar assumptions-plus-negated-conclusion test applies.
 
 The current implementation bounds the graph at six nodes and the document at
 64 probability occurrences, and bounds input and expanded SMT expressions.

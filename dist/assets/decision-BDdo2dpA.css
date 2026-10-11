@@ -1,0 +1,1 @@
+.decision-ui select,.decision-ui input,.decision-ui button{box-sizing:border-box;max-width:100%}.decision-ui nav{flex-wrap:wrap;gap:.4rem;display:flex}[data-testid=decision-status]{overflow-wrap:anywhere;margin-top:1rem;font-weight:600}.decision-ui .causal-table td{overflow-wrap:anywhere}.decision-subtitle{margin-top:.4rem;font-size:1.2rem}

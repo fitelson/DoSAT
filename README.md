@@ -1,4 +1,6 @@
-# PrSAT do-calculus extension
+# DoSAT 1.0
+
+A Decision Procedure for Do Calculus.
 
 Research workspace starting from the current PrSAT 3.0 code. Read
 [PROJECT.md](PROJECT.md) for scope and [FORK_PROVENANCE.json](FORK_PROVENANCE.json)
@@ -6,6 +8,56 @@ for source provenance. The first causal model finder is available at `/causal.ht
 graphs, shared mechanisms, hard interventions, and regime-specific conditioning.
 The single-step do-calculus checker is available at `/do_calculus.html`.
 Automated derivations and latent confounding remain later phases.
+
+## Phase 3 decision procedure
+
+`/decision.html` adds causal satisfiability and entailment using exact polynomial
+real arithmetic. Each stage tries Z3's QF_NRA strategy with a finite 60-second
+budget, then falls back to explicit NLSat if needed. Default decision mode has no
+overall time limit; cancellation or resource failure remains unresolved. Entailment includes
+countermodels with required undefined conclusion terms and distinguishes
+inconsistent premises. See DECISION_SEMANTICS.md. The required
+[scoped consensus recheck](reviews/phase3_final_recheck_consensus.md) gives
+**Phase gate: PASS**. Final checks: 1,041 unit tests and 72 Chromium tests pass;
+native Z3 matches all 607 semantic audit cases. Requested deadlines govern
+accepted verdicts; native interruption and cleanup can finish later.
+
+Boolean interventions use `do(X)` and `do(~X)` to set X true or false.
+Simultaneous interventions use `do(X, ~Y)`. Numeric forms such as `do(X=1)`
+remain supported. `Pr(Y | do(X), Z)` conditions on Z in the intervened model.
+
+Two built-in examples test Simpson's paradox and the back-door adjustment law.
+For `Z -> X; Z -> Y; X -> Y`, let X mean treatment, Y recovery and Z severity.
+The illustrative Simpson example gives observed recovery of 63% with treatment
+versus 77% without treatment. Intervention gives 75% versus 65%. DoSAT checks
+that the premises entail this reversal. These are constructed values, not a
+claim about an empirical treatment study. The second example tests the general
+adjustment identity with positive support and no numerical premises:
+
+```text
+Pr(Y | do(X)) = Pr(Y | X & Z)*Pr(Z) + Pr(Y | X & ~Z)*Pr(~Z)
+```
+
+See [Pearl's discussion](https://www.cs.ucla.edu/~kaoru/r385.pdf) for how the
+causal graph resolves Simpson's paradox. Saved solver input uses explicit
+`check-sat-using qfnra-nlsat` as a complete reference route; the application
+also tries its finite QF_NRA optimization first.
+
+Public repository: [fitelson/DoSAT](https://github.com/fitelson/DoSAT).
+Website target: [DoSAT 1.0](https://fitelson.org/DoSAT/); publication is in progress.
+
+For local development, clone `https://github.com/fitelson/DoSAT.git`, use
+Node 26.11.1 and npm 12.2.0, then run
+`npx --yes npm@12.2.0 ci` and `npm run dev`. Open `/decision.html` on the
+strict development port 5173. See [TOOLS.md](TOOLS.md) for the TypeScript 7
+compiler and separate compatible typed-lint toolchain.
+
+Some hard queries become much slower when one Z3 context is reused. Controlled
+review probes solved the six-node example in about 29 seconds with a fresh
+context, while repeated use reached the finite cap and remained unresolved in
+NLSat for several minutes. These are instance-specific observations. Save the
+problem and reload the page to obtain a fresh context when useful; this does
+not guarantee a particular runtime. See the review for details.
 
 ## Inherited PrSAT 3.0 README
 

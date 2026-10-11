@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DoSAT 1.0 — A Decision Procedure for Do Calculus.</title>
+  <meta name="description" content="Decide satisfiability and entailment for probability constraints with causal interventions on observed Boolean DAGs.">
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #25313c; background: #fafbfc; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 850px; margin: 0 auto; padding: 3rem 1.3rem; }
+    h1 { font-size: clamp(2.4rem, 8vw, 4rem); letter-spacing: -0.03em; margin: 0; line-height: 1.2; }
+    .subtitle { font-size: clamp(1.2rem, 4vw, 1.7rem); margin: 0.5rem 0 1.6rem; }
+    h2 { font-size: 1.3rem; margin-top: 2rem; }
+    a { color: #175d90; }
+    .launch { display: inline-block; background: #175d90; color: white; padding: 0.7rem 1.2rem; border-radius: 5px; text-decoration: none; font-weight: 600; margin: 0.7rem 0; }
+    .launch:focus-visible { outline: 3px solid #d19013; outline-offset: 3px; }
+    code { font-family: ui-monospace, monospace; font-size: 0.95em; overflow-wrap: anywhere; }
+    pre { background: #eef2f6; border-radius: 5px; padding: 1rem; overflow-x: auto; }
+    footer { margin-top: 2.5rem; border-top: 1px solid #dbe2e8; padding-top: 1rem; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>DoSAT 1.0</h1>
+    <p class="subtitle">A Decision Procedure for Do Calculus.</p>
+    <p>DoSAT checks whether causal probability constraints have a compatible model and whether premises entail a conclusion. Observations and interventions share the same causal mechanisms.</p>
+    <a class="launch" href="./dist/decision.html">Run DoSAT 1.0</a>
+  </header>
+  <section>
+    <h2>Questions it answers</h2>
+    <p>Test satisfiability, establish entailment, or inspect an exact countermodel. Entailment checks premise consistency first and includes cases where required undefined conditional probabilities prevent the conclusion from holding.</p>
+    <pre><code>Graph: Z -&gt; X; Z -&gt; Y
+
+Pr(Y | X) = 3/4
+Pr(Y | do(X)) = 1/2</code></pre>
+    <p>Observing <code>X</code> and setting <code>X</code> can give different probabilities. DoSAT interprets both using the supplied causal graph.</p>
+  </section>
+  <section>
+    <h2>Try Simpson’s paradox</h2>
+    <p>Load “Simpson’s paradox: treatment and recovery” in the application. In this small illustrative example, <code>X</code> is treatment, <code>Y</code> is recovery, and <code>Z</code> is severity. Sicker patients receive treatment more often. Observed recovery is 63% with treatment versus 77% without it, while intervening gives 75% versus 65%. DoSAT entails the reversal from the graph and constraints.</p>
+    <p>The graph is <code>Z -&gt; X; Z -&gt; Y; X -&gt; Y</code>. <a href="https://www.cs.ucla.edu/~kaoru/r385.pdf">Pearl’s discussion of Simpson’s paradox</a> explains why the causal graph determines the appropriate adjustment.</p>
+    <p>The “Back-door adjustment identity” example tests the general formula for this graph, assuming positive support, without numerical premises:</p>
+    <pre><code>Pr(Y | do(X)) = Pr(Y | X &amp; Z)*Pr(Z)
+                   + Pr(Y | X &amp; ~Z)*Pr(~Z)</code></pre>
+  </section>
+  <section>
+    <h2>Current scope</h2>
+    <p>Supply an acyclic graph of up to six observed Boolean variables, with independent private causal disturbances. Constraints can contain arithmetic, logical combinations, hard interventions, and conditioning within an intervention regime. The do-calculus rules hold in this model class wherever the relevant conditional terms are defined.</p>
+    <p>Decision mode has no overall time limit. Each stage first tries a strategy with a finite time budget, then falls back to the complete NLSat real-algebraic procedure if needed. A bounded search, cancellation, or finite-resource failure may leave a question unsettled. Interruptions can take additional time to settle. Undefined probabilities are reported explicitly.</p>
+    <p>Hidden confounding, cyclic or non-Boolean models, cross-world counterfactuals, and automatic observational identification are outside version 1.0.</p>
+  </section>
+  <section>
+    <h2>Related interfaces</h2>
+    <p><a href="./dist/causal.html">Causal model finder</a> · <a href="./dist/do_calculus.html">Do-calculus rule checker</a> · <a href="https://fitelson.org/PrSAT/">PrSAT</a></p>
+  </section>
+  <footer><p>DoSAT extends the PrSAT 3.0 probability-satisfiability framework. Computation runs in your browser.</p></footer>
+</main>
+</body>
+</html>

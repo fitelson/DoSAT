@@ -1,6 +1,6 @@
 // @ts-check
 
-import tseslint from 'typescript-eslint';
+import tseslint from './tools/lint/index.mjs';
 
 export default tseslint.config(
   {

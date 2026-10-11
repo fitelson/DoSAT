@@ -1,0 +1,2773 @@
+{
+  "nativeVersion": "Z3 version 4.16.0 - 64 bit - build hashcode ddb49568d3520e99799e364fb22f35fc67d887b1",
+  "inputSha256": "7b45a56053611ee465c4d3e2672603f33fba7f3e9bf8a739a7f1a36aa6636258",
+  "cases": 553,
+  "matches": 553,
+  "report": [
+    {
+      "label": "Pr(Y | X) = 1/2; model 0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 1",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 2",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 3",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 4",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 5",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 6",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 7",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 8",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 9",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 10",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 11",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 12",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 13",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 14",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 15",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 16",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 17",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 18",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 19",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 20",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 21",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 22",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 23",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 24",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 25",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2; model 26",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 27",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 28",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 29",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 30",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 31",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 32",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 33",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 34",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 35",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 36",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 37",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 38",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 39",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 40",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 41",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 42",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 43",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 44",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 45",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 46",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 47",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 48",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 49",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 50",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 51",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 52",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(Pr(Y | X) = 1/2); model 53",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 54",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 55",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 56",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 57",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 58",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 59",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 60",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 61",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 62",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 63",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 64",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 65",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 66",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 67",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 68",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 69",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 70",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 71",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 72",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 73",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 74",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 75",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 76",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 77",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 78",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 79",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | X) = 1/2 v Pr(~X) = 1; model 80",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 81",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 82",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 83",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 84",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 85",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 86",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 87",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 88",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 89",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 90",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 91",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 92",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 93",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 94",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 95",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 96",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 97",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 98",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 99",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 100",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 101",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 102",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 103",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 104",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 105",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 106",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) -> (Pr(Y) = 1/2); model 107",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 108",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 109",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 110",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 111",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 112",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 113",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 114",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 115",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 116",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 117",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 118",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 119",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 120",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 121",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 122",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 123",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 124",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 125",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 126",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 127",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 128",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 129",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 130",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 131",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 132",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 133",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> (Pr(Y | ~X) = 1/2); model 134",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 135",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 136",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 137",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 138",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 139",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 140",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 141",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 142",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 143",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 144",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 145",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 146",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 147",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 148",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 149",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 150",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 151",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 152",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 153",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 154",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 155",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 156",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 157",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 158",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 159",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 160",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) v (Pr(Y) = 1/2)); model 161",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 162",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 163",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 164",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 165",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 166",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 167",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 168",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 169",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 170",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 171",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 172",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 173",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 174",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 175",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 176",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 177",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 178",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 179",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 180",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 181",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 182",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 183",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 184",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 185",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 186",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 187",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~(~(Pr(Y | X) = 1/2)); model 188",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 189",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 190",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 191",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 192",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 193",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 194",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 195",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 196",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 197",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 198",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 199",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 200",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 201",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 202",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 203",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 204",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 205",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 206",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 207",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 208",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 209",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 210",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 211",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 212",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 213",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 214",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1)) = Pr(Y | X); model 215",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 216",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 217",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 218",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 219",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 220",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 221",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 222",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 223",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 224",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 225",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 226",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 227",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 228",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 229",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 230",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 231",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 232",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 233",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 234",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 235",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 236",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 237",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 238",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 239",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 240",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 241",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=0), X) = 1/2 v Pr(X | do(X=0)) = 0; model 242",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 243",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 244",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 245",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 246",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 247",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 248",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 249",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 250",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 251",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 252",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 253",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 254",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 255",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 256",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 257",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 258",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 259",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 260",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 261",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 262",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 263",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 264",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 265",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 266",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 267",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 268",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "Pr(Y | do(X=1), X) = Pr(Y | do(X=1)); model 269",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 270",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 271",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 272",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 273",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 274",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 275",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 276",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 277",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 278",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 279",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 280",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 281",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 282",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 283",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 284",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 285",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 286",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 287",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 288",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 289",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 290",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 291",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 292",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 293",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 294",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 295",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 296",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 297",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 298",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 299",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 300",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 301",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 302",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 303",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 304",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 305",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 306",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 307",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 308",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 309",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 310",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 311",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 312",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 313",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 314",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 315",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 316",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 317",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 318",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 319",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 320",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 321",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 322",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((Pr(Y | X) = 1/2) & (Pr(X) = 0)); model 323",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 0",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 3",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 4",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 5",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 6",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 7",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 8",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 9",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 10",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 11",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 12",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 13",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 14",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 15",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 16",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 17",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 18",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 19",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 20",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 21",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 22",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 23",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 24",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 25",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2; model 26",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 27",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 28",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 29",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 30",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 31",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 32",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 33",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 34",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 35",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 36",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 37",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 38",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 39",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 40",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 41",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 42",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 43",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 44",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 45",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 46",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 47",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 48",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 49",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 50",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 51",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 52",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~(Pr(Y | X) = 1/2); model 53",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 54",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 55",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 56",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 57",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 58",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 59",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 60",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 61",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 62",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 63",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 64",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 65",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 66",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 67",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 68",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 69",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 70",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 71",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 72",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 73",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 74",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 75",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 76",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 77",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 78",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 79",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement Pr(Y | X) = 1/2 v Pr(X) = 0; model 80",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 81",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 82",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 83",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 84",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 85",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 86",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 87",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 88",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 89",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 90",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 91",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 92",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 93",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 94",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 95",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 96",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 97",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 98",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 99",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 100",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 101",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 102",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 103",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 104",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 105",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 106",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) -> (Pr(Y | do(X=1)) = 1/2); model 107",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 108",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 109",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 110",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 111",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 112",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 113",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 114",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 115",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 116",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 117",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 118",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 119",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 120",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 121",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 122",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 123",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 124",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 125",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 126",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 127",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 128",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 129",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 130",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 131",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 132",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 133",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement (Pr(Y | X) = 1/2) <-> ~(Pr(Y | X) = 1/2); model 134",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 135",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 136",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 137",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 138",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 139",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 140",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 141",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 142",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 143",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 144",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 145",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 146",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 147",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 148",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 149",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 150",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 151",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 152",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 153",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 154",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 155",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 156",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 157",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 158",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 159",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 160",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "complement ~((Pr(Y | do(X=1), ~X) = 1/2) v (Pr(X) = 1)); model 161",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "1/a < 0; a=-2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "1/a < 0; a=-1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "1/a < 0; a=0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "1/a < 0; a=1",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "1/a < 0; a=2",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "1/a > 0; a=-2",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "1/a > 0; a=-1",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "1/a > 0; a=0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "1/a > 0; a=1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "1/a > 0; a=2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a^(-3) < 0; a=-2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a^(-3) < 0; a=-1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a^(-3) < 0; a=0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "a^(-3) < 0; a=1",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "a^(-3) < 0; a=2",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "a^(-2) > 0; a=-2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a^(-2) > 0; a=-1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a^(-2) > 0; a=0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "a^(-2) > 0; a=1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a^(-2) > 0; a=2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "1/(1/a) = a; a=-2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "1/(1/a) = a; a=-1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "1/(1/a) = a; a=0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "1/(1/a) = a; a=1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "1/(1/a) = a; a=2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a/(a*a) = 1/a; a=-2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a/(a*a) = 1/a; a=-1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a/(a*a) = 1/a; a=0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "a/(a*a) = 1/a; a=1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a/(a*a) = 1/a; a=2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a = 0 v 1/a = 1; a=-2",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "a = 0 v 1/a = 1; a=-1",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "a = 0 v 1/a = 1; a=0",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a = 0 v 1/a = 1; a=1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "a = 0 v 1/a = 1; a=2",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(1/a)^0 = 1; a=-2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(1/a)^0 = 1; a=-1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(1/a)^0 = 1; a=0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "(1/a)^0 = 1; a=1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(1/a)^0 = 1; a=2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((1/a = 1) v (a = 0)); a=-2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((1/a = 1) v (a = 0)); a=-1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "~((1/a = 1) v (a = 0)); a=0",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((1/a = 1) v (a = 0)); a=1",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "~((1/a = 1) v (a = 0)); a=2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(1/a = 1) -> (a = 1); a=-2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(1/a = 1) -> (a = 1); a=-1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(1/a = 1) -> (a = 1); a=0",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(1/a = 1) -> (a = 1); a=1",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "(1/a = 1) -> (a = 1); a=2",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "undefined atomic countermodel",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "source negation pitfall",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "zero-support intervened mechanism countermodel",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "confounded intervention exact half",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "association differs from intervention",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "adjustment through shared mechanisms",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "inconsistent premise projection",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "inconsistent premise consequence complement",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "large integer coefficient equality",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "adjacent unsafe integer inequality",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "distinct decimal source coefficients",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "positive-support action observation consequence",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "undefined action observation countermodel",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "regular structural-zero evidence countermodel",
+      "expected": "sat",
+      "actual": "sat"
+    },
+    {
+      "label": "positive reciprocal consequence",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "negative odd reciprocal consequence",
+      "expected": "unsat",
+      "actual": "unsat"
+    },
+    {
+      "label": "algebraic reciprocal consequence",
+      "expected": "unsat",
+      "actual": "unsat"
+    }
+  ]
+}

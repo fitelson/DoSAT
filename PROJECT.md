@@ -1,7 +1,12 @@
-# PrSATdo: causal probability satisfiability
+# DoSAT 1.0
 
-Updated October 11, 2026. **Phase 2 complete. Consensus phase gate: PASS
+A Decision Procedure for Do Calculus.
+
+Updated October 11, 2026. **Phase 3 complete. Consensus phase gate: PASS
 (Opus 5.5 / xhigh; GPT-6.1 Sol / xhigh).**
+Final checks: 1,041 unit tests, 72 Chromium tests and all 607 native semantic
+replay cases pass. Public repository: https://github.com/fitelson/DoSAT.
+Website publication at https://fitelson.org/DoSAT/ is in progress.
 Phase 1 implements the first milestone discussed with
 Branden: observational and hard-interventional probability constraints on a
 user-specified acyclic graph of observed Boolean variables, with independent
@@ -14,8 +19,10 @@ npm ci
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173/causal.html`. The classical baseline remains at
-`/index.html`; each interface links to the other. Three built-in examples cover
+Open `http://127.0.0.1:5173/decision.html` for the main decision procedure.
+The causal model finder is at `/causal.html`, the graphical rule checker at
+`/do_calculus.html`, and the classical baseline at `/index.html`.
+The model finder's three built-in examples cover
 confounding, mediation, and intervention into an observationally absent parent
 configuration. Problems can be saved/loaded as JSON; solver input can be saved
 as SMT-LIB. Model display includes exact input probabilities, mechanism tables,
@@ -35,12 +42,13 @@ Pr(X | Z) = 3/4
 Pr(X | ~Z) = 1/4
 Pr(Y <-> Z) = 1
 Pr(Y | X) = 3/4
-Pr(Y | do(X=1)) = 1/2
+Pr(Y | do(X)) = 1/2
 ```
 
-`Pr(Y | do(X=1), Z)` observes Z in the intervention regime.
-`Pr(Y | do(X=1, Z=0))` simultaneously sets X and Z. Assignments must be 0/1 to
-declared variables. Ordinary `Pr(Y | X)` retains observational conditioning.
+`Pr(Y | do(X), Z)` observes Z in the intervention regime.
+`Pr(Y | do(X, ~Z))` simultaneously sets X true and Z false. Numeric assignments
+such as `do(X=1, Z=0)` remain supported. Intervention variables must be declared.
+Ordinary `Pr(Y | X)` retains observational conditioning.
 Constraints retain classical PrSAT arithmetic, exact numeric literals, and
 logical combinations. One constraint per line; `#` begins a comment.
 
@@ -165,17 +173,69 @@ and regression failures with the old CSS injected in memory. Latest full checks:
 TypeScript and build pass. See [PHASE2_FINAL_STATUS.md](reviews/PHASE2_FINAL_STATUS.md)
 for the approved snapshot, qualifications and next-phase boundary.
 
+## Phase 3: causal decision procedure (complete)
+
+Branden redirected this phase on October 11 from derivation chains to a decision
+procedure for causal satisfiability and entailment. The model class remains a
+specified observed Boolean DAG with independent private disturbances. The
+do-calculus rules hold through the shared-mechanism semantics.
+
+The new path reduces constraints to polynomial real arithmetic. Each stage
+tries the specialized QF_NRA solver with a finite 60-second budget, then falls
+back to explicit NLSat if needed. Decision mode has no overall time limit; a bounded mode,
+cancellation or finite-resource failure may leave a problem unsettled. Entailment
+checks premise consistency and searches for failure of the already interpreted
+conclusion, including undefined required terms. It does not substitute explicit
+source negation for that semantic complement.
+
+Public name: **DoSAT 1.0**. Subtitle: **A Decision Procedure for Do Calculus.**
+Hosting target: `https://fitelson.org/DoSAT/`, with a landing page linking to
+`dist/decision.html`, following the PrSAT layout. Release follows completion
+and the phase review gate.
+
+New interface: `/decision.html`. Existing model-finder and step-checker pages
+remain available. Baseline: `fa7d9bd` (approved Phase 2). Phase 3 passed its
+required scoped default-model consensus gate. See
+DECISION_SEMANTICS.md and the phase3 records in reviews/ as they are completed.
+The initial debate approved the reduction and required F1 cancellation and F2
+negation-scope regression repairs. Those repairs passed recheck. The subsequent
+QF_NRA optimization introduced G1 (termination guarantee) and G2 (cancellation
+diagnosis and browser coverage); their repairs passed the final recheck. The release
+uses the current Z3/toolchain versions, including TypeScript 7.0.2. The
+[final scoped recheck](reviews/phase3_final_recheck_consensus.md) gives PASS.
+Requested deadlines govern accepted verdicts, while
+native interruption and cleanup can take additional time.
+
+The main interface now accepts Boolean `do(X)` and `do(~X)` shorthand and
+includes Simpson's paradox and a general back-door adjustment example. Both
+numeric assignment forms remain supported. The Simpson data are illustrative:
+observed recovery is 63% versus 77%; intervention recovery is 75% versus 65%.
+
+The review's nonblocking S2 regression is now permanent and rejects the
+guard-deletion mutant. UI help uses neutral strategy wording. Final unit count
+is 1,041 (one inherited skip and one todo); 72 Chromium cases and 30 packaged
+website checks pass. The reduction and runtime solver are unchanged from the
+approved snapshot. See [PHASE3_FINAL_STATUS.md](reviews/PHASE3_FINAL_STATUS.md).
+Controlled probes show that context history can slow the six-node example:
+fresh contexts return in about 29 seconds, while reuse can take minutes.
+The older untraced 08:23 diagnostic remains unattributed. No general speed
+advantage is claimed; context lifetime and memory tradeoffs remain future work.
+
 ## Provenance and laptop handoff
 
 Initial baseline commit: `724655b`, copied from the current working tree of
 `../../PrSAT 3.0/PrSAT-main`, including its uncommitted code/configuration.
 FORK_PROVENANCE.json records original hashes and source status;
 BASELINE_VERIFICATION.md records the pre-causal baseline checks.
-This folder has independent Git metadata and no remote. Deployment is disabled.
+This folder has independent Git metadata and a public `origin` at
+`https://github.com/fitelson/DoSAT.git`. The copied deployment command remains
+disabled; the new DoSAT publication is scoped explicitly to its own directory.
 The original PrSAT source checkout was not changed by this phase.
 
 All source, phase records, and model examples live in Dropbox. Read this file and
-`../LAPTOP_SETUP.md` on the laptop; install dependencies there with `npm ci`.
+`../LAPTOP_SETUP.md` on the laptop; install dependencies with npm 12.2.0 as
+described in TOOLS.md. A fresh GitHub clone outside Dropbox has independent
+Git metadata and includes the settled release.
 The parent PrSAT.code-workspace includes this folder through a relative path.
 
 ## Review qualifications
@@ -184,5 +244,6 @@ The consensus records one unidentified failed unit run among the reviewers'
 repeated full runs; the failing test and cause were not captured, so no attribution
 is claimed. All captured clean recheck runs and the latest root run pass.
 Remaining cosmetic limitations: error columns refer to substituted input, and
-older unreferenced bundles are retained in dist/. Deployment remains disabled.
+older unreferenced bundles are retained in dist/. The copied deployment command
+remains disabled; DoSAT publication uses its own explicitly authorized target.
 These were explicitly nonblocking in the phase consensus.

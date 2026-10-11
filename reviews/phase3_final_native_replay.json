@@ -1,0 +1,8 @@
+{
+  "binary": "/opt/homebrew/bin/z3",
+  "version": "Z3 version 5.1.0 - 64 bit",
+  "inputSha256": "084561cd9ae6d887e3ec13d7fab6eeb3b87f37d77f67a8237440e816f8148a87",
+  "cases": 607,
+  "matches": 607,
+  "stderr": ""
+}
