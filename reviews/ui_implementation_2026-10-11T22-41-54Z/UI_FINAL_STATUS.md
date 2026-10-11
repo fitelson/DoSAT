@@ -18,8 +18,12 @@ Default Run top: about 767px desktop / 930px at 390px. The 320px layout stays co
 
 ## Release
 
-Approved package: releases/DoSAT-1.0-2026-10-11T23-04-37-259Z-2258cdcd, **22 current files**, with [checksum manifest](recheck_2026-10-11T23-04-19Z/release-manifest.json). Target https://fitelson.org/DoSAT/; application https://fitelson.org/DoSAT/dist/decision.html. Commit/push/upload and live confirmation follow this gate. Only current referenced assets and stable runtime files are included; original PrSAT and port 5317 are unrelated.
+Approved package: releases/DoSAT-1.0-2026-10-11T23-04-37-259Z-2258cdcd, **22 current files**, with [checksum manifest](recheck_2026-10-11T23-04-19Z/release-manifest.json). Target https://fitelson.org/DoSAT/; application https://fitelson.org/DoSAT/dist/decision.html. Published and verified. Implementation commit **4ed0dea8b55975aaa2fcc4784f5f1c44ab4c8908** was pushed to public origin/main. All **22 remote files** and **21 HTTPS files** match the approved checksums/byte sizes; COOP/COEP and WASM MIME are correct. The live **37-check probe** and **two task-scheduled Cancel/Edit/reuse checks** pass. See [PUBLICATION.md](PUBLICATION.md). Only current referenced assets and stable runtime files are included; original PrSAT and port 5317 are unrelated.
 
 ## Qualifications and later work
 
 Verification is Chromium-only; Safari, Firefox, iOS Safari and real screen readers remain untested. Optional followups include making permanent tests keyboard-only to the end, reducing fitting-preview tab stops, compact whole-problem wording on phones, IME handling, multi-line conclusion display, bulk paste into a row, algebraic-root presentation and inactive invalid seconds serialization. These are nonblocking in the approved recheck. Arbitrary model evaluation, decimals/image export and graph drawing remain outside this pass. Finite resources and context history can affect difficult queries; no runtime-performance improvement is claimed.
+
+## Preserved transport recovery
+
+The first per-file SSH upload timed out before any application HTML changed. A retry over one persistent SSH connection skipped unchanged files, uploaded six changed/new files in asset-before-HTML order, preserved previous changed files, and verified all 22 remote hashes. A separate SSH re-read was unavailable; the successful connection's post-upload checks provide the remote verification record, followed by independent HTTPS checks. No file was deleted. Temporary local Vite servers were stopped after verification; the live site is independent of them.

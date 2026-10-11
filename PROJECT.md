@@ -278,3 +278,7 @@ The first implementation audit reached consensus **UI phase gate: FAIL**, with m
 ### UI gate closed
 
 The repair recheck reached explicit consensus **UI phase gate: PASS**. Source and release hashes match the frozen snapshot. The approved redesign is ready for the authorized commit/push/upload; [UI_FINAL_STATUS.md](reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md) is the current record. Earlier running/FAIL notes above preserve the development history.
+
+### UI published and verified
+
+The approved redesign is live at https://fitelson.org/DoSAT/dist/decision.html. Implementation `4ed0dea8b55975aaa2fcc4784f5f1c44ab4c8908` is pushed to public main. All 22 remote files and 21 HTTPS files match the release manifest; headers and actual Z3 5.1.0 are correct. The 37-check live probe plus two Cancel/Edit/reuse checks pass. Read [PUBLICATION.md](reviews/ui_implementation_2026-10-11T22-41-54Z/PUBLICATION.md). The compiler/solver and mathematical Phase 3 PASS remain unchanged. Local review servers are stopped. Prior running/FAIL notes are historical; current UI gate and publication are complete.

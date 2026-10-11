@@ -13,3 +13,5 @@ The published target is https://fitelson.org/DoSAT/; the primary application is 
 - Verify remote file SHA256 and bytes, HTTPS bytes/headers, actual browser Z3 and live UI behaviors.
 
 npm run prepare:release creates a fresh preserved package under releases/, including a checksum manifest. It does not deploy or delete anything. The latest approved UI package has 22 files and passes 37 headless package checks. Use the scoped publish.py helper in the UI review folder only after its PASS; it targets /home/fitelson/www/www/DoSAT exclusively. The server directory already exists from the first publication. Ports 5173/4173/5174 are strict local development/preview/test ports; 5317 is unrelated and must remain untouched.
+
+Latest UI publication is complete: all 22 remote and 21 HTTPS hashes match; isolation/MIME headers, 37 live probe checks and two live cancellation/edit/reuse checks pass. See the UI PUBLICATION.md record. On transient per-file SSH failures, single_ssh_publish.py uses one session, skips identical files, preserves old changed versions and verifies all remote bytes after upload.

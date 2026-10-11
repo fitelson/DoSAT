@@ -1,0 +1,349 @@
+{
+  "base": "https://fitelson.org/DoSAT/",
+  "checks": 37,
+  "rows": [
+    {
+      "kind": "initial",
+      "width": 1280,
+      "runY": 766.625,
+      "fonts": [
+        {
+          "familyName": "Source Sans Pro SemiBold",
+          "postScriptName": "SourceSansPro-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "version": "5.1.0"
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 5,
+      "expected": "SAT —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 6,
+      "expected": "UNSAT —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "documentWidth": 1280,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "initial",
+      "width": 390,
+      "runY": 929.640625,
+      "fonts": [
+        {
+          "familyName": "Source Sans Pro SemiBold",
+          "postScriptName": "SourceSansPro-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "version": "5.1.0"
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 5,
+      "expected": "SAT —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 6,
+      "expected": "UNSAT —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "documentWidth": 390,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "initial",
+      "width": 320,
+      "runY": 1078.84375,
+      "fonts": [
+        {
+          "familyName": "Source Sans Pro SemiBold",
+          "postScriptName": "SourceSansPro-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "version": "5.1.0"
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 5,
+      "expected": "SAT —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 6,
+      "expected": "UNSAT —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "documentWidth": 320,
+      "isolated": true,
+      "errors": []
+    },
+    {
+      "kind": "batch-error-clear-task",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "kind": "long-formulas-keyboard-scroll",
+      "width": 390,
+      "premiseSize": {
+        "client": 328,
+        "scroll": 510
+      },
+      "conclusionSize": {
+        "client": 328,
+        "scroll": 501
+      },
+      "resultSize": {
+        "client": 337,
+        "scroll": 496
+      },
+      "passed": true
+    },
+    {
+      "kind": "long-formulas-keyboard-scroll",
+      "width": 320,
+      "premiseSize": {
+        "client": 258,
+        "scroll": 510
+      },
+      "conclusionSize": {
+        "client": 258,
+        "scroll": 501
+      },
+      "resultSize": {
+        "client": 267,
+        "scroll": 496
+      },
+      "passed": true
+    },
+    {
+      "kind": "lone-cr-load-rejected-atomically",
+      "field": "graph",
+      "passed": true
+    },
+    {
+      "kind": "lone-cr-load-rejected-atomically",
+      "field": "premises",
+      "passed": true
+    },
+    {
+      "kind": "lone-cr-load-rejected-atomically",
+      "field": "conclusion",
+      "passed": true
+    },
+    {
+      "kind": "crlf-load-physical-rows",
+      "passed": true
+    }
+  ]
+}
