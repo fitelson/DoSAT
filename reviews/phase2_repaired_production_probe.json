@@ -1,0 +1,935 @@
+{
+  "entry": "built do_calculus.html",
+  "port": 4173,
+  "errors": [],
+  "results": [
+    {
+      "width": 320,
+      "example": 0,
+      "status": "Rule 2 applies under its graphical condition.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "boxes": [
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1248.625,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        },
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1574.484375,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "example": 1,
+      "status": "Rule 1 applies under its graphical condition.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "boxes": [
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1263.625,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        },
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1589.484375,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "example": 2,
+      "status": "Rule 2 is not certified by its graphical condition.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "boxes": [
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1238.03125,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        },
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1599.890625,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "example": 3,
+      "status": "Rule 3 applies under its graphical condition.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "boxes": [
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1356.40625,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        },
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1718.265625,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "example": 4,
+      "status": "Rule 3 is not certified by its graphical condition.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "boxes": [
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1356.40625,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        },
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1718.265625,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "example": 5,
+      "status": "Rule 3 applies under its graphical condition.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "boxes": [
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 529,
+          "svgWidth": 529,
+          "sectionTop": 1382,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        },
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 529,
+          "svgWidth": 529,
+          "sectionTop": 1743.859375,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "example": 6,
+      "status": "Rule 1 is not certified by its graphical condition.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "boxes": [
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1238.03125,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        },
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1599.890625,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "example": 7,
+      "status": "Rule 2 applies under its graphical condition.",
+      "pageWidth": 320,
+      "viewportWidth": 320,
+      "boxes": [
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 755,
+          "svgWidth": 754.59375,
+          "sectionTop": 1314.8125,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        },
+        {
+          "width": 280,
+          "parentWidth": 280,
+          "clientWidth": 278,
+          "scrollWidth": 755,
+          "svgWidth": 754.59375,
+          "sectionTop": 1700.671875,
+          "sectionLeft": 20,
+          "sectionRight": 300
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "example": 0,
+      "status": "Rule 2 applies under its graphical condition.",
+      "pageWidth": 360,
+      "viewportWidth": 360,
+      "boxes": [
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1197.015625,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        },
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1499.828125,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "example": 1,
+      "status": "Rule 1 applies under its graphical condition.",
+      "pageWidth": 360,
+      "viewportWidth": 360,
+      "boxes": [
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1235.015625,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        },
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1537.828125,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "example": 2,
+      "status": "Rule 2 is not certified by its graphical condition.",
+      "pageWidth": 360,
+      "viewportWidth": 360,
+      "boxes": [
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1260.609375,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        },
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1599.421875,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "example": 3,
+      "status": "Rule 3 applies under its graphical condition.",
+      "pageWidth": 360,
+      "viewportWidth": 360,
+      "boxes": [
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1353.390625,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        },
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 320,
+          "svgWidth": 320,
+          "sectionTop": 1692.203125,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "example": 4,
+      "status": "Rule 3 is not certified by its graphical condition.",
+      "pageWidth": 360,
+      "viewportWidth": 360,
+      "boxes": [
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1378.984375,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        },
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1717.796875,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "example": 5,
+      "status": "Rule 3 applies under its graphical condition.",
+      "pageWidth": 360,
+      "viewportWidth": 360,
+      "boxes": [
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 529,
+          "svgWidth": 529,
+          "sectionTop": 1378.984375,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        },
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 529,
+          "svgWidth": 529,
+          "sectionTop": 1717.796875,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "example": 6,
+      "status": "Rule 1 is not certified by its graphical condition.",
+      "pageWidth": 360,
+      "viewportWidth": 360,
+      "boxes": [
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1286.203125,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        },
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1625.015625,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "example": 7,
+      "status": "Rule 2 applies under its graphical condition.",
+      "pageWidth": 360,
+      "viewportWidth": 360,
+      "boxes": [
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 755,
+          "svgWidth": 754.59375,
+          "sectionTop": 1311.796875,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        },
+        {
+          "width": 320,
+          "parentWidth": 320,
+          "clientWidth": 318,
+          "scrollWidth": 755,
+          "svgWidth": 754.59375,
+          "sectionTop": 1674.609375,
+          "sectionLeft": 20,
+          "sectionRight": 340
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "example": 0,
+      "status": "Rule 2 applies under its graphical condition.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "boxes": [
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348,
+          "svgWidth": 320,
+          "sectionTop": 1194.828125,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        },
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348,
+          "svgWidth": 320,
+          "sectionTop": 1497.640625,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "example": 1,
+      "status": "Rule 1 applies under its graphical condition.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "boxes": [
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1283.421875,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        },
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1586.234375,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "example": 2,
+      "status": "Rule 2 is not certified by its graphical condition.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "boxes": [
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348,
+          "svgWidth": 320,
+          "sectionTop": 1283.421875,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        },
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348,
+          "svgWidth": 320,
+          "sectionTop": 1622.234375,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "example": 3,
+      "status": "Rule 3 applies under its graphical condition.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "boxes": [
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348,
+          "svgWidth": 320,
+          "sectionTop": 1376.203125,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        },
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348,
+          "svgWidth": 320,
+          "sectionTop": 1715.015625,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "example": 4,
+      "status": "Rule 3 is not certified by its graphical condition.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "boxes": [
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1401.796875,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        },
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1740.609375,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "example": 5,
+      "status": "Rule 3 applies under its graphical condition.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "boxes": [
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 529,
+          "svgWidth": 529,
+          "sectionTop": 1401.796875,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        },
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 529,
+          "svgWidth": 529,
+          "sectionTop": 1740.609375,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "example": 6,
+      "status": "Rule 1 is not certified by its graphical condition.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "boxes": [
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1283.421875,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        },
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 388,
+          "svgWidth": 388,
+          "sectionTop": 1622.234375,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "example": 7,
+      "status": "Rule 2 applies under its graphical condition.",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "boxes": [
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 755,
+          "svgWidth": 754.59375,
+          "sectionTop": 1334.609375,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        },
+        {
+          "width": 350,
+          "parentWidth": 350,
+          "clientWidth": 348,
+          "scrollWidth": 755,
+          "svgWidth": 754.59375,
+          "sectionTop": 1697.421875,
+          "sectionLeft": 20,
+          "sectionRight": 370
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "example": 0,
+      "status": "Rule 2 applies under its graphical condition.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "boxes": [
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 320,
+          "sectionTop": 1374.5625,
+          "sectionLeft": 140,
+          "sectionRight": 632
+        },
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 320,
+          "sectionTop": 1374.5625,
+          "sectionLeft": 648,
+          "sectionRight": 1140
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "example": 1,
+      "status": "Rule 1 applies under its graphical condition.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "boxes": [
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 388,
+          "sectionTop": 1400.15625,
+          "sectionLeft": 140,
+          "sectionRight": 632
+        },
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 388,
+          "sectionTop": 1400.15625,
+          "sectionLeft": 648,
+          "sectionRight": 1140
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "example": 2,
+      "status": "Rule 2 is not certified by its graphical condition.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "boxes": [
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 320,
+          "sectionTop": 1374.5625,
+          "sectionLeft": 140,
+          "sectionRight": 632
+        },
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 320,
+          "sectionTop": 1374.5625,
+          "sectionLeft": 648,
+          "sectionRight": 1140
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "example": 3,
+      "status": "Rule 3 applies under its graphical condition.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "boxes": [
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 320,
+          "sectionTop": 1416.15625,
+          "sectionLeft": 140,
+          "sectionRight": 632
+        },
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 320,
+          "sectionTop": 1416.15625,
+          "sectionLeft": 648,
+          "sectionRight": 1140
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "example": 4,
+      "status": "Rule 3 is not certified by its graphical condition.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "boxes": [
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 388,
+          "sectionTop": 1441.75,
+          "sectionLeft": 140,
+          "sectionRight": 632
+        },
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 388,
+          "sectionTop": 1441.75,
+          "sectionLeft": 648,
+          "sectionRight": 1140
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "example": 5,
+      "status": "Rule 3 applies under its graphical condition.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "boxes": [
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 529,
+          "svgWidth": 529,
+          "sectionTop": 1441.75,
+          "sectionLeft": 140,
+          "sectionRight": 632
+        },
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 529,
+          "svgWidth": 529,
+          "sectionTop": 1441.75,
+          "sectionLeft": 648,
+          "sectionRight": 1140
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "example": 6,
+      "status": "Rule 1 is not certified by its graphical condition.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "boxes": [
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 388,
+          "sectionTop": 1400.15625,
+          "sectionLeft": 140,
+          "sectionRight": 632
+        },
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 490,
+          "svgWidth": 388,
+          "sectionTop": 1400.15625,
+          "sectionLeft": 648,
+          "sectionRight": 1140
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "example": 7,
+      "status": "Rule 2 applies under its graphical condition.",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "boxes": [
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 755,
+          "svgWidth": 754.59375,
+          "sectionTop": 1374.5625,
+          "sectionLeft": 140,
+          "sectionRight": 632
+        },
+        {
+          "width": 492,
+          "parentWidth": 492,
+          "clientWidth": 490,
+          "scrollWidth": 755,
+          "svgWidth": 754.59375,
+          "sectionTop": 1374.5625,
+          "sectionLeft": 648,
+          "sectionRight": 1140
+        }
+      ]
+    }
+  ]
+}

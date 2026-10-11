@@ -30,6 +30,17 @@ journals are private diagnostics. No recursive debates or model delegation insid
 the review. This gate is separate from publication; the fork remains local until
 Branden requests otherwise.
 
+## Phase 2 scope
+
+Phase2 adds single-step graphical checking of Pearl Rules1–3 using d-separation
+in manipulated observed-variable DAGs. Read DO_CALCULUS_SEMANTICS.md. Graphical
+applicability does not check numerical definedness; failed conditions leave an
+equality uncertified. Rule3's Z(W) uses ancestry in G_bar(X). ID/IDC, latent
+confounding and automated derivation search are outside this phase. The phase2
+review baseline is local commit09da858; phase1 code is reference/integration
+material only. Phase2 is complete and its scoped default-model consensus recheck
+passed; see reviews/PHASE2_FINAL_STATUS.md. The same gate applies to Phase3.
+
 ## Do-calculus research fork (2026-10-11)
 
 Read PROJECT.md first. This is the independent PrSAT 3.0 do-calculus extension

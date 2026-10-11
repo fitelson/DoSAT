@@ -1,0 +1,10 @@
+.do-assignment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem 1.2rem; }
+.do-assignment-grid input { width: 100%; box-sizing: border-box; padding: 0.5rem; font-family: 'Source Code Pro', monospace; }
+.do-equality { border-left: 4px solid #2471a3; background: #edf5fb; padding: 0.8rem; font-family: 'Source Code Pro', monospace; overflow-wrap: anywhere; }
+.do-diagrams { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.do-graph-scroll { overflow-x: auto; border: 1px solid #dfe6e9; border-radius: 6px; }
+.do-graph-svg { display: block; background: #fff; }
+[data-testid=do-status] { margin-top: 1rem; font-weight: 600; }
+.do-ui details { margin: 1rem 0; }
+.do-ui summary { cursor: pointer; font-weight: 600; }
+@media (max-width: 700px) { .do-assignment-grid, .do-diagrams { grid-template-columns: minmax(0, 1fr); } }

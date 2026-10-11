@@ -1,0 +1,24 @@
+{
+  "captured_at": "2026-10-11T16:29:19.094963+00:00",
+  "baseline_commit": "09da8582668175078b2bbebc5cef49e1e5d89347",
+  "files": {
+    "src/causal_graph.ts": "feabeb8764bd8b00f6c24e562394b04bcad5054aaaa903ce72a5695f223b66bc",
+    "src/causal_graph.spec.ts": "4056b2262fee7bed9b2529adb0236af92caf289212da84370aafc747e8d9fafb",
+    "src/do_calculus.ts": "d626bc4909ca4637b56340ecd0a4e5c5f4798a10cbcb05e8c971de9a8d8ad4fc",
+    "src/do_calculus.spec.ts": "4a32606dcdd6283a1fc8bfa10d54fc8faabc743a7c1c0d60f5d495bb7a3d432a",
+    "src/do_calculus_audit.spec.ts": "39d068adc32cedb4e60ee99162a3bb0cb47f5061578509d670e1c24d4711f173",
+    "src/do_calculus_ui.ts": "84a59e971c7fc9bde4c6cab403b028212ace89f3fc0b3593ab2e729bf52b7819",
+    "src/do_calculus_ui.spec.ts": "4355492a6afd85b473942e2de1dc5f2b5c94d4854051c925680d1721bc1641a6",
+    "src/do_graph_view.ts": "1c806ee23e6b2e40c27c44866bc354e000374ff782d05946d49badad952be2bb",
+    "src/do_calculus_style.css": "e9cc6c6707f958bf442c2aa71a13e256d260a29bac643cffd155aa56281460e2",
+    "src/causal_ui.ts": "1b0385c5de38efda0dcaa5e7987d348dbbf31084b0b90580ac1e28651e7c3eb5",
+    "tests/do_calculus.spec.ts": "978b7f1530d5c9274b3eb615f41a3f4ecdae1813a9b32ee858d4233a71348911",
+    "do_calculus.html": "99ef6f36c9bfc784abf1729e4a0ad8f449e5b18a15d805f7eb04eca7b415429d",
+    "vite.config.ts": "1c633b1084744e9fdccd0706353b3637e7df24505c2e379623edac4d894b08e3",
+    "DO_CALCULUS_SEMANTICS.md": "d33914f48307a805a4e843f48426c94891e04ddb5575083fa9f4562c6b51f2c3",
+    "PROJECT.md": "0bbc3746473130c3ea39c01b6e2f49058922ed4defd1fc7c9f138b00bb34341d",
+    "AGENTS.md": "bcdce7bf0b884bf2ea17cc932c1f25ea644bb30d89dd94dcf5e51ba42a2ebcda",
+    "README.md": "f384a1e1e7308af04a91a1bd0245dc54b32d50628b40a55618ec76b684bc9fc8"
+  },
+  "git_status": " M AGENTS.md\n M PROJECT.md\n M README.md\n M dist/causal.html\n M dist/index.html\n M src/causal_ui.ts\n M vite.config.ts\n?? DO_CALCULUS_SEMANTICS.md\n?? dist/assets/causal-BwjKXIac.js\n?? dist/assets/causal_style-C6Fdu5pm.js\n?? dist/assets/causal_style-IaSUxDDb.css\n?? dist/assets/classical-C9hrhHga.js\n?? dist/assets/doCalculus-BGYfSg8r.css\n?? dist/assets/doCalculus-BUUT_s_k.js\n?? dist/assets/doCalculus-C6THQ9JH.js\n?? dist/assets/doCalculus-Dy5sFuNJ.js\n?? dist/assets/style-D46Ctiq_.js\n?? dist/assets/z3_integration-B9ymd65Y.js\n?? dist/do_calculus.html\n?? do_calculus.html\n?? reviews/PHASE2_DELTA.md\n?? reviews/PHASE2_VERIFICATION.md\n?? reviews/phase1-claude-initial/\n?? reviews/phase2_baseline.json\n?? scripts/claude_phase_review.py\n?? src/causal_graph.spec.ts\n?? src/causal_graph.ts\n?? src/do_calculus.spec.ts\n?? src/do_calculus.ts\n?? src/do_calculus_audit.spec.ts\n?? src/do_calculus_style.css\n?? src/do_calculus_ui.spec.ts\n?? src/do_calculus_ui.ts\n?? src/do_graph_view.ts\n?? tests/do_calculus.spec.ts\n"
+}

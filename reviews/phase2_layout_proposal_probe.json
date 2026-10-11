@@ -1,0 +1,45 @@
+{
+  "before": {
+    "viewport": 390,
+    "document": 410
+  },
+  "proposedCss": ".do-ui select{box-sizing:border-box}.do-diagrams>section{min-width:0}.do-graph-scroll{max-width:100%;box-sizing:border-box}@media(max-width:700px){.do-assignment-grid,.do-diagrams{grid-template-columns:minmax(0,1fr)}}",
+  "after": [
+    {
+      "example": 0,
+      "viewport": 390,
+      "document": 390
+    },
+    {
+      "example": 1,
+      "viewport": 390,
+      "document": 390
+    },
+    {
+      "example": 2,
+      "viewport": 390,
+      "document": 390
+    },
+    {
+      "example": 3,
+      "viewport": 390,
+      "document": 390
+    },
+    {
+      "example": 4,
+      "viewport": 390,
+      "document": 390
+    },
+    {
+      "example": 5,
+      "viewport": 390,
+      "document": 390
+    },
+    {
+      "example": 6,
+      "viewport": 390,
+      "document": 390
+    }
+  ],
+  "sourceFilesChanged": false
+}
