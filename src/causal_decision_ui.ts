@@ -48,8 +48,10 @@ const showExampleGuide = (index: number): void => {
   if (!example) return
   exampleGuide.append(el('summary', {}, 'About this example'), el('p', {}, example.description),
     el('p', {}, 'Literature: ', el('a', { href: example.source.url, target: '_blank', rel: 'noopener noreferrer' }, example.source.title)),
-    el('p', {}, `Expected decision: ${example.expectedStatus}. The numerical data are constructed Boolean illustrations.`))
-  if (example.evaluations.length) exampleGuide.append(el('p', {}, 'After obtaining a model, paste these expressions into Evaluate model:'),
+    el('p', {}, `Expected decision: ${example.expectedStatus}. ${example.dataNote ?? 'The numerical data are constructed Boolean illustrations.'}`))
+  if (example.evaluations.length) exampleGuide.append(el('p', {}, example.expectedStatus === 'ENTAILS'
+    ? 'Exact values supporting the conclusion. For optional model checks, copy these expressions, choose Satisfiability, then Find Model and use Evaluate model:'
+    : 'After obtaining a model, paste these expressions into Evaluate model:'),
     el('ul', {}, ...example.evaluations.map(item => el('li', {}, el('code', {}, item.expression),
       el('span', { class: 'decision-example-value' }, `Expected in this model: ${typeof item.value === 'boolean' ? (item.value ? 'True' : 'False') : item.value}.`)))))
 }

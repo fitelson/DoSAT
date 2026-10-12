@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "kind": "DoSAT-decision",
+  "task": "entailment",
+  "graph": "E -> M; E -> A; M -> A",
+  "premises": "Pr(E) = 130/260\nPr(M | E) = 80/130\nPr(M | ~E) = 50/130\nPr(A | M & E) = 60/80\nPr(A | ~M & E) = 40/50\nPr(A | M & ~E) = 10/50\nPr(A | ~M & ~E) = 20/80",
+  "conclusion": "(Pr(A | M) > Pr(A | ~M)) & (Pr(A | do(M)) < Pr(A | do(~M)))",
+  "regular": true,
+  "mode": "complete",
+  "seconds": 30
+}

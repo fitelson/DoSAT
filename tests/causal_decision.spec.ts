@@ -156,10 +156,11 @@ for (const timing of ['boundary', 'task'] as const) for (const action of ['cance
   })
 }
 
-test('Simpson example entails its four exact observed and intervened recovery rates', async ({ page }) => {
+test('the E/M/A Simpson example entails the supplied table and its exact intervention rates', async ({ page }) => {
   await open(page)
   await page.getByTestId('decision-example').selectOption('6')
-  await page.getByTestId('decision-conclusion').fill('(Pr(Y | X) = 63/100) & (Pr(Y | ~X) = 77/100) & (Pr(Y | do(X)) = 3/4) & (Pr(Y | do(~X)) = 13/20)')
+  await expect(page.getByTestId('decision-graph')).toHaveValue('E -> M; E -> A; M -> A')
+  await page.getByTestId('decision-conclusion').fill('(Pr(A | M) = 7/13) & (Pr(A | ~M) = 6/13) & (Pr(A | E) = 10/13) & (Pr(A | ~E) = 3/13) & (Pr(A) = 1/2) & (Pr(A | do(M)) = 19/40) & (Pr(A | do(~M)) = 21/40)')
   await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —', { timeout: 20_000 })
 })

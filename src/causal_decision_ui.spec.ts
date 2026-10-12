@@ -77,11 +77,12 @@ beforeEach(async () => {
 afterEach(() => { dom.window.close(); vi.unstubAllGlobals() })
 
 describe('decision interface', () => {
-  test('the initial literature example is Berkson with its required SAT and regularity settings', () => {
+  test('the initial literature example is Berkson with its conclusion and required entailment setting', () => {
     expect(initialProblem.graph).toBe('X -> S; Y -> S')
     expect(initialProblem.premises).toBe('Pr(X) = 1/2\nPr(Y) = 1/2\nPr(S <-> (X v Y)) = 1')
-    expect(initialProblem.satisfiability).toBe(true)
-    expect(initialProblem.entailment).toBe(false)
+    expect(initialProblem.satisfiability).toBe(false)
+    expect(initialProblem.entailment).toBe(true)
+    expect(initialProblem.conclusion).toBe('(Pr(Y | do(X)) = Pr(Y | do(~X))) & (Pr(Y | X & S) < Pr(Y | ~X & S))')
     expect(initialProblem.regular).toBe(false)
     expect(initialProblem.example).toBe('0')
     expect(initialPresentation.status).toBe('Choose a decision problem.')
@@ -94,7 +95,7 @@ describe('decision interface', () => {
       'Choose an example…', 'Berkson’s paradox: selection creates an association',
       'M-bias: a harmful pretreatment adjustment', 'Bias amplification: controlling an instrument',
       'Treatment–confounder feedback', 'Front-door adjustment',
-      'Positivity failure: an unseen treatment branch', 'Simpson’s paradox: treatment and recovery',
+      'Positivity failure: an unseen treatment branch', 'Simpson’s paradox: E, M and A',
     ])
     sample.value = '3'; sample.dispatchEvent(new dom.window.Event('change'))
     expect(node<HTMLTextAreaElement>('decision-graph').value).toBe('A -> L; L -> B; L -> Y; B -> Y')
@@ -119,6 +120,24 @@ describe('decision interface', () => {
     expect(guide.hidden).toBe(false)
     load(async () => saved()); await flush()
     expect(guide.hidden).toBe(true)
+  })
+  test.each([0, 1, 2, 3, 4])('preset %i saves and restores an active nonempty entailment conclusion', async index => {
+    const sample = node<HTMLSelectElement>('decision-example')
+    sample.value = String(index); sample.dispatchEvent(new dom.window.Event('change'))
+    const original = node<HTMLTextAreaElement>('decision-conclusion').value
+    expect(original.length).toBeGreaterThan(0)
+    expect(node<HTMLInputElement>('decision-task-entailment').checked).toBe(true)
+    expect(node<HTMLTextAreaElement>('decision-conclusion').disabled).toBe(false)
+    expect(node<HTMLTextAreaElement>('decision-conclusion').closest('section')?.hidden).toBe(false)
+    expect(node('decision-example-guide').textContent).toContain('Expected decision: ENTAILS')
+    expect(node('decision-example-guide').textContent).toContain('choose Satisfiability, then Find Model')
+    node<HTMLButtonElement>('decision-save').click()
+    const payload = JSON.parse(mocks.download.mock.calls[0][0]) as { task: string, conclusion: string }
+    expect(payload.task).toBe('entailment'); expect(payload.conclusion).toBe(original)
+    change('decision-conclusion', 'Pr(A)>0')
+    load(async () => JSON.stringify(payload)); await flush()
+    expect(node<HTMLTextAreaElement>('decision-conclusion').value).toBe(original)
+    expect(node<HTMLInputElement>('decision-task-entailment').checked).toBe(true)
   })
   test('defaults to an unbounded decision and exports both exact queries', async () => {
     expect(node('decision-runtime').dataset.z3Version).toBe('5.1.0')

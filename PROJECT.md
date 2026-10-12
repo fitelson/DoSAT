@@ -357,3 +357,38 @@ and [PUBLICATION.md](reviews/literature_examples_2026-10-12T13-22-34Z/PUBLICATIO
 The earlier running/FAIL/pending notes above are historical. The unexplained
 unchanged-evaluator WASM unit failure remains documented; subsequent isolated,
 full and independent reviewer runs pass.
+
+## Explicit entailment conclusions and E/M/A Simpson table, October 12
+
+Branden requested explicit conclusions for the first five literature presets,
+then supplied an E/M/A table for Simpson and asked to use its probabilities and
+variables in the open app. The open Chrome problem has been updated and its
+conclusion returns ENTAILS. The local preset update gives all seven cases active
+entailment conclusions; the first five and Simpson should ENTAIL, while the
+unchanged positivity example should DOES NOT ENTAIL.
+
+The first-five graphs, numerical premises, Regular settings and exact model
+evaluation recipes are preserved. The instrument and front-door conclusions use
+exact individual risk values after initial symbolic conclusions exposed high
+solver resource costs. Their full adjustment expressions remain optional model
+checks. ENTAILS returns no witness, so the guide explains the Satisfiability /
+Find Model route to inspect those expressions. Save/Load preserves each active
+conclusion. The compiler, solver, evaluator and parser sources are unchanged.
+
+Simpson now has E -> M; E -> A; M -> A, with the supplied unsimplified ratios.
+Its observational rates are 7/13 > 6/13; under that explicit DAG assumption,
+intervention rates are 19/40 < 21/40. Counts alone do not determine the DAG.
+The prior Simpson numbers remain historical regression inputs.
+
+Current local verification and resource qualifications are recorded in
+[CONCLUSIONS.md](reviews/entailment_presets_2026-10-12T18-57-44Z/CONCLUSIONS.md)
+and [VERIFICATION.md](reviews/entailment_presets_2026-10-12T18-57-44Z/VERIFICATION.md).
+The completed scoped consensus gate is PASS. The approved update is live at
+https://fitelson.org/DoSAT/: eight remote/six HTTPS hashes match, and the fresh
+full live run passes 21 scenarios and 45 evaluations. See
+[FINAL_STATUS.md](reviews/entailment_presets_2026-10-12T18-57-44Z/FINAL_STATUS.md)
+and [PUBLICATION.md](reviews/entailment_presets_2026-10-12T18-57-44Z/PUBLICATION.md)
+for source delivery and preserved nonblocking qualifications.
+DoSAT's existing commit/push/upload authorization continues for this fix, with
+the other family repos frozen. Earlier statements that Simpson's inputs remain
+unchanged describe the preceding release and are superseded by this request.

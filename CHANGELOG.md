@@ -2,6 +2,21 @@
 
 > **Note:** This is a local build for deployment to fitelson.org.
 
+## 2026-10-12 — Explicit entailment presets and supplied Simpson table
+
+- Added active, saved conclusions to Berkson, M-bias, instrument bias
+  amplification, treatment–confounder feedback and front-door; all five now
+  use Check entailment. Their probabilities and Regular settings are unchanged.
+- Kept positivity failure as a non-entailment example. Changed Simpson to the
+  supplied E/M/A count table, with its corresponding reversal and explicit
+  common-cause DAG assumption.
+- Updated model-inspection guidance and Save/Load regressions. The instrument
+  and front-door conclusions use exact risk values to avoid the resource cost
+  of the initial symbolic formulas; full adjustment expressions remain optional
+  model checks. Compiler, solver and evaluator sources are unchanged.
+- Validation and the scoped consensus/publication status are recorded in
+  reviews/entailment_presets_2026-10-12T18-57-44Z/VERIFICATION.md and PROJECT.md.
+
 ## 2026-10-12 — DoSAT literature examples
 
 - Replaced the public decision-page presets with Berkson selection bias, M-bias,

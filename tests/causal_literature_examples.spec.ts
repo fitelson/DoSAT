@@ -11,6 +11,8 @@ for (const [index, example] of DECISION_EXAMPLES.entries()) {
     await expect(page.getByTestId('decision-runtime')).toHaveText('Z3 ready.', { timeout: 20_000 })
     await page.getByTestId('decision-example').selectOption(String(index))
     await expect(page.getByTestId('decision-graph')).toHaveValue(example.graph)
+    await expect(page.getByTestId('decision-conclusion')).toHaveValue(example.conclusion)
+    await expect(page.getByTestId('decision-conclusion')).toBeVisible()
     await expect(page.getByTestId(`decision-task-${example.task}`)).toBeChecked()
     await expect(page.getByTestId('decision-regular')).toBeChecked({ checked: example.regular })
     await page.getByTestId('decision-example-guide').locator('summary').click()
@@ -19,7 +21,13 @@ for (const [index, example] of DECISION_EXAMPLES.entries()) {
     await page.getByTestId('decision-run').click()
     const verdict = example.expectedStatus === 'SAT' ? 'SAT —'
       : example.expectedStatus === 'ENTAILS' ? 'ENTAILS —' : 'DOES NOT ENTAIL'
-    await expect(page.getByTestId('decision-status')).toContainText(verdict, { timeout: 60_000 })
+    await expect(page.getByTestId('decision-status')).toContainText(verdict, { timeout: 90_000 })
+    if (example.expectedStatus === 'ENTAILS' && example.evaluations.length) {
+      await expect(page.getByTestId('model-evaluate-input')).not.toBeVisible()
+      await page.getByTestId('decision-task-satisfiability').check()
+      await page.getByTestId('decision-run').click()
+      await expect(page.getByTestId('decision-status')).toContainText('SAT —', { timeout: 60_000 })
+    }
     for (const item of example.evaluations) {
       await page.getByTestId('model-evaluate-input').fill(item.expression)
       await expect(page.getByTestId('model-evaluate-run')).toBeEnabled()
@@ -32,7 +40,7 @@ for (const [index, example] of DECISION_EXAMPLES.entries()) {
         await expect(page.getByTestId('model-evaluate-probabilities').locator('tbody tr')).toHaveCount(1)
         await expect(page.getByTestId('model-evaluate-probabilities')).not.toContainText('undefined')
       }
-      await expect(page.getByTestId('decision-status')).toContainText(verdict)
+      await expect(page.getByTestId('decision-status')).toContainText(example.expectedStatus === 'ENTAILS' ? 'SAT —' : verdict)
     }
     expect(errors).toEqual([])
   })

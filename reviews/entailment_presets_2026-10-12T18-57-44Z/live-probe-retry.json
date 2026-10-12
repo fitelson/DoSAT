@@ -1,0 +1,418 @@
+{
+  "base": "https://fitelson.org/DoSAT/",
+  "cases": 21,
+  "evaluations": 45,
+  "rows": [
+    {
+      "width": 1280,
+      "example": "Berkson’s paradox: selection creates an association",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X & S) - Pr(Y | ~X & S)",
+          "expected": "Exact value in this model: -1/2",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "example": "M-bias: a harmful pretreatment adjustment",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X) - Pr(Y | ~X)",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X & Z) - Pr(Y | ~X & Z)",
+          "expected": "Exact value in this model: -1/24",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "example": "Bias amplification: controlling an instrument",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 1/5",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X) - Pr(Y | ~X)",
+          "expected": "Exact value in this model: 8/25",
+          "passed": true
+        },
+        {
+          "expression": "(Pr(Y | X & Z) - Pr(Y | ~X & Z))*Pr(Z) + (Pr(Y | X & ~Z) - Pr(Y | ~X & ~Z))*Pr(~Z)",
+          "expected": "Exact value in this model: 31/80",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "example": "Treatment–confounder feedback",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(A, B)) - Pr(Y | do(~A, ~B))",
+          "expected": "Exact value in this model: 1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | A & B) - Pr(Y | ~A & ~B)",
+          "expected": "Exact value in this model: 17/25",
+          "passed": true
+        },
+        {
+          "expression": "(Pr(Y | A & B & L) - Pr(Y | ~A & ~B & L))*Pr(L) + (Pr(Y | A & B & ~L) - Pr(Y | ~A & ~B & ~L))*Pr(~L)",
+          "expected": "Exact value in this model: 1/5",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "example": "Front-door adjustment",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X))",
+          "expected": "Exact value in this model: 11/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X)",
+          "expected": "Exact value in this model: 7/10",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | X)*(Pr(Y | M & X)*Pr(X) + Pr(Y | M & ~X)*Pr(~X)) + Pr(~M | X)*(Pr(Y | ~M & X)*Pr(X) + Pr(Y | ~M & ~X)*Pr(~X))",
+          "expected": "Exact value in this model: 11/20",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "example": "Positivity failure: an unseen treatment branch",
+      "verdict": "DOES NOT ENTAIL",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) = 1/2",
+          "expected": "False in this model.",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "example": "Simpson’s paradox: E, M and A",
+      "verdict": "ENTAILS —",
+      "evaluations": [],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "example": "Berkson’s paradox: selection creates an association",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X & S) - Pr(Y | ~X & S)",
+          "expected": "Exact value in this model: -1/2",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "example": "M-bias: a harmful pretreatment adjustment",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X) - Pr(Y | ~X)",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X & Z) - Pr(Y | ~X & Z)",
+          "expected": "Exact value in this model: -1/24",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "example": "Bias amplification: controlling an instrument",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 1/5",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X) - Pr(Y | ~X)",
+          "expected": "Exact value in this model: 8/25",
+          "passed": true
+        },
+        {
+          "expression": "(Pr(Y | X & Z) - Pr(Y | ~X & Z))*Pr(Z) + (Pr(Y | X & ~Z) - Pr(Y | ~X & ~Z))*Pr(~Z)",
+          "expected": "Exact value in this model: 31/80",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "example": "Treatment–confounder feedback",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(A, B)) - Pr(Y | do(~A, ~B))",
+          "expected": "Exact value in this model: 1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | A & B) - Pr(Y | ~A & ~B)",
+          "expected": "Exact value in this model: 17/25",
+          "passed": true
+        },
+        {
+          "expression": "(Pr(Y | A & B & L) - Pr(Y | ~A & ~B & L))*Pr(L) + (Pr(Y | A & B & ~L) - Pr(Y | ~A & ~B & ~L))*Pr(~L)",
+          "expected": "Exact value in this model: 1/5",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "example": "Front-door adjustment",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X))",
+          "expected": "Exact value in this model: 11/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X)",
+          "expected": "Exact value in this model: 7/10",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | X)*(Pr(Y | M & X)*Pr(X) + Pr(Y | M & ~X)*Pr(~X)) + Pr(~M | X)*(Pr(Y | ~M & X)*Pr(X) + Pr(Y | ~M & ~X)*Pr(~X))",
+          "expected": "Exact value in this model: 11/20",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "example": "Positivity failure: an unseen treatment branch",
+      "verdict": "DOES NOT ENTAIL",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) = 1/2",
+          "expected": "False in this model.",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "example": "Simpson’s paradox: E, M and A",
+      "verdict": "ENTAILS —",
+      "evaluations": [],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "example": "Berkson’s paradox: selection creates an association",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X & S) - Pr(Y | ~X & S)",
+          "expected": "Exact value in this model: -1/2",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "example": "M-bias: a harmful pretreatment adjustment",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X) - Pr(Y | ~X)",
+          "expected": "Exact value in this model: 0",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X & Z) - Pr(Y | ~X & Z)",
+          "expected": "Exact value in this model: -1/24",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "example": "Bias amplification: controlling an instrument",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+          "expected": "Exact value in this model: 1/5",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X) - Pr(Y | ~X)",
+          "expected": "Exact value in this model: 8/25",
+          "passed": true
+        },
+        {
+          "expression": "(Pr(Y | X & Z) - Pr(Y | ~X & Z))*Pr(Z) + (Pr(Y | X & ~Z) - Pr(Y | ~X & ~Z))*Pr(~Z)",
+          "expected": "Exact value in this model: 31/80",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "example": "Treatment–confounder feedback",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(A, B)) - Pr(Y | do(~A, ~B))",
+          "expected": "Exact value in this model: 1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | A & B) - Pr(Y | ~A & ~B)",
+          "expected": "Exact value in this model: 17/25",
+          "passed": true
+        },
+        {
+          "expression": "(Pr(Y | A & B & L) - Pr(Y | ~A & ~B & L))*Pr(L) + (Pr(Y | A & B & ~L) - Pr(Y | ~A & ~B & ~L))*Pr(~L)",
+          "expected": "Exact value in this model: 1/5",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "example": "Front-door adjustment",
+      "verdict": "ENTAILS —",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X))",
+          "expected": "Exact value in this model: 11/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(Y | X)",
+          "expected": "Exact value in this model: 7/10",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | X)*(Pr(Y | M & X)*Pr(X) + Pr(Y | M & ~X)*Pr(~X)) + Pr(~M | X)*(Pr(Y | ~M & X)*Pr(X) + Pr(Y | ~M & ~X)*Pr(~X))",
+          "expected": "Exact value in this model: 11/20",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "example": "Positivity failure: an unseen treatment branch",
+      "verdict": "DOES NOT ENTAIL",
+      "evaluations": [
+        {
+          "expression": "Pr(Y | do(X)) = 1/2",
+          "expected": "False in this model.",
+          "passed": true
+        }
+      ],
+      "guideClearAndBlank": true,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "example": "Simpson’s paradox: E, M and A",
+      "verdict": "ENTAILS —",
+      "evaluations": [],
+      "guideClearAndBlank": true,
+      "errors": []
+    }
+  ]
+}
