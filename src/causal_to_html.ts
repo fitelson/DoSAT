@@ -1,5 +1,6 @@
 import { parse_causal_document } from './causal_syntax'
-import type { CausalProbability } from './causal_syntax'
+import type { CausalDocument, CausalProbability } from './causal_syntax'
+import { parse_causal_evaluation } from './causal_evaluation_syntax'
 import { math_el } from './el'
 import { constraint_to_html, real_expr_to_html } from './prsat_to_html'
 import type { PrSat } from './types'
@@ -51,14 +52,7 @@ const probability_html = (query: CausalProbability): MathMLElement => {
   return row
 }
 
-/** A parsed preview describes syntax; it does not certify defined probabilities. */
-export const render_causal_constraint = (graph: string, source: string): MathMLElement => {
-  const document = parse_causal_document(graph, source)
-  if (document.constraints.length !== 1) {
-    throw new Error('Enter exactly one causal constraint for this preview; logical combinations are allowed.')
-  }
-  const math = constraint_to_html(document.constraints[0], true)
-  math.setAttribute('aria-label', document.source[0])
+const replace_query_variables = (math: MathMLElement, document: CausalDocument): MathMLElement => {
   // CausalQuery identifiers are reserved by the authoritative parser. Replace
   // exact variable nodes only, never substrings of user names or text markup.
   for (const variable of math.querySelectorAll('mi')) {
@@ -67,6 +61,27 @@ export const render_causal_constraint = (graph: string, source: string): MathMLE
       variable.replaceWith(probability_html(document.probabilities[identifier]))
     }
   }
+  return math
+}
+
+/** A parsed preview describes syntax; it does not certify defined probabilities. */
+export const render_causal_constraint = (graph: string, source: string): MathMLElement => {
+  const document = parse_causal_document(graph, source)
+  if (document.constraints.length !== 1) {
+    throw new Error('Enter exactly one causal constraint for this preview; logical combinations are allowed.')
+  }
+  const math = constraint_to_html(document.constraints[0], true)
+  math.setAttribute('aria-label', document.source[0])
+  return replace_query_variables(math, document)
+}
+
+/** Preview one causal arithmetic expression or constraint, without evaluating it. */
+export const render_causal_evaluation = (graph: string, source: string): MathMLElement => {
+  const parsed = parse_causal_evaluation(graph, source)
+  const math = parsed.kind === 'constraint'
+    ? render_causal_constraint(graph, parsed.document.source.join('\n'))
+    : replace_query_variables(real_expr_to_html(parsed.expression, true), parsed.document)
+  math.setAttribute('aria-label', source.trim())
   return math
 }
 

@@ -7,7 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
 const tag = new Date().toISOString().replace(/[:.]/g, '-') + '-' + randomUUID().slice(0, 8)
 const destination = path.join(root, 'releases', 'DoSAT-1.0-' + tag)
-const queue = ['index.html', 'causal.html', 'do_calculus.html', 'decision.html']
+const queue = ['index.html']
 const seen = new Set()
 while (queue.length) {
   const relative = queue.pop()
@@ -29,12 +29,10 @@ for (const stable of ['.htaccess', 'coi-serviceworker.js', 'z3-built.js', 'z3-bu
 }
 const title = 'DoSAT 1.0'
 const subtitle = 'A Decision Procedure for Do Calculus.'
-const landing = path.join(root, 'webpage', 'dosat.html')
-const landingText = await fs.readFile(landing, 'utf8')
-if (!landingText.includes(title) || !landingText.includes(subtitle)) throw Error('Landing page branding is missing.')
+const entryText = await fs.readFile(path.join(dist, 'index.html'), 'utf8')
+if (!entryText.includes(title) || !entryText.includes(subtitle)) throw Error('App branding is missing.')
 await fs.mkdir(path.join(root, 'releases'), { recursive: true })
 await fs.mkdir(destination)
-await fs.mkdir(path.join(destination, 'dist'))
 const files = {}
 const copy = async (source, relative) => {
   const target = path.join(destination, relative)
@@ -43,8 +41,9 @@ const copy = async (source, relative) => {
   const data = await fs.readFile(target)
   files[relative] = { bytes: data.length, sha256: createHash('sha256').update(data).digest('hex') }
 }
-await copy(landing, 'index.html')
-for (const relative of [...seen].sort()) await copy(path.join(dist, relative), 'dist/' + relative)
-const manifest = { product: title, subtitle, target: 'https://fitelson.org/DoSAT/', state: 'prepared; publication requires completed phase review', createdAt: new Date().toISOString(), files }
+for (const relative of [...seen].sort()) await copy(path.join(dist, relative), relative)
+// The old directory keeps its files; this compatibility config retires its HTML routes.
+await copy(path.join(dist, '.htaccess'), 'dist/.htaccess')
+const manifest = { product: title, subtitle, target: 'https://fitelson.org/DoSAT/', state: 'prepared; publication requires completed phase review', createdAt: new Date().toISOString(), pages: ['index.html'], retiredRoutes: ['/DoSAT/dist/decision.html', '/DoSAT/dist/causal.html', '/DoSAT/dist/do_calculus.html', '/DoSAT/dist/index.html', '/DoSAT/dist/'], files }
 await fs.writeFile(path.join(destination, 'release-manifest.json'), JSON.stringify(manifest, null, 2) + '\n', { flag: 'wx' })
 console.log(JSON.stringify({ destination, files: Object.keys(files).length, target: manifest.target }))

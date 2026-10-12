@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { JSDOM } from 'jsdom'
-import { render_causal_constraint, render_causal_probability } from './causal_to_html'
+import { render_causal_constraint, render_causal_evaluation, render_causal_probability } from './causal_to_html'
 
 let dom: JSDOM
 const graph = 'Z -> X; Z -> Y; X -> Y'
@@ -131,5 +131,91 @@ describe('causal formula previews', () => {
     const math = render_causal_probability('X', 'Pr(X|~X)')
     expect(math.textContent).toBe('Pr(X|~X)')
     expect(math.querySelector('.causal-observation')?.textContent).toBe('~X')
+  })
+})
+
+describe('causal evaluation previews', () => {
+  test('renders arithmetic with new mixed and simultaneous intervention queries', () => {
+    const source = 'Pr(Y | do(X, ~Z), X) + 2*Pr(Y | do(X=0, Z=1))/Pr(X)'
+    const math = render_causal_evaluation(graph, source)
+    expect(math.localName).toBe('math')
+    expect(math.getAttribute('aria-label')).toBe(source)
+    expect(math.querySelectorAll('.causal-probability')).toHaveLength(3)
+    expect(Array.from(math.querySelectorAll('.causal-intervention'), row => row.textContent)).toEqual(['do(X,~Z)', 'do(X=0,Z=1)'])
+    expect(math.querySelector('.causal-observation')?.textContent).toBe('X')
+    expect(math.querySelectorAll('mfrac')).toHaveLength(1)
+    expect(math.textContent).not.toContain('CausalQuery')
+  })
+
+  test('keeps exact arithmetic literal spelling and user variables', () => {
+    const source = '0.1000000000000000000001*Rate + Alpha^2 - 9007199254740993/1.00000'
+    const math = render_causal_evaluation(graph, source)
+    const identifiers = Array.from(math.querySelectorAll('mi'), node => node.textContent)
+    expect(identifiers).toContain('0.1000000000000000000001')
+    expect(identifiers).toContain('9007199254740993')
+    expect(identifiers).toContain('1.00000')
+    expect(identifiers).toContain('Rate')
+    expect(identifiers).toContain('Alpha')
+    expect(math.querySelectorAll('msup')).toHaveLength(1)
+    expect(math.querySelectorAll('mfrac')).toHaveLength(1)
+    expect(math.getAttribute('aria-label')).toBe(source)
+  })
+
+  test('renders compound constraints with the existing causal constraint adapter', () => {
+    const source = '(Pr(Y|do(X)) = 1/2) v ~(Pr(Y|do(~X),Z) >= Rate)'
+    const math = render_causal_evaluation(graph, source)
+    const existing = render_causal_constraint(graph, source)
+    expect(math.outerHTML).toBe(existing.outerHTML)
+    expect(math.querySelectorAll('.causal-probability')).toHaveLength(2)
+    expect(math.textContent).not.toContain('CausalQuery')
+  })
+
+  test.each(['1.00000', 'Rate', 'Pr(Y|do(X))'])('allows the real expression %s without requiring a comparison', source => {
+    const math = render_causal_evaluation(graph, source)
+    expect(math.getAttribute('aria-label')).toBe(source)
+    expect(math.textContent).not.toContain('=0')
+    expect(math.textContent).not.toContain('CausalQuery')
+  })
+
+  test.each([
+    '# heading\n\nPr(Y|do(X)) + 1/2 # trailing comment\n',
+    '# heading\n\nPr(Y|do(X)) = 1/2 # trailing comment\n',
+  ])('ignores comments for rendering while retaining the submitted source label', source => {
+    const math = render_causal_evaluation(graph, source)
+    expect(math.getAttribute('aria-label')).toBe(source.trim())
+    expect(math.querySelectorAll('.causal-probability')).toHaveLength(1)
+    expect(math.textContent).not.toMatch(/heading|trailing comment|CausalQuery/)
+  })
+
+  test('replaces query identifiers beyond the first alphabetic suffix in real expressions', () => {
+    const source = Array.from({ length: 30 }, () => 'Pr(Y|do(X))').join(' + ')
+    const math = render_causal_evaluation(graph, source)
+    expect(math.querySelectorAll('.causal-probability')).toHaveLength(30)
+    expect(math.textContent).not.toContain('CausalQuery')
+  })
+
+  test.each([
+    '', '# comment only', 'Pr(Y)\nPr(X)', 'Pr(Y)=1\nPr(X)=1',
+    'Pr(Y); Pr(X)', 'Pr(Y|do(X & Z))', 'CausalQueryA + 1',
+    'Pr(Y)Pr(X)', '<img src=x onerror=alert(1)>', 'Pr(Q)',
+  ])('rejects unsafe, multiple, or invalid evaluation input %j', source => {
+    expect(() => render_causal_evaluation(graph, source)).toThrow()
+    expect(dom.window.document.querySelector('img')).toBeNull()
+  })
+
+  test('undefined conditioning is still syntactically renderable without a numerical verdict', () => {
+    const math = render_causal_evaluation('X', 'Pr(X|~X) + Pr(X|do(~X),X)')
+    expect(math.querySelectorAll('.causal-probability')).toHaveLength(2)
+    expect(math.querySelector('.causal-intervention')?.textContent).toBe('do(~X)')
+    expect(Array.from(math.querySelectorAll('.causal-observation'), row => row.textContent)).toEqual(['~X', 'X'])
+    expect(math.textContent).not.toMatch(/undefined|defined|true|false|CausalQuery/)
+  })
+
+  test('the real expression DOM consists only of safe MathML', () => {
+    const math = render_causal_evaluation(graph, 'Pr(Y|do(~X),Z) + Rate/2')
+    for (const node of [math, ...Array.from(math.querySelectorAll('*'))]) {
+      expect(node.namespaceURI).toBe('http://www.w3.org/1998/Math/MathML')
+      expect(node.getAttributeNames().some(name => name.startsWith('on'))).toBe(false)
+    }
   })
 })

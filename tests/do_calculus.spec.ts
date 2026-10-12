@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test'
 import { readFile } from 'node:fs/promises'
 
 const open = async (page: Page) => {
-  await page.goto('/do_calculus.html', { waitUntil: 'domcontentloaded' })
+  await page.goto('/reference-ui/do_calculus.html', { waitUntil: 'domcontentloaded' })
   await expect(page.getByTestId('do-check')).toBeEnabled()
 }
 const check = async (page: Page, applies: boolean) => {
@@ -78,7 +78,7 @@ test('exported certified step is UNSAT as a counterexample in the model finder',
 })
 
 test('step checker and model finder link in both directions', async ({ page }) => {
-  await page.goto('/causal.html')
+  await page.goto('/reference-ui/causal.html')
   await page.getByRole('link', { name: 'Check a do-calculus step' }).click()
   await expect(page).toHaveURL(/do_calculus\.html/)
   await page.getByRole('link', { name: 'Open causal model finder' }).click()

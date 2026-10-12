@@ -34,6 +34,12 @@ Branden requests otherwise.
 
 Implement the agreed first pass in reviews/ui_prsat_alignment_2026-10-11T21-49-47Z/UI_AGREED_DESIGN.md. Scope this gate to the UI delta from 9ad6e1d: row editing and batch state, causal MathML, exact witness presentation, task/draft distinction, JSON controls, validation/accessibility, and responsive PrSAT styling. The Phase 3 compiler and runtime solver are unchanged and their mathematical PASS remains closed. Arbitrary returned-model evaluation is a later capability. Before publication require explicit scoped consensus PASS and verify the prepared package and live site. The UI gate is PASS after the scoped repair recheck. Current status: reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md; approved recheck: recheck_2026-10-11T23-04-19Z/consensus.md in that folder. Later code changes require their own scoped gate.
 
+## Single-page, DAG preview and model evaluation phase
+
+Current delta begins at approved publication 109ec5be9ee936b36a03009a920fd44eb52255e8. Branden requested a live DAG preview, not-a-DAG syntax errors, retirement of causal.html and do_calculus.html, one public DoSAT page, repository updates and new-expression evaluation in a returned model. Production has one entry, index.html, served directly at /DoSAT/; retired URLs redirect there. Earlier HTML entries are preserved only under reference-ui/ for provenance and tests. The decision reduction and solver remain unchanged.
+
+The current phase gate is PASS after the B1/B2 recheck; see reviews/single_page_model_eval_2026-10-12T01-02-21Z/FINAL_STATUS.md. Read the EVALUATION_SEMANTICS.md in that folder. Evaluate a frozen complete shared kernel and assigned user variables, including new intervention regimes. Do not retain native Models, create a new satisfying model, silently complete missing user variables or use floating point. Real undefinedness and guarded Boolean satisfaction are distinct. Cancellation awaits native simplification settlement; main Run stays blocked until model evaluation settles. Scope the required default consensus gate to these changes and their integration, not a new audit of old mathematics.
+
 ## Phase 2 scope
 
 Phase2 adds single-step graphical checking of Pearl Rules1–3 using d-separation

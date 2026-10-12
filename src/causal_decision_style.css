@@ -109,3 +109,31 @@
   .decision-ui .decision-save-toolbar { margin-top: 0; }
   .decision-ui .decision-conclusion-block > .decision-note { margin-bottom: .2rem; }
 }
+.decision-graph-layout { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; align-items: center; }
+.decision-graph-preview { max-width: 340px; max-height: 145px; overflow: auto; border: 1px solid var(--border); border-radius: 6px; background: white; padding: .2rem; }
+.decision-graph-preview svg { display: block; }
+.decision-graph-preview:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 1px; }
+@media (max-width: 600px) {
+  .decision-graph-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 164px); }
+  .decision-graph-block { grid-template-columns: minmax(0, 1fr); }
+  .decision-graph-block .decision-field-error { grid-column: 1; }
+  .decision-graph-preview { max-width: 100%; }
+}
+@media (max-width: 360px) {
+  .decision-graph-layout { grid-template-columns: minmax(0, 1fr); }
+  .decision-graph-preview { justify-self: start; }
+}
+.decision-graph-preview { padding: .1rem; }
+@media (max-width: 600px) {
+  .decision-graph-block { margin: .25rem 0; gap: .1rem .6rem; }
+  .decision-graph-block label { font-size: .9rem; }
+  .decision-graph-block summary { line-height: 1.3; }
+}
+/* Evaluations belong to the currently displayed immutable model snapshot. */
+.decision-ui .decision-model-evaluation { margin: .8rem 0 0; padding: .65rem; border-left: 3px solid var(--accent); }
+.decision-ui .decision-model-evaluation h3 { margin: 0 0 .3rem; }
+.model-evaluation-controls { display: flex; gap: .4rem; margin: .3rem 0; }
+.decision-ui .model-evaluation-input { min-width: 0; width: 100%; padding: .35rem .5rem; }
+.model-evaluation-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+.model-evaluation-result { max-width: 100%; min-width: 0; }
+.model-evaluation-value { font-weight: 600; overflow-wrap: anywhere; }

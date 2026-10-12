@@ -1,0 +1,36 @@
+{
+  "root_status": 200,
+  "single_entry": [
+    "index.html"
+  ],
+  "package_files": 8,
+  "byte_identity": "PASS",
+  "headers": "PASS",
+  "redirects": [
+    {
+      "route": "/DoSAT/dist/decision.html",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/"
+    },
+    {
+      "route": "/DoSAT/dist/causal.html",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/"
+    },
+    {
+      "route": "/DoSAT/dist/do_calculus.html",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/"
+    },
+    {
+      "route": "/DoSAT/dist/index.html",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/"
+    },
+    {
+      "route": "/DoSAT/dist/",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/"
+    }
+  ]
+}

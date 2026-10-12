@@ -3,7 +3,7 @@ import * as TestId from './test_ids'
 import * as Constants from '../src/constants'
 import { fallthrough } from '../src/utils'
 
-const URL = '/'
+const URL = '/reference-ui/classical.html'
 const DEFAULT_TIMEOUT = 20_000
 
 const to_load = async (page: Page): Promise<void> => {

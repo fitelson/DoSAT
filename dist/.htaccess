@@ -33,3 +33,6 @@ AddType application/wasm .wasm
         Header set Cache-Control "no-cache"
     </IfModule>
 </FilesMatch>
+
+# One public DoSAT page. Retired app URLs retain a compatibility redirect.
+RedirectMatch 301 "^/DoSAT/(decision\.html|causal\.html|do_calculus\.html|dist/(index\.html|decision\.html|causal\.html|do_calculus\.html)?)$" "https://fitelson.org/DoSAT/"

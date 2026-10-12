@@ -282,3 +282,13 @@ The repair recheck reached explicit consensus **UI phase gate: PASS**. Source an
 ### UI published and verified
 
 The approved redesign is live at https://fitelson.org/DoSAT/dist/decision.html. Implementation `4ed0dea8b55975aaa2fcc4784f5f1c44ab4c8908` is pushed to public main. All 22 remote files and 21 HTTPS files match the release manifest; headers and actual Z3 5.1.0 are correct. The 37-check live probe plus two Cancel/Edit/reuse checks pass. Read [PUBLICATION.md](reviews/ui_implementation_2026-10-11T22-41-54Z/PUBLICATION.md). The compiler/solver and mathematical Phase 3 PASS remain unchanged. Local review servers are stopped. Prior running/FAIL notes are historical; current UI gate and publication are complete.
+
+## Single-page / DAG / returned-model evaluation phase
+
+The user requested one public DoSAT page, removal of the duplicate model-finder and rule-checker pages, live DAG rendering with not-a-DAG errors, and evaluation of new expressions in returned models. These changes are implemented locally. The public app will be /DoSAT/ with one production index.html; old paths redirect and retired source entries remain under reference-ui/. The evaluator uses a frozen shared kernel and exact values, including new intervention regimes, with no new-model search or unassigned-variable completion. The original solver/reduction remain unchanged. Review records are in reviews/single_page_model_eval_2026-10-12T01-02-21Z/. The current scoped gate is pending, so the preceding published version remains live until approval.
+
+Latest local verification: 1,309 unit tests pass (one inherited skip/todo each). All 90 existing/updated browser tests pass, plus the added legacy import browser case (91 unique cases). TypeScript, lint and build pass. Native Apache configuration and byte/header/redirect checks pass for the preserved eight-file, one-HTML package. Initial root-index redirect loop was caught and fixed before review. Source is being frozen for the default-model scoped consensus gate.
+
+### Single-page/model-evaluation gate complete
+
+The scoped default-model repair recheck gives **Phase gate: PASS**. Current record: [FINAL_STATUS.md](reviews/single_page_model_eval_2026-10-12T01-02-21Z/FINAL_STATUS.md). The approved eight-file package has one HTML entry; 1,316 units and 93 unique browser cases pass, with real Apache/package validation. Authorized commit/push/publication follows the gate. Previous pending/FAIL notes are historical.

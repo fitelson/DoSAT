@@ -2,16 +2,11 @@
 
 A Decision Procedure for Do Calculus.
 
-Research workspace starting from the current PrSAT 3.0 code. Read
-[PROJECT.md](PROJECT.md) for scope and [FORK_PROVENANCE.json](FORK_PROVENANCE.json)
-for source provenance. The first causal model finder is available at `/causal.html`: Boolean acyclic
-graphs, shared mechanisms, hard interventions, and regime-specific conditioning.
-The single-step do-calculus checker is available at `/do_calculus.html`.
-Automated derivations and latent confounding remain later phases.
+The single public app is [DoSAT 1.0](https://fitelson.org/DoSAT/), with one production entry, index.html. Read [PROJECT.md](PROJECT.md) and [FORK_PROVENANCE.json](FORK_PROVENANCE.json) for scope and provenance. The earlier model-finder, rule-checker and classical entry pages are preserved under reference-ui/ for development and regression tests; they are not published as separate apps. Old public URLs redirect to the single page.
 
 ## Phase 3 decision procedure
 
-`/decision.html` adds causal satisfiability and entailment using exact polynomial
+The main page provides causal satisfiability and entailment using exact polynomial
 real arithmetic. Each stage tries Z3's QF_NRA strategy with a finite 60-second
 budget, then falls back to explicit NLSat if needed. Default decision mode has no
 overall time limit; cancellation or resource failure remains unresolved. Entailment includes
@@ -50,7 +45,7 @@ actual Z3 5.1.0 and successful live examples/cancellation.
 
 For local development, clone `https://github.com/fitelson/DoSAT.git`, use
 Node 26.11.1 and npm 12.2.0, then run
-`npx --yes npm@12.2.0 ci` and `npm run dev`. Open `/decision.html` on the
+`npx --yes npm@12.2.0 ci` and `npm run dev`. Open `/` on the
 strict development port 5173. See [TOOLS.md](TOOLS.md) for the TypeScript 7
 compiler and separate compatible typed-lint toolchain.
 
@@ -68,6 +63,12 @@ The main editor has one premise per row with causal MathML previews, a single co
 Save to File, Load From File and Copy to Clipboard use the same version 1 whole-problem JSON, including empty premises and a retained inactive conclusion draft. SAT mode hides and ignores that draft. Empty-premise entailment tests validity. Graph, physical premise rows and conclusion errors are linked and announced near Run.
 
 An exact model or countermodel shows a visible observational/intervention probability table with ⊤/⊥ assignments, rendered input terms and exact values. Countermodels display the submitted conclusion beside witness term values; undefined terms are marked explicitly. User-named real variables remain visible, with shared mechanisms in expandable details. A preview confirms parsing, not numerical definedness. Long formulas scroll in their own named keyboard regions. Loaded line endings are normalized before validation. The separate [UI consensus gate](reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md) is PASS; latest checks are 1,123 passing unit tests and 81 passing Chromium tests.
+
+## DAG preview and fixed-model evaluation
+
+The supplied graph renders when it is accepted as a DAG; cyclic/malformed input clears the preview and reports "Syntax error: not a DAG" with the reason. Support limits are reported separately. The preview does not depend on probability-input validity.
+
+After SAT or a countermodel, Evaluate model accepts a new probability, arithmetic expression or Boolean constraint, including new do regimes. It uses the returned model's complete shared kernel and assigned real variables with exact rational/algebraic arithmetic. It does not establish entailment or choose a new model. Unknown user variables give an error; undefined real expressions are marked explicitly. Constraint truth follows DoSAT's existing definedness guards, with undefined probability terms listed. Original-problem edits clear the model and evaluator; evaluation cancellation waits for native settlement. See [evaluation semantics](reviews/single_page_model_eval_2026-10-12T01-02-21Z/EVALUATION_SEMANTICS.md). Retired model-finder v1 saved files import as corresponding SAT problems; modern DoSAT JSON remains unchanged.
 
 ## Inherited PrSAT 3.0 README
 

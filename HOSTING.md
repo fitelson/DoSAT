@@ -1,17 +1,33 @@
 # DoSAT 1.0 hosting
 
-Subtitle: **A Decision Procedure for Do Calculus.**
+The single public application is https://fitelson.org/DoSAT/.
+The only production entry is index.html; the entire app, including its graph
+preview and returned-model evaluator, is on that page. The former landing page
+and auxiliary interfaces are preserved as local references under reference-ui/.
 
-The published target is https://fitelson.org/DoSAT/; the primary application is /DoSAT/dist/decision.html. Public repository: https://github.com/fitelson/DoSAT. Branden authorized public creation, commit, push and publication on October 11. The original publication is recorded in reviews/PHASE3_PUBLICATION.md; the approved PrSAT-style UI release is recorded in reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md.
+npm run prepare:release builds one entry and copies only its current referenced
+assets, root Z3/COI runtime files, and root/compatibility .htaccess into a fresh
+preserved release. Its manifest has pages=[index.html] and five retired /dist/
+routes; those URLs redirect to the canonical root. Stable runtime filenames
+revalidate, WASM has application/wasm MIME, and COOP/COEP isolation headers apply
+at the root as well as compatibility paths. Do not add an index.html redirect
+that also redirects Apache's internal directory-index request.
 
-- webpage/dosat.html becomes /DoSAT/index.html; four built entry pages are under /DoSAT/dist/.
-- Keep the inherited classical dist/index.html for internal links and regressions.
-- dist/.htaccess supplies COOP/COEP and the WebAssembly MIME type; stable Z3 assets revalidate.
-- Upload current referenced build assets and stable Z3/COI files first, application HTML next, landing index last.
-- Publish only after the current scoped consensus gate passes. The copied deploy command stays disabled; never run the inherited PrSAT target.
-- Preserve remote files and older local releases/bundles. Do not clean directories as a release step.
-- Verify remote file SHA256 and bytes, HTTPS bytes/headers, actual browser Z3 and live UI behaviors.
+Publish only after the current scoped consensus gate passes. The helper in
+reviews/single_page_model_eval_2026-10-12T01-02-21Z/publish.py uses one SSH session,
+verifies all staged bytes, installs runtime/assets first, then root headers
+without retirement redirects, the application index, and final redirects. This
+keeps a usable application behind every newly installed redirect. Previous
+changed files are preserved outside the web root under DoSAT-release-backups.
+No cleanup or deletion occurs. Only /home/fitelson/www/www/DoSAT is the app target;
+never run inherited PrSAT deploy commands.
 
-npm run prepare:release creates a fresh preserved package under releases/, including a checksum manifest. It does not deploy or delete anything. The latest approved UI package has 22 files and passes 37 headless package checks. Use the scoped publish.py helper in the UI review folder only after its PASS; it targets /home/fitelson/www/www/DoSAT exclusively. The server directory already exists from the first publication. Ports 5173/4173/5174 are strict local development/preview/test ports; 5317 is unrelated and must remain untouched.
+Verify all remote hashes, public HTTPS bytes/headers, root status200, retired
+301 redirects, actual Z3 and live examples/evaluation/lifecycle flows. Original
+PrSAT and its permanent5317 service are unrelated. Local development uses strict
+5173, browser tests5174, and package verification uses a private4175 Apache
+instance. The copied generic npm deploy command stays disabled.
 
-Latest UI publication is complete: all 22 remote and 21 HTTPS hashes match; isolation/MIME headers, 37 live probe checks and two live cancellation/edit/reuse checks pass. See the UI PUBLICATION.md record. On transient per-file SSH failures, single_ssh_publish.py uses one session, skips identical files, preserves old changed versions and verifies all remote bytes after upload.
+The preceding UI release is recorded in reviews/ui_implementation_2026-10-11T22-41-54Z/PUBLICATION.md.
+The new single-page/model-evaluation phase is implemented locally and its gate
+is pending; it is not yet published. Read the current PROJECT.md status.

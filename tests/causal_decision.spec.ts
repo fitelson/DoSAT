@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { readFile } from 'node:fs/promises'
 const open = async (page: import('@playwright/test').Page) => {
-  await page.goto('/decision.html', { waitUntil: 'domcontentloaded' })
+  await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(page.getByTestId('decision-runtime')).toHaveText('Z3 ready.', { timeout: 20_000 })
   await expect(page.getByTestId('decision-runtime')).toHaveAttribute('data-z3-version', '5.1.0')
   await expect(page.getByRole('heading', { name: 'DoSAT 1.0', exact: true })).toBeVisible()
@@ -71,22 +71,13 @@ for (const width of [320, 390, 1280]) test(`decision results fit a ${width}px vi
   await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
 })
-test('causal interface links to the decision procedure and back', async ({ page }) => {
-  await page.goto('/causal.html')
-  await page.getByRole('link', { name: 'Decide causal satisfiability or entailment' }).click()
-  await expect(page).toHaveURL(/decision\.html/)
-  await page.getByRole('link', { name: 'Open causal model finder' }).click()
-  await expect(page).toHaveURL(/causal\.html/)
-})
-
-test('DoSAT landing page has the requested branding and fits narrow screens', async ({ page }) => {
-  for (const width of [320, 390, 1280]) {
-    await page.setViewportSize({ width, height: 900 })
-    await page.goto('/webpage/dosat.html')
+test('the root is the single DoSAT interface with no auxiliary navigation', async ({ page }) => {
+  for (const width of [320,390,1280]) {
+    await page.setViewportSize({width,height:900}); await open(page)
     await expect(page).toHaveTitle('DoSAT 1.0 — A Decision Procedure for Do Calculus.')
-    await expect(page.locator('.subtitle')).toHaveText('A Decision Procedure for Do Calculus.')
-    await expect(page.getByRole('link', { name: 'Run DoSAT 1.0' })).toHaveAttribute('href', './dist/decision.html')
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+    await expect(page.getByRole('link',{name:'GitHub'})).toHaveAttribute('href','https://github.com/fitelson/DoSAT')
+    await expect(page.locator('a[href*=causal\\.html],a[href*=do_calculus]')).toHaveCount(0)
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
   }
 })
 
@@ -309,4 +300,130 @@ test('loads validate normalized line endings before replacing any input', async 
   await page.getByTestId('decision-batch-toggle').click()
   await expect(page.getByTestId('decision-premises')).toHaveValue('Pr(Z)=1/2\n\n# note\nPr(X | Z)=3/4')
   await expect(page.getByTestId('decision-discard-batch')).toBeDisabled()
+})
+
+test('the graph preview follows DAG input independently of probability syntax', async ({ page }) => {
+  await open(page)
+  const preview=page.getByTestId('decision-graph-preview')
+  await expect(preview.getByRole('img',{name:'Input causal DAG'})).toBeVisible()
+  await expect(preview.locator('[data-node]')).toHaveCount(3)
+  await expect(preview.locator('[data-edge]')).toHaveCount(2)
+  await page.getByTestId('decision-conclusion').fill('unfinished constraint')
+  await expect(preview).toBeVisible();await expect(page.getByTestId('decision-run')).toBeDisabled()
+  await page.getByTestId('decision-graph').fill('X -> Y; Y -> X')
+  await expect(preview).toBeHidden();await expect(preview.locator('svg')).toHaveCount(0)
+  await expect(page.locator('#decision-graph-error')).toContainText('Syntax error: not a DAG')
+  await page.getByTestId('decision-graph').fill('X -> Y; Z')
+  await expect(preview).toBeVisible();await expect(preview.locator('[data-edge]')).toHaveCount(1)
+  await expect(preview.locator('[data-node="Z"]')).toBeVisible()
+  await expect(page.getByTestId('decision-run')).toBeDisabled()
+})
+
+for (const width of [320,390,1280]) test(`dense DAG preview remains readable and scrollable at ${width}px`, async ({ page }) => {
+  await page.setViewportSize({width,height:900});await open(page)
+  const names=['A','B','C','D','E','F9007199254740991']
+  const graph=names.flatMap((parent,index)=>names.slice(index+1).map(child=>`${parent} -> ${child}`)).join('; ')
+  await page.getByTestId('decision-graph').fill(graph)
+  const preview=page.getByTestId('decision-graph-preview')
+  await expect(preview.locator('[data-node]')).toHaveCount(6)
+  await expect(preview.locator('[data-edge]')).toHaveCount(15)
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+  const size=await preview.evaluate(e=>({client:e.clientWidth,scroll:e.scrollWidth,display:getComputedStyle(e).overflowX}))
+  expect(size.client).toBeGreaterThan(0);expect(size.scroll).toBeGreaterThan(size.client)
+  await preview.focus();await preview.press('ArrowRight')
+  await expect.poll(()=>preview.evaluate(e=>e.scrollLeft)).toBeGreaterThan(0)
+  const labelsFit=await preview.evaluate(e=>[...e.querySelectorAll('[data-node]')].every(n=>{
+    const text=(n.querySelector('text') as SVGGraphicsElement).getBBox(),shape=(n.querySelector('ellipse') as SVGGraphicsElement).getBBox()
+    return text.x>=shape.x&&text.x+text.width<=shape.x+shape.width&&text.y>=shape.y&&text.y+text.height<=shape.y+shape.height
+  }))
+  expect(labelsFit).toBe(true)
+})
+
+test('evaluates new intervention regimes and guarded constraints in a returned model', async ({ page }) => {
+  await open(page);await page.getByTestId('decision-example').selectOption('5');await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('SAT —')
+  const input=page.getByTestId('model-evaluate-input'), output=page.getByTestId('model-evaluate-result')
+  for(const [source,value] of [
+    ['Pr(Y | do(~X))','Exact value in this model: 0'],
+    ['Pr(Y | do(X)) - Pr(Y | do(~X))','Exact value in this model: 1'],
+    ['Pr(Y | do(X, ~Y))','Exact value in this model: 0'],
+    ['Pr(Y | do(X)) > Pr(Y)','True in this model.'],
+  ]) {await input.fill(source);await page.getByTestId('model-evaluate-run').click();await expect(output).toContainText(value)}
+  await input.fill('Pr(X | do(~Y), Y)');await page.getByTestId('model-evaluate-run').click()
+  await expect(output).toContainText('undefined (zero denominator)')
+  await expect(page.getByTestId('decision-status')).toContainText('SAT —')
+  await expect(page.getByTestId('decision-save-smt')).toBeEnabled()
+  await page.getByTestId('decision-graph').fill('A')
+  await expect(page.getByTestId('model-evaluation')).toBeHidden();await expect(page.getByTestId('model-evaluate-result')).toBeEmpty()
+})
+
+test('evaluates exact algebraic values and assigned free variables without model completion', async ({ page }) => {
+  await open(page);await page.getByTestId('decision-task-satisfiability').check()
+  await page.getByTestId('decision-graph').fill('A');await page.getByTestId('decision-clear').click()
+  await page.getByTestId('decision-premise-1').fill('Pr(A)^2 = 1/2')
+  await page.getByTestId('decision-run').click();await expect(page.getByTestId('decision-status')).toContainText('SAT —')
+  await page.getByTestId('model-evaluate-input').fill('Pr(A)^2');await page.getByTestId('model-evaluate-run').click()
+  await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 1/2')
+  await page.getByTestId('decision-premise-1').fill('Pr(A) = a & a = 1/3')
+  await page.getByTestId('decision-run').click();await expect(page.getByTestId('decision-status')).toContainText('SAT —')
+  await page.getByTestId('model-evaluate-input').fill('Pr(A) + a');await page.getByTestId('model-evaluate-run').click()
+  await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 2/3')
+  await page.getByTestId('model-evaluate-input').fill('newRealVariable');await page.getByTestId('model-evaluate-run').click()
+  await expect(page.getByTestId('model-evaluate-status')).toContainText('Unassigned free real variable')
+  await expect(page.getByTestId('decision-save-smt')).toBeEnabled()
+})
+
+test('new expressions also evaluate in the exact countermodel', async ({ page }) => {
+  await open(page);await page.getByTestId('decision-example').selectOption('1');await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
+  await page.getByTestId('model-evaluate-input').fill('Pr(Y | do(~X))');await page.getByTestId('model-evaluate-run').click()
+  await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 1/2')
+  await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
+  await page.getByTestId('model-evaluate-input').fill('Pr(Q)')
+  await expect(page.getByTestId('model-evaluate-run')).toBeDisabled()
+  await expect(page.getByTestId('model-evaluate-input')).toHaveAttribute('aria-invalid','true')
+})
+
+for(const width of [320,390,1280]) test(`evaluation input and results stay contained at ${width}px`,async({page})=>{
+  await page.setViewportSize({width,height:900});await open(page)
+  await page.getByTestId('decision-example').selectOption('5');await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('SAT —')
+  await page.getByTestId('model-evaluate-input').fill(Array.from({length:12},()=> 'Pr(Y | do(X))').join(' + '))
+  await page.getByTestId('model-evaluate-run').click();await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 12')
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+  await page.getByTestId('model-evaluate-preview').focus();await page.getByTestId('model-evaluate-preview').press('ArrowRight')
+  if(width<600)await expect.poll(()=>page.getByTestId('model-evaluate-preview').evaluate(e=>e.scrollLeft)).toBeGreaterThan(0)
+})
+
+test('the single page imports a retired model-finder problem as SAT',async({page})=>{
+ await open(page)
+ const legacy={version:1,graph:'X -> Y',constraints:'Pr(X)=0\nPr(Y)=0\nPr(Y|do(X))=1',regular:false}
+ await page.getByLabel('Load saved decision problem').setInputFiles({name:'PrSATdo-problem.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(legacy))})
+ await expect(page.getByTestId('decision-task-satisfiability')).toBeChecked()
+ await expect(page.getByTestId('decision-conclusion')).toBeHidden()
+ await page.getByTestId('decision-run').click();await expect(page.getByTestId('decision-status')).toContainText('SAT —')
+ await page.getByTestId('model-evaluate-input').fill('Pr(Y|do(~X))');await page.getByTestId('model-evaluate-run').click()
+ await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 0')
+})
+
+test('malformed evaluation parentheses cannot be repaired by the adapter',async({page})=>{
+ await open(page);await page.getByTestId('decision-example').selectOption('1');await page.getByTestId('decision-run').click()
+ await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
+ for(const source of ['Pr(Y)) + (Pr(X)','a) * (b','1) / (0']){
+  await page.getByTestId('model-evaluate-input').fill(source)
+  await expect(page.getByTestId('model-evaluate-input')).toHaveAttribute('aria-invalid','true')
+  await expect(page.getByTestId('model-evaluate-run')).toBeDisabled()
+  await expect(page.getByTestId('model-evaluate-preview')).toBeEmpty()
+ }
+ await page.getByTestId('model-evaluate-input').fill('Pr(Y) + Pr(X)');await page.getByTestId('model-evaluate-run').click()
+ await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 1')
+})
+
+test('oversized node indices are support errors with no DAG drawing',async({page})=>{
+ await open(page);await page.getByTestId('decision-graph').fill('F9007199254740992 -> Y')
+ await expect(page.locator('#decision-graph-error')).toContainText('Unsupported')
+ await expect(page.locator('#decision-graph-error')).not.toContainText('not a DAG')
+ await expect(page.getByTestId('decision-graph-preview')).toBeHidden()
+ await expect(page.getByTestId('decision-graph-preview').locator('svg')).toHaveCount(0)
+ await expect(page.getByTestId('decision-run')).toBeDisabled()
 })

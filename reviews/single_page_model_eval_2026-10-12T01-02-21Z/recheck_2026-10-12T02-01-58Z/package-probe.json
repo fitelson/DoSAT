@@ -1,0 +1,248 @@
+{
+  "base": "http://127.0.0.1:4175/DoSAT/",
+  "checks": 38,
+  "rows": [
+    {
+      "kind": "initial",
+      "width": 1280,
+      "runY": 797.8125,
+      "isolated": true
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 5,
+      "expected": "SAT —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 6,
+      "expected": "UNSAT —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 1280,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "dag-recovery-and-isolates",
+      "width": 1280,
+      "passed": true
+    },
+    {
+      "kind": "initial",
+      "width": 390,
+      "runY": 943.53125,
+      "isolated": true
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 5,
+      "expected": "SAT —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 6,
+      "expected": "UNSAT —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 390,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "dag-recovery-and-isolates",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "kind": "initial",
+      "width": 320,
+      "runY": 1204.578125,
+      "isolated": true
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 0,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 1,
+      "expected": "DOES NOT ENTAIL",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 2,
+      "expected": "DOES NOT ENTAIL",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 3,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 4,
+      "expected": "INCONSISTENT PREMISES",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 5,
+      "expected": "SAT —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 6,
+      "expected": "UNSAT —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 7,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "example",
+      "width": 320,
+      "example": 8,
+      "expected": "ENTAILS —",
+      "errors": []
+    },
+    {
+      "kind": "dag-recovery-and-isolates",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "kind": "algebraic-model",
+      "passed": true
+    },
+    {
+      "kind": "free-variable-and-unknown",
+      "passed": true
+    },
+    {
+      "kind": "legacy-import",
+      "passed": true
+    },
+    {
+      "kind": "B1-unbalanced-rejected-and-valid-recovery",
+      "passed": true
+    },
+    {
+      "kind": "B2-support-classification",
+      "passed": true
+    }
+  ]
+}

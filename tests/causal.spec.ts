@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test'
 
 const open = async (page: Page) => {
-  await page.goto('/causal.html', { waitUntil: 'domcontentloaded' })
+  await page.goto('/reference-ui/causal.html', { waitUntil: 'domcontentloaded' })
   await expect(page.getByTestId('causal-z3-status')).toHaveText('Z3 ready.', { timeout: 20_000 })
 }
 const solve = async (page: Page, expected: 'SAT' | 'UNSAT') => {
@@ -92,11 +92,11 @@ test('saved problems restore graph, constraints and positivity', async ({ page }
 })
 
 test('classical and causal interfaces link to each other', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/reference-ui/classical.html')
   await page.getByRole('link', { name: 'Open the causal model finder' }).click()
   await expect(page).toHaveURL(/causal\.html/)
   await page.getByRole('link', { name: 'Open classical PrSAT 3.0' }).click()
-  await expect(page).toHaveURL(/index\.html/)
+  await expect(page).toHaveURL(/classical\.html/)
 })
 
 

@@ -1,10 +1,13 @@
 import { el, tel } from './el'
 import { compile_decision_problem, parse_decision_input, type DecisionProblemInput, type CompiledDecisionProblem } from './causal_decision'
-import { CausalDecisionSolver, type CausalDecisionResult } from './causal_decision_solver'
+import { CausalDecisionSolver, type CausalDecisionResult, type DecisionWitness } from './causal_decision_solver'
 import { create_decision_editor } from './causal_decision_editor'
 import { render_causal_constraint } from './causal_to_html'
 import { render_decision_witness } from './causal_decision_results'
 import { validate_decision_fields } from './causal_decision_validation'
+import { CausalModelEvaluator } from './causal_model_evaluator'
+import { create_model_evaluation_panel } from './causal_evaluation_ui'
+import { create_decision_graph_preview } from './causal_graph_preview'
 import { init_z3 } from './z3_integration'
 import { download } from './download'
 import './style.css'
@@ -24,6 +27,7 @@ const examples = [
 ] as const
 const root = document.getElementById('app')!
 const graph = tel('decision-graph', 'textarea', { id: 'decision-graph', rows: '1', spellcheck: 'false', 'aria-describedby': 'decision-graph-error decision-graph-nodes' }) as HTMLTextAreaElement
+const graphPreview = create_decision_graph_preview()
 const graphError = el('div', { id: 'decision-graph-error', class: 'error decision-field-error' })
 const nodes = el('span', { id: 'decision-graph-nodes', class: 'decision-note' })
 const conclusion = tel('decision-conclusion', 'textarea', { id: 'decision-conclusion', rows: '1', spellcheck: 'false', 'aria-describedby': 'decision-conclusion-error decision-definedness' }) as HTMLTextAreaElement
@@ -59,6 +63,11 @@ const runtime = tel('decision-runtime', 'span', { role: 'status' }, 'Loading Z3�
 const status = tel('decision-status', 'div', { role: 'status', 'aria-live': 'polite' }, 'Choose a decision problem.')
 const results = tel('decision-results', 'div', { class: 'model-container' })
 let solver: CausalDecisionSolver | undefined
+let modelEvaluator: CausalModelEvaluator | undefined
+const evaluationPanel = create_model_evaluation_panel(busy => {
+  if (!busy && status.textContent === 'Input changed; waiting for model evaluation to settle…') status.textContent = 'Input changed; decide the current problem.'
+  refresh()
+})
 let revision = 0, loadToken = 0
 let running = false
 let active: AbortController | undefined
@@ -74,7 +83,8 @@ const timeLimit = (): number => {
 const linkError = (container: HTMLElement, label: string, target: string): void => container.append(el('a', { href: `#${target}` }, label), ' ')
 const valid = (): boolean => {
   const fields = validate_decision_fields(input())
-  graphError.textContent = fields.graphError ? `Graph: ${fields.graphError}` : ''
+  graphError.textContent = fields.graphError ? (fields.graphError.includes('At most') || fields.graphError.includes('limited to') || fields.graphError.includes('too large') ? `Graph: Unsupported input. ${fields.graphError}` : `Graph: Syntax error: not a DAG. ${fields.graphError}`) : ''
+  graphPreview.update(graph.value)
   graph.setAttribute('aria-invalid', String(!!fields.graphError))
   nodes.textContent = fields.nodes.length ? `${fields.nodes.length} variables: ${fields.nodes.join(', ')}` : 'A causal graph is required.'
   editor.setGraph(graph.value)
@@ -108,14 +118,14 @@ const refresh = (): void => {
   batchButton.textContent = editor.element.dataset.batchOpen === 'true' ? 'Hide Batch Input' : 'Show Batch Input'
   batchButton.setAttribute('aria-expanded', String(editor.element.dataset.batchOpen === 'true'))
   const okay = valid()
-  run.disabled = !okay || !solver || running
+  run.disabled = !okay || !solver || running || evaluationPanel.busy()
   save.disabled = !okay; copy.disabled = !okay
   cancel.disabled = !running || !active || active.signal.aborted
   saveSmt.disabled = !lastCompiled
 }
 const invalidate = (): void => {
-  revision++; active?.abort(); results.replaceChildren(); lastCompiled = undefined; sample.value = ''
-  status.textContent = running ? 'Input changed; cancelling the previous decision…' : 'Input changed; decide the current problem.'
+  revision++; active?.abort(); evaluationPanel.clear(); results.replaceChildren(); lastCompiled = undefined; sample.value = ''
+  status.textContent = running ? 'Input changed; cancelling the previous decision…' : evaluationPanel.busy() ? 'Input changed; waiting for model evaluation to settle…' : 'Input changed; decide the current problem.'
   refresh()
 }
 for (const field of [graph, conclusion, entailment, satisfiability, mode, seconds, regular]) field.addEventListener('input', invalidate)
@@ -133,11 +143,22 @@ sample.addEventListener('change', () => {
   entailment.checked = example.task === 'entailment'; satisfiability.checked = !entailment.checked; regular.checked = example.regular
   invalidate(); sample.value = String(index)
 })
+const bindModel = (witness: DecisionWitness): void => {
+  if (!modelEvaluator) return
+  const evaluator = modelEvaluator, sourceGraph = graph.value
+  try {
+    const captured = evaluator.capture(sourceGraph, witness)
+    evaluationPanel.show(sourceGraph, (source, signal) => evaluator.evaluate(captured, source, { abort_signal: signal }))
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    evaluationPanel.show(sourceGraph, async () => ({ status: 'error', message: `Model evaluation unavailable: ${message}` }))
+  }
+}
 const show = (output: CausalDecisionResult): void => {
   switch (output.status) {
-    case 'sat': status.textContent = 'SAT — a compatible causal model was found.'; results.append(render_decision_witness(output.witness, false, graph.value, conclusion.value)); break
+    case 'sat': status.textContent = 'SAT — a compatible causal model was found.'; results.append(render_decision_witness(output.witness, false, graph.value, conclusion.value)); bindModel(output.witness); break
     case 'unsat': status.textContent = 'UNSAT — no compatible causal model satisfies the constraints.'; break
-    case 'not-entailed': status.textContent = 'DOES NOT ENTAIL — a countermodel was found.'; results.append(render_decision_witness(output.witness, true, graph.value, conclusion.value)); break
+    case 'not-entailed': status.textContent = 'DOES NOT ENTAIL — a countermodel was found.'; results.append(render_decision_witness(output.witness, true, graph.value, conclusion.value)); bindModel(output.witness); break
     case 'entailed': status.textContent = 'ENTAILS — every compatible model of the premises satisfies the conclusion.'; results.append(el('p', {}, 'The premises are satisfiable. Searching for a model that satisfies them but fails the conclusion returned UNSAT.')); break
     case 'inconsistent-premises': status.textContent = 'INCONSISTENT PREMISES — no compatible model satisfies the premises.'; results.append(el('p', {}, 'Entailment holds vacuously because there are no models of the premises. This does not establish the conclusion for a possible model.')); break
     case 'unknown': status.textContent = `UNRESOLVED — ${output.reason}`; break
@@ -146,9 +167,9 @@ const show = (output: CausalDecisionResult): void => {
   }
 }
 run.addEventListener('click', () => { void (async () => {
-  if (running || !solver || !valid()) return
+  if (running || evaluationPanel.busy() || !solver || !valid()) return
   const version = revision, controller = new AbortController()
-  active = controller; running = true; results.replaceChildren(); refresh()
+  active = controller; running = true; evaluationPanel.clear(); results.replaceChildren(); refresh()
   try {
     const compiled = compile_decision_problem(input())
     lastCompiled = compiled; refresh()
@@ -192,7 +213,11 @@ load.addEventListener('change', () => {
       const value: unknown = JSON.parse(await file.text())
       if (token !== loadToken || version !== revision) return
       if (!value || typeof value !== 'object') throw new Error('Expected a saved decision problem.')
-      const data = value as Record<string, unknown>
+      let data = value as Record<string, unknown>
+      // Retired model-finder files become ordinary SAT problems on the single page.
+      if (data.version === 1 && data.kind === undefined && data.task === undefined && typeof data.graph === 'string' && typeof data.constraints === 'string' && typeof data.regular === 'boolean') {
+        data = { version: 1, kind: 'DoSAT-decision', task: 'satisfiability', graph: data.graph, premises: data.constraints, conclusion: '', regular: data.regular, mode: 'complete', seconds: 30 }
+      }
       if (data.version !== 1 || data.kind !== 'DoSAT-decision' || (data.task !== 'satisfiability' && data.task !== 'entailment') || (data.mode !== 'complete' && data.mode !== 'bounded') || typeof data.graph !== 'string' || typeof data.premises !== 'string' || typeof data.conclusion !== 'string' || typeof data.regular !== 'boolean' || typeof data.seconds !== 'number' || !Number.isFinite(data.seconds) || data.seconds < 0.1 || data.seconds > 120) throw new Error('Expected a version 1 DoSAT decision problem with valid fields.')
       // Textareas normalize line endings. Validate exactly the representable text before any mutation.
       const loadedGraph = data.graph.replace(/\r\n?/g, '\n')
@@ -211,12 +236,12 @@ const help = (title: string, text: string): HTMLElement => el('details', { class
 root.append(el('main', { class: 'causal-ui decision-ui' },
   el('header', { class: 'header' }, el('h1', {}, 'DoSAT 1.0'), el('p', { class: 'decision-subtitle' }, 'A Decision Procedure for Do Calculus.'),
     el('p', { class: 'decision-assumptions' }, 'Observed Boolean DAG · independent private disturbances · shared mechanisms across interventions'),
-    el('nav', {}, el('a', { href: '#decision-help' }, 'Help'), ' · ', el('a', { href: './causal.html', 'aria-label': 'Open causal model finder' }, 'Model finder'), ' · ', el('a', { href: './do_calculus.html', 'aria-label': 'Check a do-calculus step' }, 'Rule checker'))),
+    el('nav', {}, el('a', { href: '#decision-help' }, 'Help'), ' · ', el('a', { href: 'https://github.com/fitelson/DoSAT' }, 'GitHub'))),
   el('section', { class: 'generic-input-block decision-input-panel', 'aria-label': 'Decision problem editor' },
     el('fieldset', { class: 'decision-task' }, el('legend', {}, 'Task'), el('label', {}, entailment, ' Check entailment'), el('label', {}, satisfiability, ' Satisfiability')),
     el('div', { class: 'decision-toolbar' }, loadButton, load, batchButton, clearButton, el('label', {}, 'Examples ', sample)),
-    el('div', { class: 'decision-graph-block' }, el('label', { for: 'decision-graph' }, 'Causal graph'), graph, nodes, graphError,
-      help('ⓘ Graph syntax', 'Declare edges such as Z -> X; Z -> Y or isolated variables. Semicolons and newlines are supported. Acyclic graphs with up to six observed Boolean variables are allowed. No latent confounders or cross-world counterfactuals.')),
+    el('div', { class: 'decision-graph-layout' }, el('div', { class: 'decision-graph-block' }, el('label', { for: 'decision-graph' }, 'Causal graph'), graph, nodes, graphError,
+      help('ⓘ Graph syntax', 'Declare edges such as Z -> X; Z -> Y or isolated variables. Semicolons and newlines are supported. Acyclic graphs with up to six observed Boolean variables are allowed. No latent confounders or cross-world counterfactuals.')), graphPreview.element),
     editor.element, conclusionBlock,
     el('div', { class: 'decision-toolbar decision-save-toolbar' }, save, copy, el('span', { class: 'decision-note' }, 'Save, Load and Copy use the whole problem.'))),
   el('section', { class: 'model-finder decision-action-panel', 'aria-label': 'Run decision and results' },
@@ -224,11 +249,11 @@ root.append(el('main', { class: 'causal-ui decision-ui' },
     el('div', { class: 'decision-options' },
       el('div', {}, el('label', {}, regular, ' Regular'), el('span', { class: 'decision-note' }, 'Positive observational rows; interventions can still force zeros.')),
       el('div', {}, el('label', {}, mode, ' Time limit: ', seconds, ' seconds'), el('span', { class: 'decision-note' }, 'Off: no overall limit. A deadline ends result acceptance; cancellation and cleanup can take longer.'))),
-    validation, status, results, el('div', { class: 'decision-export' }, saveSmt)),
+    validation, status, results, evaluationPanel.element, el('div', { class: 'decision-export' }, saveSmt)),
   el('section', { id: 'decision-help' },
     help('ⓘ Probability and do syntax', 'One premise per row; blank and # comment rows are ignored. Use Pr(Y | do(X)) or do(~X) for Boolean interventions, do(X, ~Z) for simultaneous interventions, and Pr(Y | do(X), Z) to observe Z after intervention. Numeric forms do(X=1) and do(X=0) are also supported. A rendered preview confirms parsing, not numerical definedness. Empty premises are allowed. Enter splits a premise; Up/Down move between rows; Backspace at its start merges with the previous row. Batch Parse replaces premises only.'),
-    help('ⓘ Decision scope and solver', 'The supplied observed Boolean DAG defines a family of causal models with independent private disturbances and shared mechanisms across interventions. Every stage first tries a QF_NRA strategy with a budget of up to 60 seconds, then complete NLSat if needed. Finite resources may still prevent an answer. UNRESOLVED and cancellation establish no decision. Regular requires positive observational mechanisms; hard interventions may force zeros. Inconsistent premises entail vacuously. The app does not infer latent confounders, search for do-calculus derivations, or evaluate new expressions in a returned model.')),
+    help('ⓘ Decision scope and solver', 'The supplied observed Boolean DAG defines a family of causal models with independent private disturbances and shared mechanisms across interventions. Every stage first tries a QF_NRA strategy with a budget of up to 60 seconds, then complete NLSat if needed. Finite resources may still prevent an answer. UNRESOLVED and cancellation establish no decision. Regular requires positive observational mechanisms; hard interventions may force zeros. Inconsistent premises entail vacuously. The app does not infer latent confounders, search for do-calculus derivations, or infer counterfactual values across worlds. New expressions can be evaluated in a returned model; that is a value in that model, not an entailment claim.')),
 ))
 graph.value = examples[0].graph; editor.setValue(examples[0].premises); conclusion.value = examples[0].conclusion; sample.value = '0'
 refresh()
-void init_z3().then(value => { solver = new CausalDecisionSolver(value); runtime.dataset.z3Version = value.getVersionString(); runtime.textContent = 'Z3 ready.'; refresh() }).catch((error: unknown) => { runtime.textContent = `Z3 failed to load: ${error instanceof Error ? error.message : String(error)}`; refresh() })
+void init_z3().then(value => { solver = new CausalDecisionSolver(value); modelEvaluator = new CausalModelEvaluator(value); runtime.dataset.z3Version = value.getVersionString(); runtime.textContent = 'Z3 ready.'; refresh() }).catch((error: unknown) => { runtime.textContent = `Z3 failed to load: ${error instanceof Error ? error.message : String(error)}`; refresh() })
