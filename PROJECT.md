@@ -292,3 +292,7 @@ Latest local verification: 1,309 unit tests pass (one inherited skip/todo each).
 ### Single-page/model-evaluation gate complete
 
 The scoped default-model repair recheck gives **Phase gate: PASS**. Current record: [FINAL_STATUS.md](reviews/single_page_model_eval_2026-10-12T01-02-21Z/FINAL_STATUS.md). The approved eight-file package has one HTML entry; 1,316 units and 93 unique browser cases pass, with real Apache/package validation. Authorized commit/push/publication follows the gate. Previous pending/FAIL notes are historical.
+
+### Single public page now published
+
+The canonical DoSAT 1.0 app is live at https://fitelson.org/DoSAT/. It includes the live valid-DAG preview, not-a-DAG errors and exact returned-model expression evaluation. All five former /dist/ entry routes redirect to this single page. Implementation0261b48 is pushed to public main; eight remote/six HTTPS files match, 38 live probe and two live Cancel/Edit/reuse checks pass. Backup directory is HTTP403. See [PUBLICATION.md](reviews/single_page_model_eval_2026-10-12T01-02-21Z/PUBLICATION.md). Gate PASS,1316units/93unique browsercases, source hashes unchanged. Earlier pending/FAIL and old URL notes are historical.

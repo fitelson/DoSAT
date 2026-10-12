@@ -26,7 +26,10 @@ if 'index.html' in needs:
 if '.htaccess' in needs or 'index.html' in needs:plan.append({'name':'.htaccess',**files['.htaccess']})
 if 'dist/.htaccess' in needs:plan.append({'name':'dist/.htaccess',**files['dist/.htaccess']})
 print(json.dumps(plan),flush=True)
-backup=pathlib.Path('/home/fitelson/DoSAT-release-backups');backup.mkdir(exist_ok=True)
+backup=root/'.release-backups';backup.mkdir(exist_ok=True)
+guard=backup/'.htaccess'
+if not guard.exists():guard.write_text('Require all denied\n')
+else:assert guard.read_text()=='Require all denied\n'
 for item in plan:
  header=json.loads(sys.stdin.buffer.readline());assert header==item
  name=item['name'];target=root/name;target.parent.mkdir(parents=True,exist_ok=True)

@@ -1,0 +1,24 @@
+{
+  "checks": 2,
+  "qualification": "Instance observations; no universal physical settlement bound is claimed.",
+  "rows": [
+    {
+      "action": "cancel",
+      "taskDelayMs": 50,
+      "pendingAtAction": true,
+      "settled": true,
+      "elapsedMs": 2814.614999949932,
+      "reuse": "ENTAILED",
+      "errors": []
+    },
+    {
+      "action": "edit",
+      "taskDelayMs": 50,
+      "pendingAtAction": true,
+      "settled": true,
+      "elapsedMs": 2860.264999985695,
+      "reuse": "ENTAILED",
+      "errors": []
+    }
+  ]
+}

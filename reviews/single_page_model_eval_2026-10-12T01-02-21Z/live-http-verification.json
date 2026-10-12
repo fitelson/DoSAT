@@ -1,0 +1,100 @@
+{
+  "root_status": 200,
+  "files_verified": 6,
+  "files": [
+    {
+      "file": "assets/dosat-BICYPzhr.js",
+      "bytes": 273463,
+      "sha256": "570d135301eba2b136754893a2b4d74dcf6e5f5053da44fd255ebe1aa46549f6",
+      "headers": {
+        "Content-Type": "text/javascript",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Service-Worker-Allowed": null
+      }
+    },
+    {
+      "file": "assets/dosat-t4OSGF_A.css",
+      "bytes": 16011,
+      "sha256": "655f3911dcb4a527dc235f0bbbf8f59dc9c92f0b920e7330a763ba74f689db10",
+      "headers": {
+        "Content-Type": "text/css",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Service-Worker-Allowed": null
+      }
+    },
+    {
+      "file": "coi-serviceworker.js",
+      "bytes": 6027,
+      "sha256": "e35c3d4758ef522584c5608b9ebf7e0b19df4bd6857f8ac16f2e2febde119881",
+      "headers": {
+        "Content-Type": "text/javascript",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Service-Worker-Allowed": "/"
+      }
+    },
+    {
+      "file": "index.html",
+      "bytes": 955,
+      "sha256": "efb806aa6e372343c42db40df6224d4bcb505250e6511b41ca58a0a10c7d2ccc",
+      "headers": {
+        "Content-Type": "text/html",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Service-Worker-Allowed": null
+      }
+    },
+    {
+      "file": "z3-built.js",
+      "bytes": 353813,
+      "sha256": "0c6cc2a4a8461b0ffa73e792f97c9749a0c7a2ad5c647b43ec7f630c82b16ee1",
+      "headers": {
+        "Content-Type": "text/javascript",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Service-Worker-Allowed": null
+      }
+    },
+    {
+      "file": "z3-built.wasm",
+      "bytes": 34938413,
+      "sha256": "2765f5443a5a3a41aace71a82dd954e3b8c885a7d621b50122b1aede0dc8348a",
+      "headers": {
+        "Content-Type": "application/wasm",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Service-Worker-Allowed": null
+      }
+    }
+  ],
+  "retired_routes": [
+    {
+      "route": "/DoSAT/dist/decision.html",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/?single-page-check=1"
+    },
+    {
+      "route": "/DoSAT/dist/causal.html",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/?single-page-check=1"
+    },
+    {
+      "route": "/DoSAT/dist/do_calculus.html",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/?single-page-check=1"
+    },
+    {
+      "route": "/DoSAT/dist/index.html",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/?single-page-check=1"
+    },
+    {
+      "route": "/DoSAT/dist/",
+      "status": 301,
+      "location": "https://fitelson.org/DoSAT/?single-page-check=1"
+    }
+  ],
+  "backup_http_status": 403
+}

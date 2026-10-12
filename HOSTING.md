@@ -18,7 +18,7 @@ reviews/single_page_model_eval_2026-10-12T01-02-21Z/publish.py uses one SSH sess
 verifies all staged bytes, installs runtime/assets first, then root headers
 without retirement redirects, the application index, and final redirects. This
 keeps a usable application behind every newly installed redirect. Previous
-changed files are preserved outside the web root under DoSAT-release-backups.
+changed files are preserved under DoSAT/.release-backups/, protected by Require all denied.
 No cleanup or deletion occurs. Only /home/fitelson/www/www/DoSAT is the app target;
 never run inherited PrSAT deploy commands.
 
@@ -29,5 +29,4 @@ PrSAT and its permanent5317 service are unrelated. Local development uses strict
 instance. The copied generic npm deploy command stays disabled.
 
 The preceding UI release is recorded in reviews/ui_implementation_2026-10-11T22-41-54Z/PUBLICATION.md.
-The new single-page/model-evaluation phase is implemented locally and its gate
-is pending; it is not yet published. Read the current PROJECT.md status.
+The new single-page/model-evaluation phase is published and verified with its scoped gate PASS. Eight remote/six HTTPS hashes, five retired redirects, 38 live checks and two live lifecycle reuse checks pass. Read the current PROJECT.md and single-page PUBLICATION.md.
