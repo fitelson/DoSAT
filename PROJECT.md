@@ -296,3 +296,64 @@ The scoped default-model repair recheck gives **Phase gate: PASS**. Current reco
 ### Single public page now published
 
 The canonical DoSAT 1.0 app is live at https://fitelson.org/DoSAT/. It includes the live valid-DAG preview, not-a-DAG errors and exact returned-model expression evaluation. All five former /dist/ entry routes redirect to this single page. Implementation0261b48 is pushed to public main; eight remote/six HTTPS files match, 38 live probe and two live Cancel/Edit/reuse checks pass. Backup directory is HTTP403. See [PUBLICATION.md](reviews/single_page_model_eval_2026-10-12T01-02-21Z/PUBLICATION.md). Gate PASS,1316units/93unique browsercases, source hashes unchanged. Earlier pending/FAIL and old URL notes are historical.
+
+## Literature examples, October 12, 2026
+
+The requested replacement menu has the six literature illustrations (Berkson,
+M-bias, instrument bias amplification, treatment–confounder feedback, front-door,
+and positivity failure), plus the retained Simpson example. Source data live in
+src/causal_decision_examples.ts. Collapsible guidance gives literature links,
+expected decisions and exact returned-model evaluations; it clears after problem
+edits or a file load. Numerical inputs are constructed Boolean illustrations.
+Front-door/instrument background causes are explicit graph nodes, not an extension
+to latent-variable identification. The original compiler, solver and evaluator
+are unchanged. Former menu cases remain regression fixtures.
+
+Local checks: **1,318 units pass**, one inherited skip and one todo; **103 Chromium
+cases pass**, including all seven presets, all 15 displayed evaluation results,
+and 320/390/1280px containment. TypeScript/lint/build and authored whitespace pass.
+Independent Fraction enumeration checks the specified kernels and every premise,
+the exact displayed values, positivity countermodels and retained Simpson rates.
+The first browser attempt could not launch because Playwright's pinned Chromium
+was absent; after installing that browser, the complete suite passed.
+
+The scoped default-model consensus gate is pending. Current evidence and review
+artifacts: reviews/literature_examples_2026-10-12T13-22-34Z/. These presets have
+not been pushed or published; the prior approved release remains live.
+
+### Literature preset repair checkpoint
+
+The initial scoped consensus agreed on FAIL for three bounded repairs: precise
+all-paths-through-L wording, neutral startup status, and explicit guide-lifecycle
+regressions. Those repairs are implemented, along with exact scalar assertions
+and a positivity-term definedness check. All numerical inputs and recipes,
+Simpson, and compiler/solver/evaluator sources remain unchanged.
+
+The refreshed full suite passes 1,318 units and 103 Chromium cases; the rebuilt
+eight-file package passes 21 scenario runs and 45 exact evaluations across three
+widths, plus the startup and guide-clear checks. The repair recheck is running.
+Read reviews/literature_examples_2026-10-12T13-22-34Z/recheck_2026-10-12T14-08-02Z/REPAIRS.md
+for the candidate, preserved unit-failure qualification and subsequent passing
+runs. Publication is still pending.
+
+### Literature presets approved and published
+
+The scoped repair recheck reached explicit **Phase gate: PASS** from both
+Claude Opus 5.5/xhigh and GPT-6.1 Sol/xhigh. R1–R3 and the exact-value/definedness
+regressions are closed. The seven-example menu is live at
+https://fitelson.org/DoSAT/; Simpson's graph, premises and conclusion are unchanged.
+The approved eight-file package matches all eight remote files and six public
+HTTPS files. Cross-origin headers, WASM MIME, five legacy redirects and protected
+backups pass. The actual live browser probe passes 21 scenario runs and 45 exact
+evaluations across 320/390/1280px widths, with no browser errors.
+
+Branden explicitly requested commit, push and upload on October 12. This source
+release targets **fitelson/DoSAT main only**; the remaining family push freeze is
+unchanged. Source, tests, currently referenced assets and curated review evidence
+are included in this release. Raw journals, older bundles and existing unrelated
+artifacts are preserved locally. Read
+[FINAL_STATUS.md](reviews/literature_examples_2026-10-12T13-22-34Z/FINAL_STATUS.md)
+and [PUBLICATION.md](reviews/literature_examples_2026-10-12T13-22-34Z/PUBLICATION.md).
+The earlier running/FAIL/pending notes above are historical. The unexplained
+unchanged-evaluator WASM unit failure remains documented; subsequent isolated,
+full and independent reviewer runs pass.

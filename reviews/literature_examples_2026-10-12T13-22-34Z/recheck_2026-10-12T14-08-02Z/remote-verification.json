@@ -1,0 +1,46 @@
+{
+  "steps": 5,
+  "verified": 8,
+  "files": [
+    {
+      "file": ".htaccess",
+      "bytes": 1381,
+      "sha256": "4131dd76a82874996e68b1d8621882aca3be73ea80b0dc45238e73b4534e14d7"
+    },
+    {
+      "file": "assets/dosat-Clc5QVqf.css",
+      "bytes": 16250,
+      "sha256": "39105252ffbad38c898e2f4a5750cd33786825992326230efbfeeb95ed4d25b7"
+    },
+    {
+      "file": "assets/dosat-oqa7zYuo.js",
+      "bytes": 278224,
+      "sha256": "704c691b3dcb2c272b56c5f79a335d16e136efc8a436644b7360633fd7ae1988"
+    },
+    {
+      "file": "coi-serviceworker.js",
+      "bytes": 6027,
+      "sha256": "e35c3d4758ef522584c5608b9ebf7e0b19df4bd6857f8ac16f2e2febde119881"
+    },
+    {
+      "file": "index.html",
+      "bytes": 955,
+      "sha256": "0e7494bfdb136690ffa2291c7b13c8ae9dddfeaa7644fa601bbd3ffbc7057324"
+    },
+    {
+      "file": "z3-built.js",
+      "bytes": 353813,
+      "sha256": "0c6cc2a4a8461b0ffa73e792f97c9749a0c7a2ad5c647b43ec7f630c82b16ee1"
+    },
+    {
+      "file": "z3-built.wasm",
+      "bytes": 34938413,
+      "sha256": "2765f5443a5a3a41aace71a82dd954e3b8c885a7d621b50122b1aede0dc8348a"
+    },
+    {
+      "file": "dist/.htaccess",
+      "bytes": 1381,
+      "sha256": "4131dd76a82874996e68b1d8621882aca3be73ea80b0dc45238e73b4534e14d7"
+    }
+  ]
+}

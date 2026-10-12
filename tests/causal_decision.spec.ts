@@ -1,18 +1,20 @@
 import { test, expect } from '@playwright/test'
 import { readFile } from 'node:fs/promises'
+import { loadDecisionFixture } from './decision_helpers'
 const open = async (page: import('@playwright/test').Page) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(page.getByTestId('decision-runtime')).toHaveText('Z3 ready.', { timeout: 20_000 })
   await expect(page.getByTestId('decision-runtime')).toHaveAttribute('data-z3-version', '5.1.0')
   await expect(page.getByRole('heading', { name: 'DoSAT 1.0', exact: true })).toBeVisible()
   await expect(page.locator('.decision-subtitle')).toHaveText('A Decision Procedure for Do Calculus.')
+  await loadDecisionFixture(page, 0)
 }
 for (const [example, answer] of [['0', 'ENTAILS —'], ['1', 'DOES NOT ENTAIL'], ['2', 'DOES NOT ENTAIL'], ['3', 'ENTAILS —'], ['4', 'INCONSISTENT PREMISES'], ['5', 'SAT —'], ['6', 'UNSAT —'], ['7', 'ENTAILS —'], ['8', 'ENTAILS —']] as const) {
-  test(`decision example ${example}: ${answer}`, async ({ page }) => {
+  test(`retained decision regression ${example}: ${answer}`, async ({ page }) => {
     const errors: string[] = []; page.on('pageerror', error => errors.push(error.message))
     await open(page)
     await expect(page.getByTestId('decision-seconds')).toBeDisabled()
-    await page.getByTestId('decision-example').selectOption(example)
+    await loadDecisionFixture(page, Number(example))
     await page.getByTestId('decision-run').click()
     await expect(page.getByTestId('decision-status')).toContainText(answer, { timeout: 20_000 })
     if (example === '2') await expect(page.getByTestId('decision-query-table')).toContainText('undefined')
@@ -66,7 +68,7 @@ test('empty premises test validity and regularity handles support explicitly', a
 })
 for (const width of [320, 390, 1280]) test(`decision results fit a ${width}px viewport`, async ({ page }) => {
   await page.setViewportSize({ width, height: 900 }); await open(page)
-  await page.getByTestId('decision-example').selectOption('2')
+  await loadDecisionFixture(page, 2)
   await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
@@ -148,7 +150,7 @@ for (const timing of ['boundary', 'task'] as const) for (const action of ['cance
     const elapsed = await page.evaluate(() => performance.now() - Number(document.documentElement.dataset.boundaryActionAt))
     expect(elapsed).toBeLessThan(threshold)
     await expect(page.getByTestId('decision-run')).toBeEnabled()
-    await page.getByTestId('decision-example').selectOption('0')
+    await loadDecisionFixture(page, 0)
     await page.getByTestId('decision-run').click()
     await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —', { timeout: 20_000 })
   })
@@ -156,13 +158,13 @@ for (const timing of ['boundary', 'task'] as const) for (const action of ['cance
 
 test('Simpson example entails its four exact observed and intervened recovery rates', async ({ page }) => {
   await open(page)
-  await page.getByTestId('decision-example').selectOption('7')
+  await page.getByTestId('decision-example').selectOption('6')
   await page.getByTestId('decision-conclusion').fill('(Pr(Y | X) = 63/100) & (Pr(Y | ~X) = 77/100) & (Pr(Y | do(X)) = 3/4) & (Pr(Y | do(~X)) = 13/20)')
   await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —', { timeout: 20_000 })
 })
 
-test('the PrSAT-style action is reachable and the default row previews render', async ({ page }) => {
+test('the PrSAT-style action is reachable and the regression row previews render', async ({ page }) => {
   for (const [width, maximumY] of [[1280, 800], [390, 950]]) {
     await page.setViewportSize({ width, height: 900 }); await open(page)
     await page.evaluate(() => document.fonts.ready)
@@ -225,7 +227,7 @@ test('clear and batch discard preserve the graph, conclusion and options', async
 })
 
 test('a countermodel shows visible exact regime rows and the submitted claim', async ({ page }) => {
-  await open(page); await page.getByTestId('decision-example').selectOption('1'); await page.getByTestId('decision-run').click()
+  await open(page); await loadDecisionFixture(page, 1); await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
   await expect(page.getByTestId('decision-distribution-table')).toBeVisible()
   await expect(page.getByTestId('decision-distribution-table')).toContainText('⊤')
@@ -251,7 +253,7 @@ test('task switching hides but saves the inactive conclusion draft', async ({ pa
 
 for (const width of [390, 320]) test(`long formulas scroll by keyboard within their own regions at ${width}px`, async ({ page }) => {
   await page.setViewportSize({ width, height: 900 }); await open(page)
-  await page.getByTestId('decision-example').selectOption('8')
+  await loadDecisionFixture(page, 8)
   const backdoor = 'Pr(Y | do(X)) = Pr(Y | X & Z)*Pr(Z) + Pr(Y | X & ~Z)*Pr(~Z)'
   await page.getByTestId('decision-premise-1').fill(backdoor)
   const preview = page.getByRole('region', { name: 'Premise 1 preview', exact: true })
@@ -340,7 +342,7 @@ for (const width of [320,390,1280]) test(`dense DAG preview remains readable and
 })
 
 test('evaluates new intervention regimes and guarded constraints in a returned model', async ({ page }) => {
-  await open(page);await page.getByTestId('decision-example').selectOption('5');await page.getByTestId('decision-run').click()
+  await open(page);await loadDecisionFixture(page, 5);await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('SAT —')
   const input=page.getByTestId('model-evaluate-input'), output=page.getByTestId('model-evaluate-result')
   for(const [source,value] of [
@@ -374,7 +376,7 @@ test('evaluates exact algebraic values and assigned free variables without model
 })
 
 test('new expressions also evaluate in the exact countermodel', async ({ page }) => {
-  await open(page);await page.getByTestId('decision-example').selectOption('1');await page.getByTestId('decision-run').click()
+  await open(page);await loadDecisionFixture(page, 1);await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
   await page.getByTestId('model-evaluate-input').fill('Pr(Y | do(~X))');await page.getByTestId('model-evaluate-run').click()
   await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 1/2')
@@ -386,7 +388,7 @@ test('new expressions also evaluate in the exact countermodel', async ({ page })
 
 for(const width of [320,390,1280]) test(`evaluation input and results stay contained at ${width}px`,async({page})=>{
   await page.setViewportSize({width,height:900});await open(page)
-  await page.getByTestId('decision-example').selectOption('5');await page.getByTestId('decision-run').click()
+  await loadDecisionFixture(page, 5);await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('SAT —')
   await page.getByTestId('model-evaluate-input').fill(Array.from({length:12},()=> 'Pr(Y | do(X))').join(' + '))
   await page.getByTestId('model-evaluate-run').click();await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 12')
@@ -407,7 +409,7 @@ test('the single page imports a retired model-finder problem as SAT',async({page
 })
 
 test('malformed evaluation parentheses cannot be repaired by the adapter',async({page})=>{
- await open(page);await page.getByTestId('decision-example').selectOption('1');await page.getByTestId('decision-run').click()
+ await open(page);await loadDecisionFixture(page, 1);await page.getByTestId('decision-run').click()
  await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
  for(const source of ['Pr(Y)) + (Pr(X)','a) * (b','1) / (0']){
   await page.getByTestId('model-evaluate-input').fill(source)

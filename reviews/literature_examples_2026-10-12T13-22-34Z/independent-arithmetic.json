@@ -1,0 +1,58 @@
+[
+  {
+    "example": "Berkson\u2019s paradox: selection creates an association",
+    "mechanisms_and_premises": "PASS",
+    "exact_evaluation_values": [
+      "0",
+      "-1/2"
+    ]
+  },
+  {
+    "example": "M-bias: a harmful pretreatment adjustment",
+    "mechanisms_and_premises": "PASS",
+    "exact_evaluation_values": [
+      "0",
+      "0",
+      "-1/24"
+    ]
+  },
+  {
+    "example": "Bias amplification: controlling an instrument",
+    "mechanisms_and_premises": "PASS",
+    "exact_evaluation_values": [
+      "1/5",
+      "8/25",
+      "31/80"
+    ]
+  },
+  {
+    "example": "Treatment\u2013confounder feedback",
+    "mechanisms_and_premises": "PASS",
+    "exact_evaluation_values": [
+      "1/2",
+      "17/25",
+      "1/5"
+    ]
+  },
+  {
+    "example": "Front-door adjustment",
+    "mechanisms_and_premises": "PASS",
+    "exact_evaluation_values": [
+      "11/20",
+      "7/10",
+      "11/20"
+    ]
+  },
+  {
+    "example": "Positivity failure: an unseen treatment branch",
+    "mechanisms_and_premises": "PASS",
+    "exact_evaluation_values": [
+      false
+    ]
+  },
+  {
+    "example": "Simpson\u2019s paradox: treatment and recovery",
+    "mechanisms_and_premises": "PASS",
+    "exact_evaluation_values": []
+  }
+]

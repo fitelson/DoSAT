@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { JSDOM } from 'jsdom'
 import type { CausalDecisionResult, DecisionWitness } from './causal_decision_solver'
 import type { ModelEvaluationResult } from './causal_model_evaluator'
+import { savedDecisionFixture } from '../tests/fixtures/decision_problems'
 const mocks = vi.hoisted(() => ({ init: vi.fn(), decide: vi.fn(), download: vi.fn(), clipboard: vi.fn(), capture: vi.fn(), evaluate: vi.fn() }))
 vi.mock('./z3_integration', () => ({ init_z3: mocks.init }))
 vi.mock('./causal_decision_solver', () => ({ CausalDecisionSolver: class { decide = mocks.decide } }))
@@ -35,6 +36,8 @@ const problemState = () => ({
   batchOpen: node('decision-batch-toggle').getAttribute('aria-expanded'),
   example: node<HTMLSelectElement>('decision-example').value,
 })
+let initialProblem: ReturnType<typeof problemState>
+let initialPresentation: { status: string | null, guideHidden: boolean, guideOpen: boolean }
 const pending = <T>() => { let resolve!: (value: T) => void, reject!: (error: Error) => void; const promise = new Promise<T>((yes, no) => { resolve = yes; reject = no }); return { promise, resolve, reject } }
 const load = (read: () => Promise<string>, size = 100) => { const field = node<HTMLInputElement>('decision-load'); Object.defineProperty(field, 'files', { configurable: true, value: [{ size, text: read }] }); field.dispatchEvent(new dom.window.Event('change')) }
 const saved = (overrides: Record<string, unknown> = {}) => JSON.stringify({ version: 1, kind: 'DoSAT-decision', task: 'entailment', graph: 'A', premises: 'Pr(A)=1/2', conclusion: 'Pr(A)>0', regular: false, mode: 'complete', seconds: 30, ...overrides })
@@ -63,10 +66,60 @@ beforeEach(async () => {
   }))
   mocks.evaluate.mockResolvedValue({ status: 'value', kind: 'real', value: '(/ 1 2)', probabilities: [] })
   await import('./causal_decision_ui'); await flush()
+  initialProblem = problemState()
+  initialPresentation = {
+    status: node('decision-status').textContent,
+    guideHidden: Boolean(node('decision-example-guide').hidden),
+    guideOpen: node<HTMLDetailsElement>('decision-example-guide').open,
+  }
+  load(async () => JSON.stringify(savedDecisionFixture(0))); await flush()
 })
 afterEach(() => { dom.window.close(); vi.unstubAllGlobals() })
 
 describe('decision interface', () => {
+  test('the initial literature example is Berkson with its required SAT and regularity settings', () => {
+    expect(initialProblem.graph).toBe('X -> S; Y -> S')
+    expect(initialProblem.premises).toBe('Pr(X) = 1/2\nPr(Y) = 1/2\nPr(S <-> (X v Y)) = 1')
+    expect(initialProblem.satisfiability).toBe(true)
+    expect(initialProblem.entailment).toBe(false)
+    expect(initialProblem.regular).toBe(false)
+    expect(initialProblem.example).toBe('0')
+    expect(initialPresentation.status).toBe('Choose a decision problem.')
+    expect(initialPresentation.guideHidden).toBe(false)
+    expect(initialPresentation.guideOpen).toBe(false)
+  })
+  test('the menu contains the six literature cases and Simpson, and guidance is invalidated by edits', async () => {
+    const sample = node<HTMLSelectElement>('decision-example')
+    expect(Array.from(sample.options, option => option.text)).toEqual([
+      'Choose an example…', 'Berkson’s paradox: selection creates an association',
+      'M-bias: a harmful pretreatment adjustment', 'Bias amplification: controlling an instrument',
+      'Treatment–confounder feedback', 'Front-door adjustment',
+      'Positivity failure: an unseen treatment branch', 'Simpson’s paradox: treatment and recovery',
+    ])
+    sample.value = '3'; sample.dispatchEvent(new dom.window.Event('change'))
+    expect(node<HTMLTextAreaElement>('decision-graph').value).toBe('A -> L; L -> B; L -> Y; B -> Y')
+    expect(node('decision-example-guide').textContent).toContain('Every causal path from A to Y passes through L')
+    expect(node('decision-example-guide').textContent).not.toContain('part of A')
+    sample.value = '1'; sample.dispatchEvent(new dom.window.Event('change'))
+    const guide = node('decision-example-guide')
+    expect(guide.hidden).toBe(false)
+    expect(guide.textContent).toContain('-1/24')
+    expect(guide.querySelector('a')?.getAttribute('href')).toBe('https://arxiv.org/abs/1408.0324')
+    change('decision-premise-1', 'Pr(U)=1/3')
+    expect(guide.hidden).toBe(true)
+    sample.value = '1'; sample.dispatchEvent(new dom.window.Event('change'))
+    expect(guide.hidden).toBe(false)
+    node<HTMLButtonElement>('decision-clear').click()
+    expect(guide.hidden).toBe(true)
+    sample.value = '1'; sample.dispatchEvent(new dom.window.Event('change'))
+    expect(guide.hidden).toBe(false)
+    sample.value = ''; sample.dispatchEvent(new dom.window.Event('change'))
+    expect(guide.hidden).toBe(true)
+    sample.value = '1'; sample.dispatchEvent(new dom.window.Event('change'))
+    expect(guide.hidden).toBe(false)
+    load(async () => saved()); await flush()
+    expect(guide.hidden).toBe(true)
+  })
   test('defaults to an unbounded decision and exports both exact queries', async () => {
     expect(node('decision-runtime').dataset.z3Version).toBe('5.1.0')
     expect(node<HTMLInputElement>('decision-seconds').disabled).toBe(true)
@@ -350,7 +403,7 @@ describe('decision interface', () => {
   })
 
   test('empty-premise entailment compiles a validity question and keeps the conclusion', async () => {
-    const example = node<HTMLSelectElement>('decision-example'); example.value = '8'; example.dispatchEvent(new dom.window.Event('change'))
+    load(async () => JSON.stringify(savedDecisionFixture(8))); await flush()
     expect(rowValues()).toBe('')
     expect(node('decision-validation').textContent).toContain('No premises: checks validity')
     expect(node<HTMLButtonElement>('decision-run').disabled).toBe(false)
@@ -596,8 +649,8 @@ describe('decision interface', () => {
     sample.value = '2'; sample.dispatchEvent(new dom.window.Event('change'))
     const example = preview.querySelector('svg')!
     expect(example).not.toBe(original)
-    expect(Array.from(example.querySelectorAll('[data-node]'), value => value.getAttribute('data-node')).sort()).toEqual(['A', 'B'])
-    expect(example.querySelectorAll('[data-edge]')).toHaveLength(0)
+    expect(Array.from(example.querySelectorAll('[data-node]'), value => value.getAttribute('data-node')).sort()).toEqual(['U', 'X', 'Y', 'Z'])
+    expect(example.querySelectorAll('[data-edge]')).toHaveLength(4)
     load(async () => saved({ graph: 'A -> B; C' })); await flush()
     const loaded = preview.querySelector('svg')!
     expect(loaded).not.toBe(example)

@@ -8,23 +8,13 @@ import { validate_decision_fields } from './causal_decision_validation'
 import { CausalModelEvaluator } from './causal_model_evaluator'
 import { create_model_evaluation_panel } from './causal_evaluation_ui'
 import { create_decision_graph_preview } from './causal_graph_preview'
+import { DECISION_EXAMPLES as examples } from './causal_decision_examples'
 import { init_z3 } from './z3_integration'
 import { download } from './download'
 import './style.css'
 import './causal_style.css'
 import './causal_decision_style.css'
 
-const examples = [
-  { name: 'Observation differs from intervention', task: 'entailment', graph: 'Z -> X; Z -> Y', premises: 'Pr(Z) = 1/2\nPr(X | Z) = 3/4\nPr(X | ~Z) = 1/4\nPr(Y <-> Z) = 1', conclusion: 'Pr(Y | do(X)) = 1/2', regular: false },
-  { name: 'An incorrect intervention claim', task: 'entailment', graph: 'Z -> X; Z -> Y', premises: 'Pr(Z) = 1/2\nPr(X | Z) = 3/4\nPr(X | ~Z) = 1/4\nPr(Y <-> Z) = 1', conclusion: 'Pr(Y | do(X)) = 3/4', regular: false },
-  { name: 'Undefined conditioning prevents entailment', task: 'entailment', graph: 'A; B', premises: 'Pr(B) = 0', conclusion: 'Pr(A | B) = 0', regular: false },
-  { name: 'Do-calculus exchange with positive support', task: 'entailment', graph: 'Z -> Y', premises: 'Pr(Z) > 0', conclusion: 'Pr(Y | do(Z)) = Pr(Y | Z)', regular: false },
-  { name: 'Inconsistent premises', task: 'entailment', graph: 'A', premises: 'Pr(A) = 0\nPr(A) = 1', conclusion: 'Pr(A) = 1/2', regular: false },
-  { name: 'A compatible intervened model', task: 'satisfiability', graph: 'X -> Y', premises: 'Pr(X) = 0\nPr(Y) = 0\nPr(Y | do(X)) = 1', conclusion: '', regular: false },
-  { name: 'Impossible constraints', task: 'satisfiability', graph: 'A', premises: 'Pr(A) > 1', conclusion: '', regular: false },
-  { name: 'Simpson’s paradox: treatment and recovery', task: 'entailment', graph: 'Z -> X; Z -> Y; X -> Y', premises: 'Pr(Z) = 1/2\nPr(X | Z) = 9/10\nPr(X | ~Z) = 1/10\nPr(Y | X & Z) = 3/5\nPr(Y | ~X & Z) = 1/2\nPr(Y | X & ~Z) = 9/10\nPr(Y | ~X & ~Z) = 4/5', conclusion: '(Pr(Y | X) < Pr(Y | ~X)) & (Pr(Y | do(X)) > Pr(Y | do(~X)))', regular: true },
-  { name: 'Back-door adjustment identity', task: 'entailment', graph: 'Z -> X; Z -> Y; X -> Y', premises: '', conclusion: 'Pr(Y | do(X)) = Pr(Y | X & Z)*Pr(Z) + Pr(Y | X & ~Z)*Pr(~Z)', regular: true },
-] as const
 const root = document.getElementById('app')!
 const graph = tel('decision-graph', 'textarea', { id: 'decision-graph', rows: '1', spellcheck: 'false', 'aria-describedby': 'decision-graph-error decision-graph-nodes' }) as HTMLTextAreaElement
 const graphPreview = create_decision_graph_preview()
@@ -49,6 +39,20 @@ const regular = tel('decision-regular', 'input', { type: 'checkbox', id: 'decisi
 const sample = tel('decision-example', 'select', { 'aria-label': 'Examples' }) as HTMLSelectElement
 sample.append(el('option', { value: '' }, 'Choose an example…'))
 examples.forEach((example, index) => sample.append(el('option', { value: String(index) }, example.name)))
+const exampleGuide = tel('decision-example-guide', 'details', { class: 'decision-help decision-example-guide' })
+exampleGuide.hidden = true
+const showExampleGuide = (index: number): void => {
+  const example = examples[index]
+  exampleGuide.replaceChildren()
+  exampleGuide.hidden = !example
+  if (!example) return
+  exampleGuide.append(el('summary', {}, 'About this example'), el('p', {}, example.description),
+    el('p', {}, 'Literature: ', el('a', { href: example.source.url, target: '_blank', rel: 'noopener noreferrer' }, example.source.title)),
+    el('p', {}, `Expected decision: ${example.expectedStatus}. The numerical data are constructed Boolean illustrations.`))
+  if (example.evaluations.length) exampleGuide.append(el('p', {}, 'After obtaining a model, paste these expressions into Evaluate model:'),
+    el('ul', {}, ...example.evaluations.map(item => el('li', {}, el('code', {}, item.expression),
+      el('span', { class: 'decision-example-value' }, `Expected in this model: ${typeof item.value === 'boolean' ? (item.value ? 'True' : 'False') : item.value}.`)))))
+}
 const run = tel('decision-run', 'button', { type: 'button', class: 'generate', disabled: 'true' }, 'Check entailment') as HTMLButtonElement
 const cancel = tel('decision-cancel', 'button', { type: 'button', disabled: 'true' }, 'Cancel') as HTMLButtonElement
 const save = tel('decision-save', 'button', { type: 'button' }, 'Save to File') as HTMLButtonElement
@@ -124,7 +128,7 @@ const refresh = (): void => {
   saveSmt.disabled = !lastCompiled
 }
 const invalidate = (): void => {
-  revision++; active?.abort(); evaluationPanel.clear(); results.replaceChildren(); lastCompiled = undefined; sample.value = ''
+  revision++; active?.abort(); evaluationPanel.clear(); results.replaceChildren(); lastCompiled = undefined; sample.value = ''; exampleGuide.hidden = true
   status.textContent = running ? 'Input changed; cancelling the previous decision…' : evaluationPanel.busy() ? 'Input changed; waiting for model evaluation to settle…' : 'Input changed; decide the current problem.'
   refresh()
 }
@@ -134,14 +138,16 @@ batchButton.addEventListener('click', () => { editor.toggleBatch(); refresh() })
 clearButton.addEventListener('click', () => editor.clear())
 conclusionInfo.addEventListener('click', () => { conclusionHelp.hidden = !conclusionHelp.hidden; conclusionInfo.setAttribute('aria-expanded', String(!conclusionHelp.hidden)) })
 conclusion.addEventListener('keydown', event => { if (event.key === 'Enter') event.preventDefault() })
-sample.addEventListener('change', () => {
-  if (sample.value === '') return
-  const index = Number(sample.value)
+const setExample = (index: number): void => {
   const example = examples[index]
   if (!example) return
   graph.value = example.graph; editor.setValue(example.premises); conclusion.value = example.conclusion
   entailment.checked = example.task === 'entailment'; satisfiability.checked = !entailment.checked; regular.checked = example.regular
-  invalidate(); sample.value = String(index)
+  invalidate(); sample.value = String(index); showExampleGuide(index)
+}
+sample.addEventListener('change', () => {
+  if (sample.value === '') { exampleGuide.hidden = true; return }
+  setExample(Number(sample.value))
 })
 const bindModel = (witness: DecisionWitness): void => {
   if (!modelEvaluator) return
@@ -240,6 +246,7 @@ root.append(el('main', { class: 'causal-ui decision-ui' },
   el('section', { class: 'generic-input-block decision-input-panel', 'aria-label': 'Decision problem editor' },
     el('fieldset', { class: 'decision-task' }, el('legend', {}, 'Task'), el('label', {}, entailment, ' Check entailment'), el('label', {}, satisfiability, ' Satisfiability')),
     el('div', { class: 'decision-toolbar' }, loadButton, load, batchButton, clearButton, el('label', {}, 'Examples ', sample)),
+    exampleGuide,
     el('div', { class: 'decision-graph-layout' }, el('div', { class: 'decision-graph-block' }, el('label', { for: 'decision-graph' }, 'Causal graph'), graph, nodes, graphError,
       help('ⓘ Graph syntax', 'Declare edges such as Z -> X; Z -> Y or isolated variables. Semicolons and newlines are supported. Acyclic graphs with up to six observed Boolean variables are allowed. No latent confounders or cross-world counterfactuals.')), graphPreview.element),
     editor.element, conclusionBlock,
@@ -254,6 +261,7 @@ root.append(el('main', { class: 'causal-ui decision-ui' },
     help('ⓘ Probability and do syntax', 'One premise per row; blank and # comment rows are ignored. Use Pr(Y | do(X)) or do(~X) for Boolean interventions, do(X, ~Z) for simultaneous interventions, and Pr(Y | do(X), Z) to observe Z after intervention. Numeric forms do(X=1) and do(X=0) are also supported. A rendered preview confirms parsing, not numerical definedness. Empty premises are allowed. Enter splits a premise; Up/Down move between rows; Backspace at its start merges with the previous row. Batch Parse replaces premises only.'),
     help('ⓘ Decision scope and solver', 'The supplied observed Boolean DAG defines a family of causal models with independent private disturbances and shared mechanisms across interventions. Every stage first tries a QF_NRA strategy with a budget of up to 60 seconds, then complete NLSat if needed. Finite resources may still prevent an answer. UNRESOLVED and cancellation establish no decision. Regular requires positive observational mechanisms; hard interventions may force zeros. Inconsistent premises entail vacuously. The app does not infer latent confounders, search for do-calculus derivations, or infer counterfactual values across worlds. New expressions can be evaluated in a returned model; that is a value in that model, not an entailment claim.')),
 ))
-graph.value = examples[0].graph; editor.setValue(examples[0].premises); conclusion.value = examples[0].conclusion; sample.value = '0'
+setExample(0)
+status.textContent = 'Choose a decision problem.'
 refresh()
 void init_z3().then(value => { solver = new CausalDecisionSolver(value); modelEvaluator = new CausalModelEvaluator(value); runtime.dataset.z3Version = value.getVersionString(); runtime.textContent = 'Z3 ready.'; refresh() }).catch((error: unknown) => { runtime.textContent = `Z3 failed to load: ${error instanceof Error ? error.message : String(error)}`; refresh() })

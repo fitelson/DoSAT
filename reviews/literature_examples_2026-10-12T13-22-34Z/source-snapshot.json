@@ -1,0 +1,23 @@
+{
+  "baseline": "b59d78268d632d9ab603d2dfa70ce27e1535c93c",
+  "source": {
+    "src/causal_decision_examples.ts": "64cd8cdd71c9e05d27fcae75ab3ee1fc86bd6990a36792587ee6f2e064a4b209",
+    "src/causal_decision_ui.ts": "7b010a9220a37c1d0191d257833f310c4ccebd74209556c8abf3a7f02e8e5731",
+    "src/causal_decision_style.css": "4ed99ede305bed0c6052c2aa3d3415b8ccfe2bb0df7288c98cf8a22ea0ebfb0b",
+    "src/causal_decision_ui.spec.ts": "01b8c214c62204df0341b13075f8180a00b906de7380ababad5ea96ae94bd924",
+    "tests/causal_decision.spec.ts": "e9c87dc03a6ea3130b40a1e079b6b5f5004205ae951e62cbc40f70725fe81be9",
+    "tests/causal_literature_examples.spec.ts": "f648d05452e0651169a9378a27b67b9fccc0a4fc91ed4227998d24be4e859e79",
+    "tests/decision_helpers.ts": "a677c923f66527ff70c4801b07f773af0380258d2d60c6264ea3fc1964f26ff6",
+    "tests/fixtures/decision_problems.ts": "401b69d2e44b8b7424fe57f7011d05c42b1efad8c6ac86a976f0ba297d806bd3"
+  },
+  "unchanged_core": {
+    "src/causal_syntax.ts": "b83726518fcb9d9abf774e288f71aac904602227517df8ce021455a25f83ea97",
+    "src/causal.ts": "b0d269e01999e413955197ba27606daf4c4f5588f52c3a88e43d1c01cd4a800e",
+    "src/causal_decision.ts": "3060d949f5783101e745f9d16adf3c486e0f845a45a6f213a5ee330130bd7349",
+    "src/causal_decision_solver.ts": "9e2f6760a6e360d6b59da2d08c848d13d821f22efaa6dd7788de01f8c918d396",
+    "src/causal_model_evaluator.ts": "2ac58b37d990b9f737950f1a196faffcd81db8acd89c67d9edf70887f53a7020",
+    "src/causal_evaluation_syntax.ts": "09a16fd091234616f16c34df89a1161452e5392100c24c504fa0e0403238cf8e",
+    "src/causal_evaluation_ui.ts": "a46f66c65216bbbc0b7b47fd5469a07c0e85b795eeb7c4200f55eb6cac72b600",
+    "src/z3_integration.ts": "f1c4445ba3290bb590e57af4846d95b5ef7a23ab4c14288c0ee9f5052c1ed820"
+  }
+}

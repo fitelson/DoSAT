@@ -1,0 +1,173 @@
+[
+  {
+    "name": "Berkson’s paradox: selection creates an association",
+    "task": "satisfiability",
+    "regular": false,
+    "graph": "X -> S; Y -> S",
+    "premises": "Pr(X) = 1/2\nPr(Y) = 1/2\nPr(S <-> (X v Y)) = 1",
+    "conclusion": "",
+    "description": "Two independent causes become associated after selecting their common consequence S. This Boolean illustration selects cases where X or Y is true. Regular is off because selection is deterministic.",
+    "source": {
+      "title": "Pearl: Causal inference in statistics",
+      "url": "https://ftp.cs.ucla.edu/pub/stat_ser/r350.pdf"
+    },
+    "expectedStatus": "SAT",
+    "evaluations": [
+      {
+        "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+        "value": "0"
+      },
+      {
+        "expression": "Pr(Y | X & S) - Pr(Y | ~X & S)",
+        "value": "-1/2"
+      }
+    ]
+  },
+  {
+    "name": "M-bias: a harmful pretreatment adjustment",
+    "task": "satisfiability",
+    "regular": true,
+    "graph": "U -> X; U -> Z; V -> Z; V -> Y",
+    "premises": "Pr(U) = 1/2\nPr(V) = 1/2\nPr(X | U) = 3/4\nPr(X | ~U) = 1/4\nPr(Y | V) = 3/4\nPr(Y | ~V) = 1/4\nPr(Z | U & V) = 9/10\nPr(Z | U & ~V) = 1/2\nPr(Z | ~U & V) = 1/2\nPr(Z | ~U & ~V) = 1/10",
+    "conclusion": "",
+    "description": "X has no causal effect on Y and no marginal association with Y. Conditioning on the collider Z creates an apparent protective effect. U and V are explicitly represented independent Boolean background causes; every mechanism is positive.",
+    "source": {
+      "title": "Ding and Miratrix: M-bias and butterfly bias",
+      "url": "https://arxiv.org/abs/1408.0324"
+    },
+    "expectedStatus": "SAT",
+    "evaluations": [
+      {
+        "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+        "value": "0"
+      },
+      {
+        "expression": "Pr(Y | X) - Pr(Y | ~X)",
+        "value": "0"
+      },
+      {
+        "expression": "Pr(Y | X & Z) - Pr(Y | ~X & Z)",
+        "value": "-1/24"
+      }
+    ]
+  },
+  {
+    "name": "Bias amplification: controlling an instrument",
+    "task": "satisfiability",
+    "regular": true,
+    "graph": "Z -> X; U -> X; U -> Y; X -> Y",
+    "premises": "Pr(Z) = 1/2\nPr(U) = 1/2\nPr(X | ~U & ~Z) = 1/10\nPr(X | U & ~Z) = 3/10\nPr(X | ~U & Z) = 7/10\nPr(X | U & Z) = 9/10\nPr(Y | ~X & ~U) = 1/10\nPr(Y | X & ~U) = 3/10\nPr(Y | ~X & U) = 7/10\nPr(Y | X & U) = 9/10",
+    "conclusion": "",
+    "description": "The true risk difference is 1/5. The observational difference is 8/25; standardizing over the instrument Z gives 31/80 and increases the bias. U is an explicit Boolean common cause whose influence is left unadjusted in those two comparisons.",
+    "source": {
+      "title": "Pearl: Bias-amplifying variables",
+      "url": "https://proceedings.mlr.press/r8/pearl10b.html"
+    },
+    "expectedStatus": "SAT",
+    "evaluations": [
+      {
+        "expression": "Pr(Y | do(X)) - Pr(Y | do(~X))",
+        "value": "1/5"
+      },
+      {
+        "expression": "Pr(Y | X) - Pr(Y | ~X)",
+        "value": "8/25"
+      },
+      {
+        "expression": "(Pr(Y | X & Z) - Pr(Y | ~X & Z))*Pr(Z) + (Pr(Y | X & ~Z) - Pr(Y | ~X & ~Z))*Pr(~Z)",
+        "value": "31/80"
+      }
+    ]
+  },
+  {
+    "name": "Treatment–confounder feedback",
+    "task": "satisfiability",
+    "regular": true,
+    "graph": "A -> L; L -> B; L -> Y; B -> Y",
+    "premises": "Pr(A) = 1/2\nPr(L | A) = 3/4\nPr(L | ~A) = 1/4\nPr(B | L) = 3/4\nPr(B | ~L) = 1/4\nPr(Y | ~B & ~L) = 1/10\nPr(Y | B & ~L) = 3/10\nPr(Y | ~B & L) = 7/10\nPr(Y | B & L) = 9/10",
+    "conclusion": "",
+    "description": "A is early treatment, L a later covariate, and B later treatment. L mediates part of A’s effect and confounds B’s effect. The joint treatment contrast is 1/2; its observational analogue is 17/25. Averaging over the population’s L distribution instead of its treatment-specific distribution gives 1/5.",
+    "source": {
+      "title": "Hernán and Robins: Causal Inference: What If",
+      "url": "https://miguelhernan.org/whatifbook"
+    },
+    "expectedStatus": "SAT",
+    "evaluations": [
+      {
+        "expression": "Pr(Y | do(A, B)) - Pr(Y | do(~A, ~B))",
+        "value": "1/2"
+      },
+      {
+        "expression": "Pr(Y | A & B) - Pr(Y | ~A & ~B)",
+        "value": "17/25"
+      },
+      {
+        "expression": "(Pr(Y | A & B & L) - Pr(Y | ~A & ~B & L))*Pr(L) + (Pr(Y | A & B & ~L) - Pr(Y | ~A & ~B & ~L))*Pr(~L)",
+        "value": "1/5"
+      }
+    ]
+  },
+  {
+    "name": "Front-door adjustment",
+    "task": "satisfiability",
+    "regular": true,
+    "graph": "U -> X; U -> Y; X -> M; M -> Y",
+    "premises": "Pr(U) = 1/2\nPr(X | U) = 3/4\nPr(X | ~U) = 1/4\nPr(M | X) = 3/4\nPr(M | ~X) = 1/4\nPr(Y | ~M & ~U) = 1/10\nPr(Y | M & ~U) = 3/10\nPr(Y | ~M & U) = 7/10\nPr(Y | M & U) = 9/10",
+    "conclusion": "",
+    "description": "U is an explicit Boolean common cause, and M mediates the entire effect of X on Y. The front-door expression uses only X, M and Y and recovers the intervention probability 11/20. This illustrates the formula in a specified Boolean model; it is not a general latent-variable identification procedure.",
+    "source": {
+      "title": "Pearl: Causal inference in statistics",
+      "url": "https://ftp.cs.ucla.edu/pub/stat_ser/r350.pdf"
+    },
+    "expectedStatus": "SAT",
+    "evaluations": [
+      {
+        "expression": "Pr(Y | do(X))",
+        "value": "11/20"
+      },
+      {
+        "expression": "Pr(Y | X)",
+        "value": "7/10"
+      },
+      {
+        "expression": "Pr(M | X)*(Pr(Y | M & X)*Pr(X) + Pr(Y | M & ~X)*Pr(~X)) + Pr(~M | X)*(Pr(Y | ~M & X)*Pr(X) + Pr(Y | ~M & ~X)*Pr(~X))",
+        "value": "11/20"
+      }
+    ]
+  },
+  {
+    "name": "Positivity failure: an unseen treatment branch",
+    "task": "entailment",
+    "regular": false,
+    "graph": "X -> Y",
+    "premises": "Pr(X) = 0\nPr(Y) = 1/2",
+    "conclusion": "Pr(Y | do(X)) = 1/2",
+    "description": "Observation never reaches X=true. The premises therefore leave that mechanism branch undetermined, so the proposed intervention probability is not entailed. The returned countermodel gives one possible value, not an identified effect. Regular is off to allow zero observational support.",
+    "source": {
+      "title": "Hernán and Robins: Causal Inference: What If",
+      "url": "https://miguelhernan.org/whatifbook"
+    },
+    "expectedStatus": "DOES NOT ENTAIL",
+    "evaluations": [
+      {
+        "expression": "Pr(Y | do(X)) = 1/2",
+        "value": false
+      }
+    ]
+  },
+  {
+    "name": "Simpson’s paradox: treatment and recovery",
+    "task": "entailment",
+    "regular": true,
+    "graph": "Z -> X; Z -> Y; X -> Y",
+    "premises": "Pr(Z) = 1/2\nPr(X | Z) = 9/10\nPr(X | ~Z) = 1/10\nPr(Y | X & Z) = 3/5\nPr(Y | ~X & Z) = 1/2\nPr(Y | X & ~Z) = 9/10\nPr(Y | ~X & ~Z) = 4/5",
+    "conclusion": "(Pr(Y | X) < Pr(Y | ~X)) & (Pr(Y | do(X)) > Pr(Y | do(~X)))",
+    "description": "The retained Simpson example uses constructed recovery data: 63% versus 77% observationally, but 75% versus 65% under intervention. The conclusion states the reversal and should be entailed.",
+    "source": {
+      "title": "Pearl: Causal inference in statistics",
+      "url": "https://ftp.cs.ucla.edu/pub/stat_ser/r350.pdf"
+    },
+    "expectedStatus": "ENTAILS",
+    "evaluations": []
+  }
+]

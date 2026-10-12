@@ -2,6 +2,21 @@
 
 > **Note:** This is a local build for deployment to fitelson.org.
 
+## 2026-10-12 — DoSAT literature examples
+
+- Replaced the public decision-page presets with Berkson selection bias, M-bias,
+  instrumental-variable bias amplification, treatment–confounder feedback,
+  front-door adjustment, and positivity failure; retained the existing Simpson
+  reversal and its exact inputs.
+- Added collapsible descriptions, primary literature links, and exact expressions
+  to evaluate after a model is returned. Numbers are constructed Boolean examples.
+  Background causes are explicit graph nodes; no latent-variable engine was added.
+- Kept all previous solver/UI scenarios as independent regression fixtures.
+- Local verification: 1,318 unit tests and 103 Chromium tests pass, as do typed
+  lint and production build. Independent rational enumeration checks every
+  specified mechanism, premise and displayed evaluation value. The scoped phase
+  review and publication status are recorded in PROJECT.md.
+
 ## 2026-08-31
 
 ### Changed: Project Webpage Branding
