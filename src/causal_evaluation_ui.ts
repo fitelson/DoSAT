@@ -2,6 +2,8 @@ import type { ModelEvaluationResult } from './causal_model_evaluator'
 import { format_exact_value } from './causal_format'
 import { render_causal_evaluation, render_causal_probability } from './causal_to_html'
 import { el, tel } from './el'
+import { create_decision_editor } from './causal_decision_editor'
+import { CAUSAL_LIMITS } from './causal_syntax'
 
 export interface ModelEvaluationPanel {
   element: HTMLElement
@@ -16,19 +18,13 @@ const message_of = (error: unknown): string => error instanceof Error ? error.me
 /** The callback owns evaluation; this component owns only serialized UI work. */
 export const create_model_evaluation_panel = (onBusyChange: (busy: boolean) => void): ModelEvaluationPanel => {
   const id = `model-evaluation-${++nextPanel}`
-  const input = tel('model-evaluate-input', 'input', {
-    id: `${id}-input`, type: 'text', class: 'text model-evaluation-input',
-    placeholder: 'Pr(Y | do(X)), a real expression, or a constraint', autocomplete: 'off', spellcheck: 'false',
-    'aria-describedby': `${id}-help ${id}-error ${id}-status`, 'aria-invalid': 'false',
-  }) as HTMLInputElement
+  const editor = create_decision_editor(() => invalidate('Expressions changed; cancelling evaluation and waiting for it to settle…'), 'evaluation')
+  const batch = tel('model-evaluate-batch-toggle', 'button', { type: 'button', 'aria-expanded': 'false' }, 'Show Batch Input')
+  const clear = tel('model-evaluate-clear', 'button', { type: 'button' }, 'Clear checks')
   const help = el('p', { id: `${id}-help`, class: 'decision-note' },
     'Evaluate probabilities, arithmetic, assigned real variables, or Boolean constraints in this returned model. A parsed preview does not establish numerical definedness. The result does not establish entailment. Constraints use DoSAT\'s definedness guards: False may reflect an undefined probability term, which is listed with the result.')
   const error = el('div', { id: `${id}-error`, class: 'error decision-field-error' })
   error.hidden = true
-  const preview = tel('model-evaluate-preview', 'div', {
-    class: 'constraint decision-preview model-evaluation-preview', tabindex: '0', role: 'region',
-    'aria-label': 'Evaluation expression preview',
-  })
   const run = tel('model-evaluate-run', 'button', { type: 'button', class: 'generate' }, 'Evaluate') as HTMLButtonElement
   const cancel = tel('model-evaluate-cancel', 'button', { type: 'button' }, 'Cancel evaluation') as HTMLButtonElement
   const status = tel('model-evaluate-status', 'p', {
@@ -37,14 +33,14 @@ export const create_model_evaluation_panel = (onBusyChange: (busy: boolean) => v
   const output = tel('model-evaluate-result', 'div', { class: 'model-evaluation-result' })
   const element = tel('model-evaluation', 'section', { class: 'model-evaluators generic-input-block decision-model-evaluation' },
     el('h3', {}, 'Evaluate model'),
-    el('label', { for: input.id }, 'Evaluate new expression in this returned model'),
-    el('div', { class: 'model-evaluation-controls' }, input),
-    preview, error, help,
+    el('div', { class: 'decision-toolbar' }, batch, clear),
+    editor.element, error, help,
     el('div', { class: 'model-evaluation-actions decision-toolbar' }, run, cancel), status, output)
   element.hidden = true
   let graph = ''
   let evaluator: ((source: string, signal: AbortSignal) => Promise<ModelEvaluationResult>) | undefined
   let valid = false
+  let sources: { source: string, index: number }[] = []
   let generation = 0
   let working = false
   let active: { controller: AbortController } | undefined
@@ -54,21 +50,32 @@ export const create_model_evaluation_panel = (onBusyChange: (busy: boolean) => v
     cancel.disabled = !working || !active || active.controller.signal.aborted
   }
   const readiness = (): string => !evaluator ? 'No returned model is available.'
-    : !input.value.trim() ? 'Enter an expression to evaluate in this model.'
-      : valid ? 'Ready to evaluate in this model.' : 'Fix the evaluation expression before evaluating.'
+    : editor.pending() ? 'Batch edits are unapplied. Parse or Discard them before evaluating.'
+      : !sources.length ? 'Enter an expression to evaluate in this model.'
+        : valid ? (sources.length === 1 ? 'Ready to evaluate in this model.' : `Ready to evaluate ${sources.length} expressions in this model.`)
+          : 'Fix the evaluation expressions before evaluating.'
   const validate = (): void => {
     valid = false
-    preview.replaceChildren()
     error.textContent = ''
     error.hidden = true
-    input.setAttribute('aria-invalid', 'false')
-    if (!evaluator || !input.value.trim()) return
-    try { preview.append(render_causal_evaluation(graph, input.value)); valid = true }
-    catch (exception) {
-      error.textContent = `Evaluation expression: ${message_of(exception)}`
-      error.hidden = false
-      input.setAttribute('aria-invalid', 'true')
+    const errors = new Map<number, string>()
+    sources = editor.getValue().split('\n').map((source, index) => ({ source, index }))
+      .filter(row => row.source.split('#', 1)[0].trim())
+    if (evaluator) {
+      if (sources.length > CAUSAL_LIMITS.max_constraints || graph.length + editor.getValue().length > CAUSAL_LIMITS.max_input_characters) {
+        error.textContent = `Model checks are limited to ${CAUSAL_LIMITS.max_constraints} expressions and ${CAUSAL_LIMITS.max_input_characters} characters.`
+        error.hidden = false
+      } else {
+        for (const row of sources) {
+          try { render_causal_evaluation(graph, row.source) }
+          catch (exception) { errors.set(row.index, message_of(exception)) }
+        }
+        valid = sources.length > 0 && !errors.size && !editor.pending()
+      }
     }
+    editor.setErrors(errors)
+    batch.textContent = editor.element.dataset.batchOpen === 'true' ? 'Hide Batch Input' : 'Show Batch Input'
+    batch.setAttribute('aria-expanded', String(editor.element.dataset.batchOpen === 'true'))
   }
   const invalidate = (settlingMessage: string): void => {
     generation++
@@ -84,9 +91,9 @@ export const create_model_evaluation_panel = (onBusyChange: (busy: boolean) => v
     refreshControls()
     onBusyChange(value)
   }
-  const showProbabilities = (values: Extract<ModelEvaluationResult, { status: 'value' | 'undefined' }>['probabilities']): void => {
+  const showProbabilities = (target: HTMLElement, values: Extract<ModelEvaluationResult, { status: 'value' | 'undefined' }>['probabilities']): void => {
     if (!values.length) return
-    const table = tel('model-evaluate-probabilities', 'table', { class: 'causal-table' },
+    const table = tel(target === output ? 'model-evaluate-probabilities' : `${target.dataset.testid}-probabilities`, 'table', { class: 'causal-table' },
       el('caption', {}, 'Probability term values in this model'),
       el('thead', {}, el('tr', {}, el('th', { scope: 'col' }, 'Probability'), el('th', { scope: 'col' }, 'Exact value'))),
       el('tbody', {}, ...values.map(value => {
@@ -97,47 +104,73 @@ export const create_model_evaluation_panel = (onBusyChange: (busy: boolean) => v
           el('td', {}, value.defined ? format_exact_value(value.value) : 'undefined (zero denominator)'))
       })),
     )
-    output.append(el('div', {
+    target.append(el('div', {
       class: 'causal-table-scroll', tabindex: '0', role: 'region', 'aria-label': 'Evaluation probability term values',
     }, table))
   }
-  const showResult = (result: ModelEvaluationResult): void => {
+  const showResult = (result: ModelEvaluationResult, target = output): void => {
     switch (result.status) {
       case 'value':
         status.textContent = 'Evaluated in this model.'
-        output.append(el('p', { class: 'model-evaluation-value' }, result.kind === 'real'
+        target.append(el('p', { class: 'model-evaluation-value' }, result.kind === 'real'
           ? `Exact value in this model: ${format_exact_value(result.value)}`
           : `${result.value ? 'True' : 'False'} in this model.`))
-        showProbabilities(result.probabilities)
+        showProbabilities(target, result.probabilities)
         break
       case 'undefined':
         status.textContent = 'The expression is undefined in this model.'
-        output.append(el('p', { class: 'error model-evaluation-value' }, 'undefined (zero denominator) in this model.'),
+        target.append(el('p', { class: 'error model-evaluation-value' }, 'undefined (zero denominator) in this model.'),
           el('p', { class: 'decision-note' }, result.reason))
-        showProbabilities(result.probabilities)
+        showProbabilities(target, result.probabilities)
         break
       case 'error':
         status.textContent = `Evaluation error: ${result.message}`
-        output.append(el('p', { class: 'error' }, result.message))
+        target.append(el('p', { class: 'error' }, result.message))
         break
       case 'cancelled': status.textContent = 'Evaluation cancelled; no value accepted.'; break
     }
   }
-  input.addEventListener('input', () => invalidate('Expression changed; cancelling evaluation and waiting for it to settle…'))
+  batch.addEventListener('click', () => { editor.toggleBatch(); validate() })
+  clear.addEventListener('click', () => editor.clear())
   run.addEventListener('click', () => { void (async () => {
-    if (working || !evaluator || !valid || element.hidden) return
-    const evaluate = evaluator, version = generation, source = input.value, controller = new AbortController()
+    if (working || !evaluator || !valid || element.hidden || editor.pending()) return
+    const evaluate = evaluator, version = generation, submitted = sources.slice(), controller = new AbortController()
+    const current = (): boolean => version === generation && evaluator === evaluate && !element.hidden
     active = { controller }
     output.replaceChildren()
     status.textContent = 'Evaluating in this model…'
     setBusy(true)
     try {
-      const result = await evaluate(source, controller.signal)
-      if (version !== generation || evaluator !== evaluate || element.hidden) return
-      if (controller.signal.aborted) status.textContent = 'Evaluation cancelled; no value accepted.'
-      else showResult(result)
+      const results: ModelEvaluationResult[] = []
+      for (const row of submitted) {
+        if (controller.signal.aborted || !current()) return
+        let result: ModelEvaluationResult
+        try { result = await evaluate(row.source, controller.signal) }
+        catch (exception) { result = { status: 'error', message: message_of(exception) } }
+        if (!current()) return
+        if (controller.signal.aborted || result.status === 'cancelled') {
+          status.textContent = 'Evaluation cancelled; no value accepted.'
+          return
+        }
+        results.push(result)
+      }
+      if (submitted.length === 1) showResult(results[0])
+      else {
+        let failures = 0
+        results.forEach((result, index) => {
+          const row = submitted[index]
+          const target = tel(`model-evaluate-item-${row.index + 1}`, 'section', { class: 'model-evaluation-item' },
+            el('h4', {}, `Expression ${row.index + 1}`),
+            el('div', { class: 'decision-preview', tabindex: '0', role: 'region', 'aria-label': `Evaluated expression ${row.index + 1}` }, render_causal_evaluation(graph, row.source)))
+          showResult(result, target)
+          output.append(target)
+          if (result.status === 'error' || result.status === 'undefined') failures++
+        })
+        status.textContent = `Evaluated ${results.length} expressions in this model.${failures ? ` ${failures} could not be evaluated; see their results.` : ''}`
+      }
     } catch (exception) {
-      if (version === generation && evaluator === evaluate && !element.hidden) {
+      if (current()) {
+        output.replaceChildren()
         if (controller.signal.aborted) status.textContent = 'Evaluation cancelled; no value accepted.'
         else showResult({ status: 'error', message: message_of(exception) })
       }
@@ -160,6 +193,7 @@ export const create_model_evaluation_panel = (onBusyChange: (busy: boolean) => v
     element,
     show(source, evaluate) {
       graph = source
+      editor.setGraph(source)
       evaluator = evaluate
       element.hidden = false
       invalidate('Model changed; cancelling the previous evaluation and waiting for it to settle…')
@@ -167,6 +201,7 @@ export const create_model_evaluation_panel = (onBusyChange: (busy: boolean) => v
     clear() {
       evaluator = undefined
       graph = ''
+      editor.setGraph('')
       element.hidden = true
       invalidate('Model cleared; cancelling evaluation and waiting for it to settle…')
     },

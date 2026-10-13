@@ -40,6 +40,17 @@ Current delta begins at approved publication 109ec5be9ee936b36a03009a920fd44eb52
 
 The current phase gate is PASS after the B1/B2 recheck; see reviews/single_page_model_eval_2026-10-12T01-02-21Z/FINAL_STATUS.md. Read the EVALUATION_SEMANTICS.md in that folder. Evaluate a frozen complete shared kernel and assigned user variables, including new intervention regimes. Do not retain native Models, create a new satisfying model, silently complete missing user variables or use floating point. Real undefinedness and guarded Boolean satisfaction are distinct. Cancellation awaits native simplification settlement; main Run stays blocked until model evaluation settles. Scope the required default consensus gate to these changes and their integration, not a new audit of old mathematics.
 
+## Batch model checks, October 12
+
+The PrSAT-style evaluation row/batch editor phase is PASS after the scoped
+default-model review in reviews/batch_model_evaluation_2026-10-13T01-57-53Z/consensus.md.
+Read that folder's SEMANTICS.md and PUBLICATION.md for the current behavior and
+release evidence. Batch checks use one captured model, serial callbacks and one
+abort/busy ownership interval; no partial results survive cancellation or edits.
+The decision solver and exact evaluator service are unchanged. Keep the ordinary
+premise editor and evaluator namespaces separate. Existing limits apply to
+accepted active checks, not to a strict cap on all manually created preview rows.
+
 ## Phase 2 scope
 
 Phase2 adds single-step graphical checking of Pearl Rules1–3 using d-separation

@@ -1,0 +1,42 @@
+[
+  {
+    "file": "src/causal_decision_editor.ts",
+    "bytes": 11553,
+    "sha256": "f81c6663644bc75ee520aebf0559c1d84d4bcbe856ed67b6985fd16ab608d6fa"
+  },
+  {
+    "file": "src/causal_evaluation_ui.ts",
+    "bytes": 10779,
+    "sha256": "4a5b00e0dd18cfb39f0f8ca1d748320549baade47eaaf8f03be3c6751f0f3236"
+  },
+  {
+    "file": "src/causal_evaluation_ui.spec.ts",
+    "bytes": 23926,
+    "sha256": "47251bd0caa5f7f8eb14fe52a6b6341eec3fdacbd8d9b98fe009a1f30accf204"
+  },
+  {
+    "file": "src/causal_decision_style.css",
+    "bytes": 9993,
+    "sha256": "c42b4ce7588ed8131491fcbcc4d4e0e10abbb63532e2a866fff45aaddf037809"
+  },
+  {
+    "file": "tests/causal_decision.spec.ts",
+    "bytes": 37143,
+    "sha256": "78503fd98e1e0a8ee056457fac43dc823d174163e59e96a312e1a8f74c6d0d6b"
+  },
+  {
+    "file": "README.md",
+    "bytes": 9492,
+    "sha256": "b69dd4e38e0aca470caad968721b0bf62cfd22b9f52b3061a3a2087e96747db0"
+  },
+  {
+    "file": "CHANGELOG.md",
+    "bytes": 24386,
+    "sha256": "80364291046bb6b64c74b00d6021c497704fabeb418cc7daee4340a5c7ff4146"
+  },
+  {
+    "file": "PROJECT.md",
+    "bytes": 32750,
+    "sha256": "a03f17f96feff875b45713669c93ef7bc8fc52085d80737b9a30c50af39b7785"
+  }
+]

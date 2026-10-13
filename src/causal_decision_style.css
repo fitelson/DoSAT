@@ -137,6 +137,8 @@
 .model-evaluation-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
 .model-evaluation-result { max-width: 100%; min-width: 0; }
 .model-evaluation-value { font-weight: 600; overflow-wrap: anywhere; }
+.model-evaluation-item { margin-top: .6rem; padding: .5rem; border: 1px solid var(--border); border-radius: .4rem; }
+.model-evaluation-item h4 { margin: 0 0 .25rem; }
 .decision-example-guide { max-width: 100%; min-width: 0; }
 .decision-example-guide code { display: block; white-space: normal; overflow-wrap: anywhere; }
 .decision-example-guide li { margin-block: .65rem; }

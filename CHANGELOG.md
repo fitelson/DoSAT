@@ -2,6 +2,20 @@
 
 > **Note:** This is a local build for deployment to fitelson.org.
 
+## 2026-10-12 — PrSAT-style batch model checks
+
+- Replace the single evaluation field with the existing row editor and a separate
+  batch input. Parse accepts one expression or constraint per line; individual
+  previews and syntax errors identify the affected row.
+- Evaluate all applied rows serially against the same captured model, with an
+  exact value or constraint truth for each. Undefined terms and unassigned real
+  variables remain explicit and do not hide subsequent valid results.
+- Preserve the original premises, witness, verdict and solver export. Drafts,
+  edits, replacement models and cancellation suppress the whole in-flight batch
+  while retaining ownership until native work settles. Existing solver and
+  evaluator mathematics are unchanged. Checks use existing 64-line/50000-character
+  budgets; the review is scoped to this UI/editor integration.
+
 ## 2026-10-12 — Guard-preserving constraint optimization
 
 - Complete both scoped implementation reviews with PASS. Fix exact-zero

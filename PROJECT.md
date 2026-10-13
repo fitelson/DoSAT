@@ -478,3 +478,18 @@ separate reliability follow-up; eight allowed variables do not guarantee that
 every model fits the solver's memory budget. See the repair consensus for evidence.
 Publication and live verification will be recorded in
 reviews/constraint_implementation_2026-10-12T23-41-52Z/PUBLICATION.md.
+
+## Batch model evaluation, October 12
+
+Branden requested PrSAT's batch mode and verification of multiple constraints in
+one returned model. Evaluate model now reuses the row editor in evaluation mode,
+with independent batch Parse/Discard and Clear checks. Mixed real expressions
+and Boolean constraints receive individual exact results. The immutable captured
+model, definedness semantics, evaluator service and decision solver are unchanged.
+One abort signal and one ownership interval cover the complete serialized batch;
+no partial batch results survive cancellation or edits. Existing source budgets
+bound the batch. Scope, verification and the required review are in
+reviews/batch_model_evaluation_2026-10-13T01-57-53Z/. The completed default-model
+implementation consensus is PASS. All 1357 units and 62 public-page browser
+cases pass, as do lint, TypeScript/build and 99 actual prepared-package batch
+checks across three widths. Publication is recorded in that folder's PUBLICATION.md.
