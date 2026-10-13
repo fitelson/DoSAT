@@ -1,0 +1,57 @@
+{
+  "base": "https://fitelson.org/DoSAT/",
+  "asset": "assets/dosat-DzVDdA2r.js",
+  "rows": [
+    {
+      "width": 1280,
+      "height": 52,
+      "scrollHeight": 52,
+      "sourcePreserved": true,
+      "wholeGraphVisible": true,
+      "modelPreserved": true
+    },
+    {
+      "width": 1024,
+      "height": 52,
+      "scrollHeight": 52,
+      "sourcePreserved": true,
+      "wholeGraphVisible": true,
+      "modelPreserved": true
+    },
+    {
+      "width": 900,
+      "height": 72,
+      "scrollHeight": 72,
+      "sourcePreserved": true,
+      "wholeGraphVisible": true,
+      "modelPreserved": true
+    },
+    {
+      "width": 390,
+      "height": 52,
+      "scrollHeight": 52,
+      "sourcePreserved": true,
+      "wholeGraphVisible": true,
+      "modelPreserved": true
+    },
+    {
+      "width": 320,
+      "height": 52,
+      "scrollHeight": 52,
+      "sourcePreserved": true,
+      "wholeGraphVisible": true,
+      "modelPreserved": true
+    },
+    {
+      "width": 1280,
+      "height": 52,
+      "scrollHeight": 52,
+      "sourcePreserved": true,
+      "wholeGraphVisible": true,
+      "modelPreserved": true
+    }
+  ],
+  "explicitLines": true,
+  "shrinksAfterShortEdit": true,
+  "errors": []
+}

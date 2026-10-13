@@ -94,7 +94,7 @@ the conclusion input grows with its content, and top-level conjunctions are
 displayed on separate lines. The graph input also expands for wrapped text,
 explicit line breaks and window resizing. On phones, the widest typeset clauses require
 horizontal scrolling in their keyboard-accessible regions. See the
-[current UI record](reviews/automatic_evaluation_layout_2026-10-13T02-15-05Z/VERIFICATION.md).
+[current UI record](reviews/graph_input_autosize_2026-10-13T02-30-42Z/VERIFICATION.md).
 
 ## Inherited PrSAT 3.0 README
 

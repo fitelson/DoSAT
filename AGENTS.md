@@ -62,6 +62,11 @@ layout flattens only its root conjunction tree, preserving nested grouping.
 The DAG fits its panel; the widest typeset conclusion clauses still scroll on
 phones. Keep the decision/parser/evaluator-service semantics unchanged.
 
+The follow-up graph-input sizing correction is PASS in
+reviews/graph_input_autosize_2026-10-13T02-30-42Z/consensus.md. Both graph and
+conclusion textareas expand for content/width changes; sizing never edits source
+or invalidates a returned model. See that folder's PUBLICATION.md.
+
 ## Phase 2 scope
 
 Phase2 adds single-step graphical checking of Pearl Rules1–3 using d-separation
