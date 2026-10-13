@@ -1,0 +1,20 @@
+{
+  "base": "https://fitelson.org/DoSAT/",
+  "rows": [
+    {
+      "regular": false,
+      "countermodel": true,
+      "exact_model_predicate": true,
+      "contradictory_sat": "UNSAT",
+      "vacuous_entailment": "ENTAILS"
+    },
+    {
+      "regular": true,
+      "countermodel": true,
+      "exact_model_predicate": true,
+      "contradictory_sat": "UNSAT",
+      "vacuous_entailment": "ENTAILS"
+    }
+  ],
+  "errors": []
+}

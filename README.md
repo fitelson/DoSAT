@@ -55,7 +55,7 @@ records below are historical and remain preserved.
 
 Public repository: [fitelson/DoSAT](https://github.com/fitelson/DoSAT).
 Live website: [DoSAT 1.0](https://fitelson.org/DoSAT/). The
-[publication record](reviews/PHASE3_PUBLICATION.md) confirms uploaded checksums,
+[publication record](reviews/constraint_implementation_2026-10-12T23-41-52Z/PUBLICATION.md) confirms uploaded checksums,
 actual Z3 5.1.0 and successful live examples/cancellation.
 
 For local development, clone `https://github.com/fitelson/DoSAT.git`, use
