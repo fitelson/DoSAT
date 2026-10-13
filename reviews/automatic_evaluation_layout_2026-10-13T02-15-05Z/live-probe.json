@@ -1,0 +1,49 @@
+{
+  "base": "https://fitelson.org/DoSAT/",
+  "bundle": "assets/dosat-UjYW2ohl.js",
+  "rows": [
+    {
+      "width": 1280,
+      "allChecks": 29,
+      "displayChecks": 4,
+      "exactValues": 14,
+      "constraintsTrue": 14,
+      "constraintsFalse": 1,
+      "draftDiscard": true,
+      "rowSyntax": true,
+      "originalWitnessPreserved": true,
+      "isolated": true,
+      "z3Version": "5.1.0",
+      "errors": []
+    },
+    {
+      "width": 390,
+      "allChecks": 29,
+      "displayChecks": 4,
+      "exactValues": 14,
+      "constraintsTrue": 14,
+      "constraintsFalse": 1,
+      "draftDiscard": true,
+      "rowSyntax": true,
+      "originalWitnessPreserved": true,
+      "isolated": true,
+      "z3Version": "5.1.0",
+      "errors": []
+    },
+    {
+      "width": 320,
+      "allChecks": 29,
+      "displayChecks": 4,
+      "exactValues": 14,
+      "constraintsTrue": 14,
+      "constraintsFalse": 1,
+      "draftDiscard": true,
+      "rowSyntax": true,
+      "originalWitnessPreserved": true,
+      "isolated": true,
+      "z3Version": "5.1.0",
+      "errors": []
+    }
+  ],
+  "totalChecks": 99
+}

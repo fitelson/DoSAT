@@ -51,7 +51,7 @@ The decision solver and exact evaluator service are unchanged. Keep the ordinary
 premise editor and evaluator namespaces separate. Existing limits apply to
 accepted active checks, not to a strict cap on all manually created preview rows.
 
-## Phase 2 scope
+## Automatic evaluation and layout corrections, October 12
 
 The later automatic-evaluation/layout corrections are PASS in
 reviews/automatic_evaluation_layout_2026-10-13T02-15-05Z/consensus.md and supersede
@@ -61,6 +61,8 @@ debounce and native settlement. Cancellation must suppress queued work. Conclusi
 layout flattens only its root conjunction tree, preserving nested grouping.
 The DAG fits its panel; the widest typeset conclusion clauses still scroll on
 phones. Keep the decision/parser/evaluator-service semantics unchanged.
+
+## Phase 2 scope
 
 Phase2 adds single-step graphical checking of Pearl Rules1–3 using d-separation
 in manipulated observed-variable DAGs. Read DO_CALCULUS_SEMANTICS.md. Graphical
