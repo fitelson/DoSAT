@@ -2,6 +2,12 @@
 
 > **Note:** This is a local build for deployment to fitelson.org.
 
+## 2026-10-12 — Expand the graph input
+
+- Apply content sizing to the graph textarea as well as the conclusion, including
+  loaded examples, explicit line breaks and width changes. The full graph text
+  stays visible beside the fitted diagram; parsing and model state are unchanged.
+
 ## 2026-10-12 — Automatic inline evaluation and readable diagrams/conclusions
 
 - Correct the evaluator to PrSAT's automatic behavior: row edits and batch Parse

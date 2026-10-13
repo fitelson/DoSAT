@@ -563,3 +563,22 @@ for (const width of [320, 390, 1280]) test(`admissions conclusion and entire DAG
   await page.getByTestId('model-evaluate-input').fill('Pr(A | do(E)) < Pr(A | do(~E))')
   await expect(page.getByTestId('model-evaluate-preview')).toHaveText('False')
 })
+
+test('graph input grows for wrapped text, explicit lines, and window resizing', async ({ page }) => {
+  await open(page)
+  await page.getByTestId('decision-example').selectOption('6')
+  const input = page.getByTestId('decision-graph')
+  const source = await input.inputValue()
+  for (const width of [1280, 1024, 900, 390, 320, 1280]) {
+    await page.setViewportSize({ width, height: 900 })
+    await expect.poll(() => input.evaluate(e => e.scrollHeight - e.clientHeight)).toBeLessThanOrEqual(1)
+    await expect(input).toHaveValue(source)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+  }
+  await input.fill(source.replace(/; /g, '\n'))
+  await expect.poll(() => input.evaluate(e => e.scrollHeight - e.clientHeight)).toBeLessThanOrEqual(1)
+  await expect(page.getByTestId('decision-graph-preview').locator('[data-node]')).toHaveCount(5)
+  await input.fill('M')
+  await expect.poll(() => input.evaluate(e => e.scrollHeight - e.clientHeight)).toBeLessThanOrEqual(1)
+  expect(await input.evaluate(e => e.clientHeight)).toBeLessThan(60)
+})

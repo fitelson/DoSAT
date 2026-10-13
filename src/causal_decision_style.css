@@ -27,7 +27,7 @@
 .decision-toolbar label { display: inline-flex; align-items: center; gap: .3rem; min-width: 0; flex: 1; }
 .decision-toolbar select { min-width: 0; width: 100%; max-width: 390px; padding: .25rem; }
 .decision-graph-block { display: grid; grid-template-columns: auto minmax(150px, 1fr) auto; gap: .25rem .6rem; align-items: center; margin: .5rem 0; }
-.decision-graph-block textarea { min-height: 2.25rem; }
+.decision-graph-block textarea { min-height: 2.25rem; box-sizing: border-box; overflow-y: hidden; resize: vertical; }
 .decision-graph-block .decision-field-error { grid-column: 2 / -1; }
 .decision-graph-block details { grid-column: 1 / -1; margin: 0; }
 .decision-note { display: block; color: var(--text-light); font-size: .85rem; font-weight: 400; line-height: 1.3; }

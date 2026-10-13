@@ -1,0 +1,17 @@
+[
+  {
+    "file": "src/causal_decision_ui.ts",
+    "bytes": 25320,
+    "sha256": "259b9a14edc2fc1649fb74f544ed6dfb7544137c12e837661c92a03c835e6b97"
+  },
+  {
+    "file": "src/causal_decision_style.css",
+    "bytes": 10303,
+    "sha256": "c85136596a4929b074b9d09a9df08c6e3009f1931139b19c865606bc27481380"
+  },
+  {
+    "file": "tests/causal_decision.spec.ts",
+    "bytes": 39892,
+    "sha256": "059ae5cfab98be7d0da9f6c1db05adf1301bbb00faed8051e08f62be99b6a5cf"
+  }
+]

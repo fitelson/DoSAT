@@ -510,3 +510,15 @@ unit cases, 65 public browser cases and 99 automatic prepared-package checks at
 three widths. Full input text and all graph nodes are visible; the widest
 typeset clauses require horizontal scrolling on phones. Publication/live evidence
 is recorded in that folder's PUBLICATION.md.
+
+## Graph input sizing, October 12
+
+Branden identified wrapped graph source text hidden by the fixed-height input.
+The graph textarea now shares the conclusion's content sizing, on input/load and
+width changes. This UI-only correction keeps the full source text visible without
+changing its value, graph rendering or model semantics. Scope and verification:
+reviews/graph_input_autosize_2026-10-13T02-30-42Z/.
+The scoped default-model implementation review is PASS. Full checks pass 1366
+units and 66 public browser cases, plus lint/TypeScript/build. The prepared
+package passes six width transitions with source and returned-model preservation.
+Publication/live evidence is recorded in that folder's PUBLICATION.md.

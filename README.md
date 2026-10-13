@@ -91,7 +91,8 @@ optional retry. Enter inserts a row; Up/Down navigate. Unapplied batch edits mus
 be parsed or discarded. Clear checks affects only the evaluator. Up to 64 active
 checks and 50000 total input characters are supported. The graph fits its panel,
 the conclusion input grows with its content, and top-level conjunctions are
-displayed on separate lines. On phones, the widest typeset clauses require
+displayed on separate lines. The graph input also expands for wrapped text,
+explicit line breaks and window resizing. On phones, the widest typeset clauses require
 horizontal scrolling in their keyboard-accessible regions. See the
 [current UI record](reviews/automatic_evaluation_layout_2026-10-13T02-15-05Z/VERIFICATION.md).
 
