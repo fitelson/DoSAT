@@ -2,6 +2,21 @@
 
 > **Note:** This is a local build for deployment to fitelson.org.
 
+## 2026-10-12 — Automatic inline evaluation and readable diagrams/conclusions
+
+- Correct the evaluator to PrSAT's automatic behavior: row edits and batch Parse
+  evaluate without a button click, and values or True/False appear beside inputs.
+  Valid rows continue when another has invalid syntax; term details are expandable.
+- Debounce typing and queue the latest checks behind native settlement. Cancel,
+  Clear and unapplied drafts suppress queued work; model replacement reevaluates
+  retained valid rows in the new captured model. No overlapping native calls.
+- Fit the entire DAG to its panel. Expand the conclusion textarea to its content,
+  with full-width preview and one line per top-level conjunction clause. Preserve
+  nested Boolean grouping and exact numerals; parser/solver semantics are unchanged.
+- The scoped default-model implementation review is PASS. The widest typeset
+  conclusion clauses still require horizontal scrolling on phone screens; full
+  input text remains visible in the expanding editor.
+
 ## 2026-10-12 — PrSAT-style batch model checks
 
 - Replace the single evaluation field with the existing row editor and a separate

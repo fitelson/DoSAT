@@ -1,0 +1,67 @@
+[
+  {
+    "file": "src/causal_decision_editor.ts",
+    "bytes": 11767,
+    "sha256": "6d4dcf5c7f788d375b81cbb160542264b978e3aa0e1dd24160d6c4a8df4e72e1"
+  },
+  {
+    "file": "src/causal_evaluation_ui.ts",
+    "bytes": 13264,
+    "sha256": "967697b42b8b089d8b2abcafa3c7442e092def2fc694314616b96b8584366065"
+  },
+  {
+    "file": "src/causal_decision_style.css",
+    "bytes": 10241,
+    "sha256": "2ef96ab99c31709e32d68f39a5d313e41ff4fce781eeab5092532cdf02f24df5"
+  },
+  {
+    "file": "src/causal_decision_ui.ts",
+    "bytes": 25227,
+    "sha256": "a878ed385aa77a0cb9797eefebc70c22af8b052e02af1c93310712954b9d3ebe"
+  },
+  {
+    "file": "src/causal_to_html.ts",
+    "bytes": 6363,
+    "sha256": "5606de66034c52ba34796d7b6db06a33070581335c1b328f8acdd05e39a79f17"
+  },
+  {
+    "file": "src/causal_evaluation_ui.spec.ts",
+    "bytes": 27930,
+    "sha256": "19a9db705b583d96c356243fc4f6eb4ba7305a7a7f0b743ab2f9a8944b913512"
+  },
+  {
+    "file": "src/causal_decision_ui.spec.ts",
+    "bytes": 59216,
+    "sha256": "c28f3ee74fc68cbd3412dfb05db2f0e43519000deb4b48bb77b0b5834c97b1c1"
+  },
+  {
+    "file": "src/causal_to_html.spec.ts",
+    "bytes": 12506,
+    "sha256": "7f52bcbcc740d2c6c91f1d5939c69752d1361f43439a3c20486eceb16a2654be"
+  },
+  {
+    "file": "tests/causal_decision.spec.ts",
+    "bytes": 38797,
+    "sha256": "945b1010a9c5a48d0dd3b6407aa75abb16bca1b98e5b9f4afed7913a8e8697fc"
+  },
+  {
+    "file": "tests/causal_literature_examples.spec.ts",
+    "bytes": 4247,
+    "sha256": "7cec57ba74e38d08d56a05d3d60e056784b76c56cf670a9c0a81300b9cc15aa4"
+  },
+  {
+    "file": "README.md",
+    "bytes": 9780,
+    "sha256": "4f76614ebcd9eb92971c9237063d0e3ab01ae02cccfab1435c5c028f0f9260e1"
+  },
+  {
+    "file": "CHANGELOG.md",
+    "bytes": 25203,
+    "sha256": "d85c59bcec582ad1105a3a4bdc6c6801b438e35cc58a163b18827d9a1b9e52b8"
+  },
+  {
+    "file": "PROJECT.md",
+    "bytes": 33755,
+    "sha256": "1a2e72cdcf8a2392859436c2fb15417a8d075a56402564949066a81f6d154bd4"
+  }
+]

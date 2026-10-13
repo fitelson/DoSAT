@@ -493,3 +493,20 @@ reviews/batch_model_evaluation_2026-10-13T01-57-53Z/. The completed default-mode
 implementation consensus is PASS. All 1357 units and 62 public-page browser
 cases pass, as do lint, TypeScript/build and 99 actual prepared-package batch
 checks across three widths. Publication is recorded in that folder's PUBLICATION.md.
+
+## Automatic evaluation and layout corrections, October 12
+
+Branden clarified that evaluations should run automatically and show values beside
+rows, rather than typeset input awaiting an Evaluate click. Row edits and batch
+Parse now trigger debounced exact evaluation; valid rows survive another row's
+syntax error, and native work remains serialized until settlement. Details are
+expandable. He also identified clipped conclusion text and DAG nodes. The full
+graph now fits its panel; the conclusion input expands and top-level conjunctions
+render on separate lines without splitting nested logic. This supersedes the
+manual interaction from the preceding batch release. Current scoped verification
+and the required review are in reviews/automatic_evaluation_layout_2026-10-13T02-15-05Z/.
+The completed implementation consensus is PASS. Verification covers 1366 distinct
+unit cases, 65 public browser cases and 99 automatic prepared-package checks at
+three widths. Full input text and all graph nodes are visible; the widest
+typeset clauses require horizontal scrolling on phones. Publication/live evidence
+is recorded in that folder's PUBLICATION.md.

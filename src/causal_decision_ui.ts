@@ -2,7 +2,7 @@ import { el, tel } from './el'
 import { compile_decision_problem, parse_decision_input, type DecisionProblemInput, type CompiledDecisionProblem } from './causal_decision'
 import { CausalDecisionSolver, type CausalDecisionResult, type DecisionWitness } from './causal_decision_solver'
 import { create_decision_editor } from './causal_decision_editor'
-import { render_causal_constraint } from './causal_to_html'
+import { render_causal_conclusion } from './causal_to_html'
 import { render_decision_witness } from './causal_decision_results'
 import { validate_decision_fields } from './causal_decision_validation'
 import { CausalModelEvaluator } from './causal_model_evaluator'
@@ -87,6 +87,11 @@ const timeLimit = (): number => {
   return Math.round(value * 1000)
 }
 const linkError = (container: HTMLElement, label: string, target: string): void => container.append(el('a', { href: `#${target}` }, label), ' ')
+const sizeConclusion = (): void => {
+  if (!conclusion.scrollHeight) return
+  conclusion.style.height = 'auto'
+  conclusion.style.height = `${conclusion.scrollHeight + 2}px`
+}
 const valid = (): boolean => {
   const fields = validate_decision_fields(input())
   graphError.textContent = fields.graphError ? (fields.graphError.includes('At most') || fields.graphError.includes('limited to') || fields.graphError.includes('too large') ? `Graph: Unsupported input. ${fields.graphError}` : `Graph: Syntax error: not a DAG. ${fields.graphError}`) : ''
@@ -99,8 +104,9 @@ const valid = (): boolean => {
   conclusion.setAttribute('aria-invalid', String(!!fields.conclusionError))
   conclusionPreview.replaceChildren()
   if (taskValue() === 'entailment' && !fields.graphError && !fields.conclusionError) {
-    try { conclusionPreview.append(render_causal_constraint(graph.value, conclusion.value)) } catch { /* Field error above is authoritative. */ }
+    try { conclusionPreview.append(render_causal_conclusion(graph.value, conclusion.value)) } catch { /* Field error above is authoritative. */ }
   }
+  sizeConclusion()
   const nextValidation = el('div', {})
   if (fields.graphError) linkError(nextValidation, 'Fix the graph.', 'decision-graph')
   for (const index of fields.premiseErrors.keys()) linkError(nextValidation, `Fix ${taskValue() === 'entailment' ? 'Premise' : 'Constraint'} ${index + 1}.`, (editor.element.querySelector(`[data-testid="decision-premise-${index + 1}"]`) as HTMLInputElement).id)
@@ -135,6 +141,14 @@ const invalidate = (): void => {
   refresh()
 }
 for (const field of [graph, conclusion, entailment, satisfiability, mode, seconds, regular]) field.addEventListener('input', invalidate)
+if (typeof ResizeObserver !== 'undefined') {
+  let width = -1
+  const observer = new ResizeObserver(entries => {
+    const next = entries[0]?.contentRect.width ?? 0
+    if (next !== width) { width = next; sizeConclusion() }
+  })
+  observer.observe(conclusion)
+}
 loadButton.addEventListener('click', () => load.click())
 batchButton.addEventListener('click', () => { editor.toggleBatch(); refresh() })
 clearButton.addEventListener('click', () => editor.clear())

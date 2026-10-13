@@ -1,5 +1,5 @@
 import { el, tel } from './el'
-import { render_causal_constraint, render_causal_evaluation } from './causal_to_html'
+import { render_causal_constraint } from './causal_to_html'
 import { CAUSAL_LIMITS } from './causal_syntax'
 
 export interface DecisionEditor {
@@ -10,6 +10,7 @@ export interface DecisionEditor {
   setGraph(graph: string): void
   setLabel(label: string): void
   setErrors(errors: Map<number, string>): void
+  setResults(results: Map<number, Node>): void
   pending(): boolean
   toggleBatch(): void
   clear(): void
@@ -85,7 +86,7 @@ export const create_decision_editor = (onChange: () => void, mode: 'premises' | 
       row.input.dataset.testid = evaluation ? `model-evaluate-input${index === 0 ? '' : `-${index + 1}`}` : `decision-premise-${index + 1}`
       if (evaluation) row.preview.dataset.testid = `model-evaluate-preview${index === 0 ? '' : `-${index + 1}`}`
       row.input.setAttribute('aria-label', name)
-      row.preview.setAttribute('aria-label', `${name} preview`)
+      row.preview.setAttribute('aria-label', `${name} ${evaluation ? 'result' : 'preview'}`)
       row.remove.setAttribute('aria-label', `Delete ${name.toLowerCase()}`)
       row.remove.disabled = rows.length === 1
       row.newline.setAttribute('aria-label', `Insert a row after ${name.toLowerCase()}`)
@@ -101,8 +102,8 @@ export const create_decision_editor = (onChange: () => void, mode: 'premises' | 
         if (row.value.trim().startsWith('#')) row.preview.textContent = 'Comment'
         return
       }
-      if (evaluation && !graph) return
-      try { row.preview.append(evaluation ? render_causal_evaluation(graph, row.value) : render_causal_constraint(graph, row.value)) }
+      if (evaluation) return
+      try { row.preview.append(render_causal_constraint(graph, row.value)) }
       catch { if (!evaluation) row.preview.append(el('span', { class: 'decision-note' }, 'Preview unavailable.')) }
     })
   }
@@ -217,6 +218,14 @@ export const create_decision_editor = (onChange: () => void, mode: 'premises' | 
     setGraph(value) { graph = value; refreshRows() },
     setLabel(value) { label = value; heading.textContent = value; batch.setAttribute('aria-label', `Batch ${singular().toLowerCase()} input`); refreshRows() },
     setErrors(value) { errors = new Map(value); refreshRows() },
+    setResults(value) {
+      if (!evaluation) return
+      rows.forEach((row, index) => {
+        row.preview.replaceChildren()
+        const result = value.get(index)
+        if (result) row.preview.append(result)
+      })
+    },
     toggleBatch() { batchRegion.hidden = !batchRegion.hidden; element.dataset.batchOpen = String(!batchRegion.hidden); refreshBatch() },
     clear() { setValue(''); onChange() },
   }

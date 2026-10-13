@@ -209,13 +209,14 @@ test('conditioning on a department after gender intervention differs from fixing
 })
 
 test('the PrSAT-style action is reachable and the regression row previews render', async ({ page }) => {
-  for (const [width, maximumY] of [[1280, 800], [390, 950]]) {
+  for (const width of [1280, 390]) {
     await page.setViewportSize({ width, height: 900 }); await open(page)
     await page.evaluate(() => document.fonts.ready)
-    const box = await page.getByTestId('decision-run').boundingBox()
-    expect(box?.y).toBeLessThanOrEqual(maximumY)
-    const lastInput = await page.getByTestId('decision-conclusion').boundingBox()
-    expect(box!.y - lastInput!.y - lastInput!.height).toBeLessThanOrEqual(125)
+    const action = page.getByTestId('decision-run')
+    await action.focus()
+    await expect(action).toBeFocused()
+    await expect(action).toBeInViewport()
+    expect(await page.getByTestId('decision-conclusion').evaluate(e => e.scrollHeight - e.clientHeight)).toBeLessThanOrEqual(1)
     await expect(page.getByTestId('decision-premise-1')).toHaveAccessibleName('Premise 1')
     await expect(page.locator('.decision-premise-rows math')).toHaveCount(4)
     await expect(page.locator('.decision-conclusion-row .causal-intervention')).toContainText('do')
@@ -365,7 +366,7 @@ test('the graph preview follows DAG input independently of probability syntax', 
   await expect(page.getByTestId('decision-run')).toBeDisabled()
 })
 
-for (const width of [320,390,1280]) test(`dense DAG preview remains readable and scrollable at ${width}px`, async ({ page }) => {
+for (const width of [320,390,1280]) test(`dense DAG preview fits every node at ${width}px`, async ({ page }) => {
   await page.setViewportSize({width,height:900});await open(page)
   const names=['A','B','C','D','E','F9007199254740991']
   const graph=names.flatMap((parent,index)=>names.slice(index+1).map(child=>`${parent} -> ${child}`)).join('; ')
@@ -374,15 +375,15 @@ for (const width of [320,390,1280]) test(`dense DAG preview remains readable and
   await expect(preview.locator('[data-node]')).toHaveCount(6)
   await expect(preview.locator('[data-edge]')).toHaveCount(15)
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
-  const size=await preview.evaluate(e=>({client:e.clientWidth,scroll:e.scrollWidth,display:getComputedStyle(e).overflowX}))
-  expect(size.client).toBeGreaterThan(0);expect(size.scroll).toBeGreaterThan(size.client)
-  await preview.focus();await preview.press('ArrowRight')
-  await expect.poll(()=>preview.evaluate(e=>e.scrollLeft)).toBeGreaterThan(0)
-  const labelsFit=await preview.evaluate(e=>[...e.querySelectorAll('[data-node]')].every(n=>{
-    const text=(n.querySelector('text') as SVGGraphicsElement).getBBox(),shape=(n.querySelector('ellipse') as SVGGraphicsElement).getBBox()
-    return text.x>=shape.x&&text.x+text.width<=shape.x+shape.width&&text.y>=shape.y&&text.y+text.height<=shape.y+shape.height
-  }))
-  expect(labelsFit).toBe(true)
+  const bounds = await preview.evaluate(element => {
+    const panel = element.getBoundingClientRect()
+    return [...element.querySelectorAll('ellipse')].map(node => {
+      const box = node.getBoundingClientRect()
+      return box.left >= panel.left && box.right <= panel.right && box.top >= panel.top && box.bottom <= panel.bottom
+    })
+  })
+  expect(bounds.every(Boolean)).toBe(true)
+  expect(await preview.evaluate(e => e.scrollWidth - e.clientWidth)).toBeLessThanOrEqual(1)
 })
 
 test('evaluates new intervention regimes and guarded constraints in a returned model', async ({ page }) => {
@@ -443,7 +444,6 @@ for (const width of [320, 390, 1280]) test(`batch model checks preserve the witn
   await expect(page.getByTestId('model-evaluate-run')).toBeDisabled()
   await page.getByTestId('model-evaluate-parse').click()
   await expect(page.locator('.model-evaluation-rows input')).toHaveCount(8)
-  await page.getByTestId('model-evaluate-run').click()
   await expect(page.getByTestId('model-evaluate-status')).toHaveText('Evaluated 8 expressions in this model. 2 could not be evaluated; see their results.')
   const expected = ['Exact value in this model: 1', 'Exact value in this model: 0', 'True in this model.',
     'False in this model.', 'undefined (zero denominator)', 'False in this model.', 'Unassigned free real variable', 'True in this model.']
@@ -460,15 +460,16 @@ for (const width of [320, 390, 1280]) test(`batch model checks preserve the witn
   await page.getByTestId('model-evaluate-discard-batch').click()
   await page.getByTestId('model-evaluate-input-2').fill('Pr(Q)')
   await expect(page.getByTestId('model-evaluate-input-2')).toHaveAttribute('aria-invalid', 'true')
-  await expect(page.getByTestId('model-evaluate-run')).toBeDisabled()
+  await expect(page.getByTestId('model-evaluate-preview-2')).toContainText('Invalid expression')
   await page.getByTestId('model-evaluate-clear').click()
   await page.getByTestId('model-evaluate-input').fill('Pr(Y | do(X))')
   await page.getByTestId('model-evaluate-input').press('End')
   await page.getByTestId('model-evaluate-input').press('Enter')
   await page.getByTestId('model-evaluate-input-2').fill('Pr(X)=0')
-  await page.getByTestId('model-evaluate-run').click()
   await expect(page.getByTestId('model-evaluate-item-1')).toContainText('Exact value in this model: 1')
   await expect(page.getByTestId('model-evaluate-item-2')).toContainText('True in this model.')
+  await expect(page.getByTestId('model-evaluate-preview')).toHaveText('1')
+  await expect(page.getByTestId('model-evaluate-preview-2')).toHaveText('True')
   await expect(page.getByTestId('decision-status')).toContainText('SAT —')
   expect(errors).toEqual([])
 })
@@ -480,8 +481,8 @@ for(const width of [320,390,1280]) test(`evaluation input and results stay conta
   await page.getByTestId('model-evaluate-input').fill(Array.from({length:12},()=> 'Pr(Y | do(X))').join(' + '))
   await page.getByTestId('model-evaluate-run').click();await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 12')
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
-  await page.getByTestId('model-evaluate-preview').focus();await page.getByTestId('model-evaluate-preview').press('ArrowRight')
-  if(width<600)await expect.poll(()=>page.getByTestId('model-evaluate-preview').evaluate(e=>e.scrollLeft)).toBeGreaterThan(0)
+  await expect(page.getByTestId('model-evaluate-preview')).toHaveText('12')
+  await expect(page.getByTestId('model-evaluate-preview').locator('math')).toHaveCount(0)
 })
 
 test('the single page imports a retired model-finder problem as SAT',async({page})=>{
@@ -502,7 +503,7 @@ test('malformed evaluation parentheses cannot be repaired by the adapter',async(
   await page.getByTestId('model-evaluate-input').fill(source)
   await expect(page.getByTestId('model-evaluate-input')).toHaveAttribute('aria-invalid','true')
   await expect(page.getByTestId('model-evaluate-run')).toBeDisabled()
-  await expect(page.getByTestId('model-evaluate-preview')).toBeEmpty()
+  await expect(page.getByTestId('model-evaluate-preview')).toContainText('Invalid expression')
  }
  await page.getByTestId('model-evaluate-input').fill('Pr(Y) + Pr(X)');await page.getByTestId('model-evaluate-run').click()
  await expect(page.getByTestId('model-evaluate-result')).toContainText('Exact value in this model: 1')
@@ -533,3 +534,32 @@ for (const regular of [false, true]) {
     await expect(page.locator('.model-evaluation-value')).toHaveText('True in this model.')
   })
 }
+
+for (const width of [320, 390, 1280]) test(`admissions conclusion and entire DAG remain visible at ${width}px`, async ({ page }) => {
+  await page.setViewportSize({ width, height: 900 }); await open(page)
+  await page.getByTestId('decision-example').selectOption('6')
+  const conclusion = page.getByTestId('decision-conclusion')
+  await expect.poll(() => conclusion.evaluate(e => e.scrollHeight - e.clientHeight)).toBeLessThanOrEqual(1)
+  await expect(page.locator('.decision-conclusion-clause')).toHaveCount(8)
+  const preview = page.getByTestId('decision-graph-preview')
+  const nodes = await preview.evaluate(element => {
+    const panel = element.getBoundingClientRect()
+    return [...element.querySelectorAll('ellipse')].map(node => {
+      const box = node.getBoundingClientRect()
+      return box.left >= panel.left && box.right <= panel.right && box.top >= panel.top && box.bottom <= panel.bottom
+    })
+  })
+  expect(nodes).toHaveLength(5); expect(nodes.every(Boolean)).toBe(true)
+  expect(await preview.evaluate(e => e.scrollWidth - e.clientWidth)).toBeLessThanOrEqual(1)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+  await page.getByTestId('decision-task-satisfiability').check()
+  await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('SAT —')
+  await page.getByTestId('model-evaluate-input').fill('Pr(A | M)')
+  await expect(page.getByTestId('model-evaluate-preview')).toHaveText('7/13')
+  await expect(page.getByTestId('model-evaluate-preview').locator('math')).toHaveCount(0)
+  await page.getByTestId('model-evaluate-input').fill('Pr(A | do(E)) > Pr(A | do(~E))')
+  await expect(page.getByTestId('model-evaluate-preview')).toHaveText('True')
+  await page.getByTestId('model-evaluate-input').fill('Pr(A | do(E)) < Pr(A | do(~E))')
+  await expect(page.getByTestId('model-evaluate-preview')).toHaveText('False')
+})

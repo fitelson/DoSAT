@@ -36,6 +36,7 @@ for (const [index, example] of DECISION_EXAMPLES.entries()) {
         : `Exact value in this model: ${item.value}`
       await expect(page.getByTestId('model-evaluate-result').locator('.model-evaluation-value')).toHaveText(expected, { timeout: 15_000 })
       if (example.expectedStatus === 'DOES NOT ENTAIL') {
+        await page.getByText('Probability terms and evaluation details', { exact: true }).click()
         await expect(page.getByTestId('model-evaluate-probabilities')).toBeVisible()
         await expect(page.getByTestId('model-evaluate-probabilities').locator('tbody tr')).toHaveCount(1)
         await expect(page.getByTestId('model-evaluate-probabilities')).not.toContainText('undefined')

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { JSDOM } from 'jsdom'
-import { render_causal_constraint, render_causal_evaluation, render_causal_probability } from './causal_to_html'
+import { render_causal_constraint, render_causal_conclusion, render_causal_evaluation, render_causal_probability } from './causal_to_html'
 
 let dom: JSDOM
 const graph = 'Z -> X; Z -> Y; X -> Y'
@@ -217,5 +217,27 @@ describe('causal evaluation previews', () => {
       expect(node.namespaceURI).toBe('http://www.w3.org/1998/Math/MathML')
       expect(node.getAttributeNames().some(name => name.startsWith('on'))).toBe(false)
     }
+  })
+})
+
+describe('readable conclusion display', () => {
+  test('separates only top-level conjunctions and preserves nested disjunction, implication and negation', () => {
+    const rendered = render_causal_conclusion('X; Y; Z', '((Pr(X)=0 v Pr(Y)=1) -> Pr(Z)=1) & ~(Pr(X)=1 & Pr(Y)=0)') as HTMLElement
+    expect(rendered.querySelectorAll('.decision-conclusion-clause')).toHaveLength(2)
+    const clauses = rendered.querySelectorAll('.decision-conclusion-clause')
+    expect(clauses[0].textContent).toContain('→')
+    expect(clauses[0].textContent).toContain('∨')
+    expect(clauses[1].textContent).toContain('~')
+    expect(clauses[1].textContent?.match(/&/g)).toHaveLength(2)
+    expect(rendered.querySelectorAll('.causal-probability')).toHaveLength(5)
+    expect(rendered.textContent).not.toContain('CausalQuery')
+  })
+
+  test('keeps an implication containing conjunctions as one original formula', () => {
+    const rendered = render_causal_conclusion('X; Y', '(Pr(X)=1 & Pr(Y)=0) -> (Pr(X)=0 & Pr(Y)=1)') as HTMLElement
+    expect(rendered.localName).toBe('math')
+    expect(rendered.querySelectorAll('.decision-conclusion-clause')).toHaveLength(0)
+    expect(rendered.textContent?.match(/&/g)).toHaveLength(2)
+    expect(rendered.textContent).toContain('→')
   })
 })

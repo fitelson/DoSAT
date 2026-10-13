@@ -788,7 +788,7 @@ describe('decision interface', () => {
     node<HTMLButtonElement>('decision-save-smt').click()
     const originalExport = mocks.download.mock.calls[0][0]
     change('model-evaluate-input', 'Rate + Pr(A | do(A))')
-    expect(node('model-evaluate-preview').querySelector('math')).not.toBeNull()
+    expect(node('model-evaluate-preview').querySelector('math')).toBeNull()
     expect(problemState()).toEqual(originalProblem)
     expect(node('decision-results').firstChild).toBe(originalWitness)
     expect(node('decision-results').innerHTML).toBe(originalHTML)

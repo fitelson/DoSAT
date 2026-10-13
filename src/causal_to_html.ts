@@ -1,7 +1,7 @@
 import { parse_causal_document } from './causal_syntax'
 import type { CausalDocument, CausalProbability } from './causal_syntax'
 import { parse_causal_evaluation } from './causal_evaluation_syntax'
-import { math_el } from './el'
+import { el, math_el } from './el'
 import { constraint_to_html, real_expr_to_html } from './prsat_to_html'
 import type { PrSat } from './types'
 
@@ -73,6 +73,27 @@ export const render_causal_constraint = (graph: string, source: string): MathMLE
   const math = constraint_to_html(document.constraints[0], true)
   math.setAttribute('aria-label', document.source[0])
   return replace_query_variables(math, document)
+}
+
+/** Display top-level conjunctions on separate lines without splitting nested logic. */
+export const render_causal_conclusion = (graph: string, source: string): Node => {
+  const document = parse_causal_document(graph, source)
+  if (document.constraints.length !== 1) throw new Error('Enter exactly one conclusion constraint.')
+  const root = document.constraints[0]
+  if (root.tag !== 'conjunction') return render_causal_constraint(graph, source)
+  const clauses: PrSat['Constraint'][] = []
+  const collect = (constraint: PrSat['Constraint']): void => {
+    if (constraint.tag === 'conjunction') { collect(constraint.left); collect(constraint.right) }
+    else clauses.push(constraint)
+  }
+  collect(root)
+  return el('div', { class: 'decision-conclusion-clauses' }, ...clauses.map((clause, index) => {
+    const math = math_el('math', {},
+      math_el('mrow', {}, ...(index ? [math_el('mo', {}, '&')] : []),
+        math_el('mo', {}, '('), constraint_to_html(clause, false), math_el('mo', {}, ')')))
+    replace_query_variables(math, document)
+    return el('div', { class: 'decision-conclusion-clause decision-preview', tabindex: '0', role: 'region', 'aria-label': `Conclusion clause ${index + 1} preview` }, math)
+  }))
 }
 
 /** Preview one causal arithmetic expression or constraint, without evaluating it. */

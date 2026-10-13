@@ -82,13 +82,18 @@ The supplied graph renders when it is accepted as a DAG; cyclic/malformed input 
 
 After SAT or a countermodel, Evaluate model accepts a new probability, arithmetic expression or Boolean constraint, including new do regimes. It uses the returned model's complete shared kernel and assigned real variables with exact rational/algebraic arithmetic. It does not establish entailment or choose a new model. Unknown user variables give an error; undefined real expressions are marked explicitly. Constraint truth follows DoSAT's existing definedness guards, with undefined probability terms listed. Original-problem edits clear the model and evaluator; evaluation cancellation waits for native settlement. See [evaluation semantics](reviews/single_page_model_eval_2026-10-12T01-02-21Z/EVALUATION_SEMANTICS.md). Retired model-finder v1 saved files import as corresponding SAT problems; modern DoSAT JSON remains unchanged.
 
-Evaluate model now uses PrSAT-style rows and Show Batch Input. Paste one expression
-or constraint per line, click Parse, then Evaluate to check them all in the same
-returned model. Each row has its own exact value, True/False result, undefined
-marker or error. Enter inserts a row; Up/Down navigate. Unapplied batch edits must
-be parsed or discarded. Clear checks affects only the evaluator. Up to 64 checks
-and 50000 total input characters are supported. See the
-[batch evaluation record](reviews/batch_model_evaluation_2026-10-13T01-57-53Z/VERIFICATION.md).
+Evaluate model uses PrSAT-style rows and Show Batch Input. Editing a row evaluates
+it automatically; batch Parse applies and evaluates one expression or constraint
+per line. Exact values, True/False, undefined markers or errors appear beside
+their input rows. Valid checks still evaluate when another row has a syntax
+error. Probability terms and further details are expandable; Reevaluate is an
+optional retry. Enter inserts a row; Up/Down navigate. Unapplied batch edits must
+be parsed or discarded. Clear checks affects only the evaluator. Up to 64 active
+checks and 50000 total input characters are supported. The graph fits its panel,
+the conclusion input grows with its content, and top-level conjunctions are
+displayed on separate lines. On phones, the widest typeset clauses require
+horizontal scrolling in their keyboard-accessible regions. See the
+[current UI record](reviews/automatic_evaluation_layout_2026-10-13T02-15-05Z/VERIFICATION.md).
 
 ## Inherited PrSAT 3.0 README
 

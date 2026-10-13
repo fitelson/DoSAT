@@ -42,9 +42,10 @@
 .decision-ui .causal-observation { color: var(--primary-dark); }
 .decision-field-error:empty { display: none; }
 .decision-field-error { font-size: .9rem; overflow-wrap: anywhere; }
-.decision-conclusion-row { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(150px, 1fr); gap: .3rem; align-items: center; }
+.decision-conclusion-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: .3rem; align-items: center; }
 .decision-conclusion-row .decision-field-error { grid-column: 1 / -1; }
-.decision-ui .decision-conclusion-row textarea { min-height: 2.25rem; }
+.decision-ui .decision-conclusion-row textarea { min-height: 2.25rem; box-sizing: border-box; overflow-y: hidden; resize: vertical; }
+.decision-conclusion-clauses { display: grid; gap: .3rem; min-width: 0; }
 .decision-save-toolbar { margin: .5rem 0 0; }
 .decision-save-toolbar .decision-note { margin-left: .25rem; }
 .decision-run-line { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
@@ -109,12 +110,12 @@
   .decision-ui .decision-save-toolbar { margin-top: 0; }
   .decision-ui .decision-conclusion-block > .decision-note { margin-bottom: .2rem; }
 }
-.decision-graph-layout { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; align-items: center; }
-.decision-graph-preview { max-width: 340px; max-height: 145px; overflow: auto; border: 1px solid var(--border); border-radius: 6px; background: white; padding: .2rem; }
-.decision-graph-preview svg { display: block; }
+.decision-graph-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: .5rem; align-items: center; }
+.decision-graph-preview { width: 100%; min-width: 0; max-width: 420px; box-sizing: border-box; border: 1px solid var(--border); border-radius: 6px; background: white; padding: .2rem; }
+.decision-graph-preview svg { display: block; width: 100%; height: auto; max-height: 220px; }
 .decision-graph-preview:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 1px; }
 @media (max-width: 600px) {
-  .decision-graph-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 164px); }
+  .decision-graph-layout { grid-template-columns: minmax(0, 1fr); }
   .decision-graph-block { grid-template-columns: minmax(0, 1fr); }
   .decision-graph-block .decision-field-error { grid-column: 1; }
   .decision-graph-preview { max-width: 100%; }
@@ -137,6 +138,7 @@
 .model-evaluation-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
 .model-evaluation-result { max-width: 100%; min-width: 0; }
 .model-evaluation-value { font-weight: 600; overflow-wrap: anywhere; }
+.model-evaluation-inline-value { font-weight: 600; overflow-wrap: anywhere; }
 .model-evaluation-item { margin-top: .6rem; padding: .5rem; border: 1px solid var(--border); border-radius: .4rem; }
 .model-evaluation-item h4 { margin: 0 0 .25rem; }
 .decision-example-guide { max-width: 100%; min-width: 0; }

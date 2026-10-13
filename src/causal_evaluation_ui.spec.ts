@@ -15,6 +15,7 @@ const change = (source: string): void => {
   input().dispatchEvent(new dom.window.Event('input', { bubbles: true }))
 }
 const flush = async (): Promise<void> => { for (let index = 0; index < 12; index++) await Promise.resolve() }
+const autoFlush = async (): Promise<void> => { await new Promise(resolve => dom.window.setTimeout(resolve, 210)); await flush() }
 const pending = (): { promise: Promise<ModelEvaluationResult>, resolve: (value: ModelEvaluationResult) => void, reject: (error: Error) => void } => {
   let resolve!: (value: ModelEvaluationResult) => void, reject!: (error: Error) => void
   const promise = new Promise<ModelEvaluationResult>((yes, no) => { resolve = yes; reject = no })
@@ -63,7 +64,7 @@ describe('returned causal model evaluation panel', () => {
     const preview = node('model-evaluate-preview')
     expect(preview.getAttribute('role')).toBe('region')
     expect(preview.tabIndex).toBe(0)
-    expect(preview.getAttribute('aria-label')).toBe('Expression 1 preview')
+    expect(preview.getAttribute('aria-label')).toBe('Expression 1 result')
     expect(node('model-evaluate-status').getAttribute('role')).toBe('status')
     expect(node('model-evaluate-status').getAttribute('aria-live')).toBe('polite')
     expect(panel.element.textContent).toContain('does not establish entailment')
@@ -72,10 +73,10 @@ describe('returned causal model evaluation panel', () => {
   test.each([
     'Pr(Y | do(X))', 'Pr(Y | do(~X), Z)', 'q + Pr(Y | do(X=1, ~Z))',
     'Pr(Y | do(X)) = 1/2 & a > 0',
-  ])('shows a live causal MathML preview without evaluating valid source %s', source => {
+  ])('validates source %s and leaves the result slot ready for automatic evaluation', source => {
     show()
     change(source)
-    expect(node('model-evaluate-preview').querySelector('math')).not.toBeNull()
+    expect(node('model-evaluate-preview').querySelector('math')).toBeNull()
     expect(input().getAttribute('aria-invalid')).toBe('false')
     expect(node<HTMLButtonElement>('model-evaluate-run').disabled).toBe(false)
     expect(node('model-evaluate-status').textContent).toContain('Ready')
@@ -401,8 +402,75 @@ test.each(['Pr(Y)) + (Pr(X)','a) * (b','1) / (0'])('malformed parentheses disabl
  expect(input().getAttribute('aria-invalid')).toBe('true')
  expect(node<HTMLButtonElement>('model-evaluate-run').disabled).toBe(true)
  expect(node('model-evaluate-preview').querySelector('math')).toBeNull()
- expect(node('model-evaluate-preview').textContent).toBe('')
+ expect(node('model-evaluate-preview').textContent).toContain('Invalid expression')
  run();await flush();expect(evaluator).not.toHaveBeenCalled()
+})
+
+describe('automatic inline model results', () => {
+  test('typing automatically evaluates once and shows only the exact value beside the row', async () => {
+    show(); change('Pr(Y)')
+    await autoFlush()
+    expect(evaluator).toHaveBeenCalledExactlyOnceWith('Pr(Y)', expect.any(AbortSignal))
+    expect(node('model-evaluate-preview').textContent).toBe('1/2')
+    expect(node('model-evaluate-preview').querySelector('math')).toBeNull()
+    expect(panel.element.querySelector('details')?.open).toBe(false)
+    expect(node('model-evaluate-result').textContent).toContain('Exact value in this model: 1/2')
+  })
+
+  test('Parse automatically evaluates a mixed batch and displays truth, undefinedness and errors beside each row', async () => {
+    show()
+    evaluator.mockResolvedValueOnce({ status: 'value', kind: 'constraint', value: true, probabilities: [] })
+      .mockResolvedValueOnce({ status: 'value', kind: 'constraint', value: false, probabilities: [] })
+      .mockResolvedValueOnce({ status: 'undefined', reason: 'Zero evidence.', probabilities: [] })
+      .mockResolvedValueOnce({ status: 'error', message: 'q was not assigned.' })
+    applyBatch('Pr(Y)>0\nPr(Y)=0\nPr(Y|Z)\nq')
+    await autoFlush()
+    expect(evaluator).toHaveBeenCalledTimes(4)
+    expect(node('model-evaluate-preview').textContent).toBe('True')
+    expect(node('model-evaluate-preview-2').textContent).toBe('False')
+    expect(node('model-evaluate-preview-3').textContent).toBe('undefined (zero denominator)')
+    expect(node('model-evaluate-preview-4').textContent).toBe('Error: q was not assigned.')
+  })
+
+  test('debounces rapid edits and keeps values when batch visibility toggles', async () => {
+    show(); change('Pr(X)'); change('Pr(Y)'); change('Pr(Z)')
+    await autoFlush()
+    expect(evaluator).toHaveBeenCalledExactlyOnceWith('Pr(Z)', expect.any(AbortSignal))
+    node('model-evaluate-batch-toggle').click()
+    node('model-evaluate-batch-toggle').click()
+    expect(node('model-evaluate-preview').textContent).toBe('1/2')
+    await autoFlush(); expect(evaluator).toHaveBeenCalledTimes(1)
+  })
+
+  test('queues the latest edit behind native settlement, suppresses stale results and then evaluates automatically', async () => {
+    const work = pending(); evaluator.mockReturnValueOnce(work.promise)
+    show(); change('Pr(X)'); await autoFlush()
+    change('Pr(Y)'); await autoFlush()
+    expect(evaluator).toHaveBeenCalledTimes(1)
+    expect(evaluator.mock.calls[0][1].aborted).toBe(true)
+    expect(panel.busy()).toBe(true)
+    work.resolve(value('999')); await autoFlush()
+    expect(evaluator).toHaveBeenCalledTimes(2)
+    expect(evaluator.mock.calls[1][0]).toBe('Pr(Y)')
+    expect(node('model-evaluate-preview').textContent).toBe('1/2')
+    expect(node('model-evaluate-result').textContent).not.toContain('999')
+  })
+
+  test.each(['clear', 'draft', 'cancel'])('%s stops queued or running automatic work without restarting it', async action => {
+    const work = pending(); evaluator.mockReturnValueOnce(work.promise)
+    show(); change('Pr(Y)')
+    if (action === 'cancel') { await autoFlush(); node('model-evaluate-cancel').click(); work.resolve(value('777')) }
+    else if (action === 'clear') panel.clear()
+    else {
+      const batch = node<HTMLTextAreaElement>('model-evaluate-batch')
+      batch.value = 'Pr(X)'; batch.dispatchEvent(new dom.window.Event('input'))
+    }
+    await autoFlush()
+    expect(evaluator).toHaveBeenCalledTimes(action === 'cancel' ? 1 : 0)
+    expect(node('model-evaluate-result').textContent).toBe('')
+    expect(node('model-evaluate-preview').textContent).toBe('')
+    expect(panel.busy()).toBe(false)
+  })
 })
 
 describe('batch model checks', () => {
@@ -411,7 +479,7 @@ describe('batch model checks', () => {
     node('model-evaluate-batch-toggle').click()
     applyBatch('# same model\nPr(Y)\n\nPr(Y)>0 # true\nPr(Y)=0')
     expect(panel.element.querySelectorAll('.model-evaluation-rows input')).toHaveLength(3)
-    expect(panel.element.querySelectorAll('.model-evaluation-rows math')).toHaveLength(3)
+    expect(panel.element.querySelectorAll('.model-evaluation-rows math')).toHaveLength(0)
     evaluator.mockResolvedValueOnce(value('(/ 1 2)'))
       .mockResolvedValueOnce({ status: 'value', kind: 'constraint', value: true, probabilities: [] })
       .mockResolvedValueOnce({ status: 'value', kind: 'constraint', value: false, probabilities: [] })
@@ -438,11 +506,13 @@ describe('batch model checks', () => {
     expect(node<HTMLButtonElement>('model-evaluate-run').disabled).toBe(false)
   })
 
-  test('a syntax error on the second row blocks all evaluation and points to that row', async () => {
+  test('a syntax error on the second row is labelled while the valid row still evaluates', async () => {
     show(); applyBatch('Pr(Y)\nPr(Q)')
     expect(node<HTMLInputElement>('model-evaluate-input-2').getAttribute('aria-invalid')).toBe('true')
     expect(node('model-evaluate-row-2').textContent).toContain('Expression 2:')
-    run(); await flush(); expect(evaluator).not.toHaveBeenCalled()
+    run(); await flush(); expect(evaluator).toHaveBeenCalledExactlyOnceWith('Pr(Y)', expect.any(AbortSignal))
+    expect(node('model-evaluate-preview').textContent).toBe('1/2')
+    expect(node('model-evaluate-preview-2').textContent).toContain('Invalid expression')
   })
 
   test('undefined expressions and unassigned variables receive individual results without hiding later valid checks', async () => {

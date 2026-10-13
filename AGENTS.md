@@ -53,6 +53,15 @@ accepted active checks, not to a strict cap on all manually created preview rows
 
 ## Phase 2 scope
 
+The later automatic-evaluation/layout corrections are PASS in
+reviews/automatic_evaluation_layout_2026-10-13T02-15-05Z/consensus.md and supersede
+the manual evaluation interaction. Read that folder's SEMANTICS.md/PUBLICATION.md.
+Values belong beside the rows and update automatically; latest edits wait for
+debounce and native settlement. Cancellation must suppress queued work. Conclusion
+layout flattens only its root conjunction tree, preserving nested grouping.
+The DAG fits its panel; the widest typeset conclusion clauses still scroll on
+phones. Keep the decision/parser/evaluator-service semantics unchanged.
+
 Phase2 adds single-step graphical checking of Pearl Rules1–3 using d-separation
 in manipulated observed-variable DAGs. Read DO_CALCULUS_SEMANTICS.md. Graphical
 applicability does not check numerical definedness; failed conditions leave an
