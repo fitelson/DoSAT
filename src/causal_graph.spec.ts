@@ -11,7 +11,7 @@ describe('validated causal graph operations', () => {
 
   test.each([
     { nodes: [], parents: {} },
-    { nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], parents: { A: [], B: [], C: [], D: [], E: [], F: [], G: [] } },
+    { nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'], parents: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [] } },
     { nodes: ['X', 'X'], parents: { X: [] } },
     { nodes: ['X'], parents: { X: ['X'] } },
     { nodes: ['X', 'Y'], parents: { X: ['Y'], Y: ['X'] } },

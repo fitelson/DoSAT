@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "kind": "DoSAT-decision",
+  "task": "entailment",
+  "graph": "M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A",
+  "premises": "Pr(M) = 1/2\nPr(U) = 1/2\nPr(Z | ~M & ~U) = 1/16\nPr(Z | ~M & U) = 161/208\nPr(Z | M & ~U) = 47/208\nPr(Z | M & U) = 15/16\nPr(E | ~M & ~Z) = 1/20\nPr(E | ~M & Z) = 17/20\nPr(E | M & ~Z) = 3/20\nPr(E | M & Z) = 19/20\nPr(A | E & ~U) = 18/37\nPr(A | E & U) = 94/111\nPr(A | ~E & ~U) = 17/111\nPr(A | ~E & U) = 19/37",
+  "conclusion": "(Pr(A | M) > Pr(A | ~M)) & (Pr(A | M & E) < Pr(A | ~M & E)) & (Pr(A | M & ~E) < Pr(A | ~M & ~E)) & (Pr(A | do(M, E)) = Pr(A | do(~M, E))) & (Pr(A | do(M, ~E)) = Pr(A | do(~M, ~E))) & (Pr(A | do(E)) > Pr(A | do(~E))) & (Pr(M | do(E)) = Pr(M)) & (Pr(M | do(~E)) = Pr(M))",
+  "regular": true,
+  "mode": "complete",
+  "seconds": 10
+}

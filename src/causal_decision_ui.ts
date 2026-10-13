@@ -167,8 +167,7 @@ const show = (output: CausalDecisionResult): void => {
     case 'sat': status.textContent = 'SAT — a compatible causal model was found.'; results.append(render_decision_witness(output.witness, false, graph.value, conclusion.value)); bindModel(output.witness); break
     case 'unsat': status.textContent = 'UNSAT — no compatible causal model satisfies the constraints.'; break
     case 'not-entailed': status.textContent = 'DOES NOT ENTAIL — a countermodel was found.'; results.append(render_decision_witness(output.witness, true, graph.value, conclusion.value)); bindModel(output.witness); break
-    case 'entailed': status.textContent = 'ENTAILS — every compatible model of the premises satisfies the conclusion.'; results.append(el('p', {}, 'The premises are satisfiable. Searching for a model that satisfies them but fails the conclusion returned UNSAT.')); break
-    case 'inconsistent-premises': status.textContent = 'INCONSISTENT PREMISES — no compatible model satisfies the premises.'; results.append(el('p', {}, 'Entailment holds vacuously because there are no models of the premises. This does not establish the conclusion for a possible model.')); break
+    case 'entailed': status.textContent = 'ENTAILS — every compatible model of the premises satisfies the conclusion.'; results.append(el('p', {}, 'Searching for a model that satisfies the premises but fails the conclusion returned UNSAT. Premise consistency was not checked separately.')); break
     case 'unknown': status.textContent = `UNRESOLVED — ${output.reason}`; break
     case 'cancelled': status.textContent = 'Cancelled — no decision established.'; break
     case 'error': status.textContent = `Solver error: ${output.message}`; break
@@ -181,9 +180,9 @@ run.addEventListener('click', () => { void (async () => {
   try {
     const compiled = compile_decision_problem(input())
     lastCompiled = compiled; refresh()
-    status.textContent = 'Checking the premises…'
+    status.textContent = compiled.task === 'entailment' ? 'Searching for a countermodel…' : 'Checking the constraints…'
     const output = await solver.decide(compiled, { timeout_ms: timeLimit(), abort_signal: controller.signal, on_stage: stage => {
-      if (revision === version && !controller.signal.aborted) status.textContent = stage === 'counterexample' ? 'Searching for a countermodel…' : stage === 'witness' ? 'Preparing the exact model…' : 'Checking the premises…'
+      if (revision === version && !controller.signal.aborted) status.textContent = stage === 'counterexample' ? 'Searching for a countermodel…' : stage === 'witness' ? 'Preparing the exact model…' : 'Checking the constraints…'
     } })
     if (revision === version) show(output)
   } catch (error) { if (revision === version) status.textContent = controller.signal.aborted ? 'Cancelled — no decision established.' : `Error: ${error instanceof Error ? error.message : String(error)}` }
@@ -208,7 +207,7 @@ copy.addEventListener('click', () => { void (async () => {
 saveSmt.addEventListener('click', () => {
   if (!lastCompiled) return
   const check = '\n(check-sat-using qfnra-nlsat)\n'
-  const text = '; Complete NLSat reference checks. The app first tries a time-capped QF_NRA strategy.\n' + lastCompiled.premisesSmt + check + (lastCompiled.counterexampleSmt ? '\n(reset)\n' + lastCompiled.counterexampleSmt + check : '')
+  const text = '; Complete NLSat reference check. The app first tries a time-capped QF_NRA strategy.\n' + (lastCompiled.task === 'entailment' ? lastCompiled.counterexampleSmt! : lastCompiled.premisesSmt) + check
   download(text, 'DoSAT.smt2', 'text/plain')
 })
 load.addEventListener('change', () => {
@@ -250,7 +249,7 @@ root.append(el('main', { class: 'causal-ui decision-ui' },
     el('div', { class: 'decision-toolbar' }, loadButton, load, batchButton, clearButton, el('label', {}, 'Examples ', sample)),
     exampleGuide,
     el('div', { class: 'decision-graph-layout' }, el('div', { class: 'decision-graph-block' }, el('label', { for: 'decision-graph' }, 'Causal graph'), graph, nodes, graphError,
-      help('ⓘ Graph syntax', 'Declare edges such as Z -> X; Z -> Y or isolated variables. Semicolons and newlines are supported. Acyclic graphs with up to six observed Boolean variables are allowed. No latent confounders or cross-world counterfactuals.')), graphPreview.element),
+      help('ⓘ Graph syntax', 'Declare edges such as Z -> X; Z -> Y or isolated variables. Semicolons and newlines are supported. Acyclic graphs with up to eight observed Boolean variables are allowed. No latent confounders or cross-world counterfactuals.')), graphPreview.element),
     editor.element, conclusionBlock,
     el('div', { class: 'decision-toolbar decision-save-toolbar' }, save, copy, el('span', { class: 'decision-note' }, 'Save, Load and Copy use the whole problem.'))),
   el('section', { class: 'model-finder decision-action-panel', 'aria-label': 'Run decision and results' },

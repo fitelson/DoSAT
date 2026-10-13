@@ -1,6 +1,6 @@
 import { describe, test } from 'vitest'
-import { assert_parse_constraint } from './parser'
-import { init_z3, pr_sat } from './z3_integration'
+import { assert_parse_constraint } from '../../src/parser'
+import { init_z3, pr_sat } from '../../src/z3_integration'
 
 describe('exponent e2e', () => {
   test('2^Pr(B) = 2 end-to-end (should be SAT with Pr(B)=1)', async () => {

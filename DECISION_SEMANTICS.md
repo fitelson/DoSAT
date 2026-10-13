@@ -46,7 +46,7 @@ existential in satisfiability and universally quantified, together with the
 mechanisms, in consequence. Input and expansion limits define the currently
 accepted implementation fragment; they are not extra mathematical axioms.
 
-The implementation accepts at most six graph nodes, 64 combined premise and
+The implementation accepts at most eight graph nodes, 64 combined premise and
 conclusion lines, 64 probability occurrences, and 50,000 total source
 characters. Each constraint line has limits of 4,096 characters, 512 tokens,
 and 64 nested parentheses. The inherited causal compiler also bounds input to
@@ -143,12 +143,37 @@ of its joint and evidence masses. Apply the satisfaction guards above before
 eliminating division. All resulting arithmetic is rational in finitely many
 mechanism parameters and free real variables.
 
-The new compiler builds a directed acyclic graph of auxiliary real variables
-for arithmetic operations. Addition, subtraction, unary minus, and
-multiplication use defining polynomial equations. Nonnegative integer powers
-use finite multiplication chains, with repeated squaring to avoid expanding a
-large textual expression. A reciprocal uses the same division construction as
-other division. There is no variable exponent or transcendental operation.
+The solver compiler inlines addition, subtraction, unary minus and multiplication,
+folds constants using exact BigInt rational arithmetic, and structurally shares
+identical total quotient definitions. Powers retain bounded repeated-squaring
+chains. Large constant powers also use these chains rather than creating huge
+numerals. Rational coefficients may use SMT-LIB division of integer constants;
+no variable division is sent to either solver stage.
+
+Before lowering, each mass is computed using only ancestors of its event in the
+intervened graph, whose intervened nodes have incoming edges removed. Barren
+nodes sum to one; fixed mechanism factors are extracted. Conditional masses
+cancel common factors only inside the original nonzero-support guard. A child
+intervention and descendant evidence are handled by the masses themselves.
+Regularity removes guards only for nonempty compatible support. Contradictory
+intervention evidence remains undefined.
+
+Guarded fraction normalization combines recognized mass ratios with polynomial
+terms, keeping factored numerators. Reduced mass denominators are nonnegative
+under the mechanism bounds and positive wherever their original guards hold.
+Thus cancellation, common-denominator arithmetic and cross-multiplication
+preserve comparisons there. Arbitrary arithmetic quotients retain total
+quotient definitions. Normalization falls back to that representation if its
+denominator exceeds eight factors, or its comparison exceeds 64,000 characters
+or degree 64. These are optimization budgets, not new semantic restrictions.
+The denominator cap alone does not bound numerator complexity. Saturated
+DAG-cost checks enforce the full SMT character budget before serialization;
+source and inherited expansion limits continue to apply.
+
+All these transformations affect solver expressions only. Complete original
+mechanisms, distribution rows, queries and guarded constraints remain available
+for witness inspection and exact model evaluation. The same polynomial encoding
+is submitted to QF_NRA and its NLSat fallback.
 
 For a division with translated numerator `n`, denominator `d`, and fresh result
 variable `r`, add the polynomial relation
@@ -177,14 +202,14 @@ are quantifier-free Boolean combinations of polynomial comparisons with exact
 rational coefficients. Declared auxiliaries are existentially searched by the
 SMT solver; they are not part of the causal model.
 
-**Lemma 1 (arithmetic auxiliaries).** For every fixed valuation `q`, there is
+**Lemma 1 (arithmetic auxiliaries).** For every valuation `q` satisfying the mechanism bounds `B`, there is
 an extension `r` satisfying `A(q,r)`. In every such extension, each defined
 source term has its actual real value in its translated arithmetic variable.
 
 **Proof.** Order the arithmetic operations so that operands precede the
 operation that uses them. Such an order exists because the input expression
-graph is acyclic. For a sum, difference, product, or unary minus, assign the
-result its operation value. For a division, assign `n/d` when the already
+graph is acyclic. Inline polynomial terms already have their operation values; assign any
+shared multiplication-chain alias its operation value. For a division, assign `n/d` when the already
 assigned denominator is nonzero and assign an arbitrary real value otherwise.
 This satisfies its stated relation in both cases. Nonnegative powers have
 finite multiplication chains; negative powers add a reciprocal. The same
@@ -192,13 +217,13 @@ construction therefore supplies an extension for the entire graph.
 
 Now assume that a source term is defined. Its operands are defined. Induction
 in the same order gives their actual values in every extension satisfying the
-relations. Polynomial operation equations fix the actual operation value. For
+relations. Inline polynomial operations and chain equations preserve the actual values. For
 a defined division the denominator is nonzero, so `r*d=n` has precisely its
 ordinary quotient as solution. The multiplication chains and reciprocal give
 the actual integer power in the power cases. This proves both assertions. ▪
 
 **Lemma 2 (satisfaction projection).** For every source constraint `C`, every
-fixed valuation `q`, and every extension `r` satisfying `A(q,r)`,
+fixed valuation `q` satisfying `B`, and every extension `r` satisfying `A(q,r)`,
 
 ```text
 F_C(q,r) holds if and only if S_q(C) holds.
@@ -273,12 +298,12 @@ itself requires positive evidence. Calling that UNSAT result an entailment
 would be incorrect. The consequence compiler instead complements
 `Pr(X)!=0 and Pr(Y & X)/Pr(X)=1/2`, allowing the zero-evidence countermodels.
 
-The interface first checks premise consistency. If the premises are
-unsatisfiable, every conclusion follows vacuously, and the interface reports
-**inconsistent premises** explicitly. A consistent premise model followed by
-an unsatisfiable countermodel search gives **entailed**. A satisfying
-countermodel search gives **not entailed** with an exact witness. This order
-distinguishes substantive entailment from the inconsistency case.
+Entailment performs one countermodel query, with no preliminary premise
+consistency check. An unsatisfiable countermodel formula gives **entailed**;
+a satisfying formula gives **not entailed** with an exact witness. Inconsistent
+premises therefore entail every conclusion vacuously, under the same result.
+An ENTAILS result does not assert that the premises have a model. Satisfiability
+checks the active premise constraints directly and can be selected separately.
 
 ## Decidability and practical result meanings
 
@@ -291,8 +316,9 @@ the Z3 authors identify NLSat as a decision procedure for polynomial
 quantifier-free real arithmetic in [*Programming Z3*, Section
 6.5](https://theory.stanford.edu/~nikolaj/programmingz3.html#sec-nlsat).
 
-The application uses a hybrid for each applicable stage: premise consistency
-and, for entailment with consistent premises, countermodel search. It first
+The application uses a hybrid for its single task query: the active constraints
+for satisfiability, or their conjunction with failure of the guarded conclusion
+for entailment. It first
 tries PrSAT's `Solver('QF_NRA')` configuration with a requested finite budget
 of 60 seconds. The optional programmatic `fast_timeout_ms` setting can select
 a different positive budget. This is a performance attempt, not the source of
@@ -345,8 +371,8 @@ The exported SMT problem uses `(check-sat-using qfnra-nlsat)` as a reproducible
 complete reference route. It encodes the same graph theory and guarded
 satisfaction/countermodel formulas as the application. It deliberately omits
 the application's budgeted QF_NRA performance attempt and its lifecycle wrapper;
-export timings therefore need not match in-app timings. The premise and
-countermodel checks have separate declarations, with a reset between them.
+export timings therefore need not match in-app timings. The export contains
+one check for the selected task, with no preliminary consistency check or reset.
 
 Witnesses preserve exact Z3 numeral strings, including rational numbers and
 algebraic roots. They show one compatible model or countermodel, not uniqueness
@@ -389,3 +415,14 @@ its complete input and result report. See
 These bounded regression grids test the implementation; Lemmas 1–2 and
 Propositions 3–4 supply the general reduction argument. No exhaustive numerical
 test over all six-node graphs or all real parameter valuations is claimed.
+
+
+## Returned-model validation
+
+After a SAT or countermodel result, the native model is evaluated against the
+original mechanism bounds and all original guarded premises. A countermodel
+must also falsify the original guarded conclusion. Failure returns ERROR, not a
+verified verdict. Undefined terms in an unused disjunct remain allowed by the
+original satisfaction predicate. Validation participates in the existing
+cancellation/deadline ownership and waits for native settlement before reuse.
+It is not a consistency preflight and does not certify UNSAT.

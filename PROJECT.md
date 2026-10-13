@@ -94,6 +94,8 @@ phase design and the same consensus review gate.
 Run `npm run lint`, `npm run build`, and `npm test`. Browser tests use strict port
 5174 and headless Chromium. Development/preview use strict loopback 5173/4173.
 Port 5317 remains reserved for the original full-3.1 background service.
+`npm test` covers units plus the public-page browsers; see [TESTING.md](TESTING.md)
+for when `test:e2e:legacy` is required and how to run all retained browser cases.
 
 Current implementation tests cover confounding, backdoor adjustment, Simpson
 reversal, mediation, interventions on ancestors, simultaneous and total
@@ -392,3 +394,87 @@ for source delivery and preserved nonblocking qualifications.
 DoSAT's existing commit/push/upload authorization continues for this fix, with
 the other family repos frozen. Earlier statements that Simpson's inputs remain
 unchanged describe the preceding release and are superseded by this request.
+
+## Simpson admissions correction, October 12
+
+This three-node candidate was reviewed but never published. It and the later
+A-first draft are superseded by the user-selected Pearl-style model below.
+
+Branden specified A = admission, E = applying to the easy department and M =
+being male, then explicitly requested the graph/conclusion correction and
+commit/push/upload. The local preset now uses M -> E; M -> A; E -> A, with E
+as the applicant's choice and M as background. Equivalent root-M/E-given-M
+premises preserve all eight supplied cell counts. The six-clause conclusion
+checks the overall/within-department reversal, invariance of M under both E
+choices and the higher admission probability under do(E) than do(~E).
+
+Population choice rates are 31/40 and 9/40; for known M they are 3/4 and 1/5.
+The old do(M) inequality is not entailed, and its left term is 7/13 in the
+returned countermodel. The generic language still permits that hypothetical
+intervention, but the preset does not present it as an applicant action.
+The DAG is an explicit causally sufficient toy assumption, not a conclusion
+about discrimination inferred from the table.
+
+The other six presets and eleven backend/UI-runtime files are unchanged.
+Verification, exact reconstruction and the scoped phase/publication status
+are in reviews/admissions_simpson_2026-10-12T20-46-41Z/. The gate is pending;
+the preceding release remains live until a final candidate passes. Earlier E->M and 19/40
+statements are historical and superseded for this admissions interpretation.
+
+
+## Pearl-style admissions and aptitude, October 12
+
+The user selected Pearl's expanded admissions explanation: aptitude U and career
+objectives Z, with M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A. This adapts
+Figure 4.9 without its direct M -> A arrow. U is unrecorded in the story but
+explicitly specified as a Boolean node in the app; no latent-ID engine is added.
+The constructed positive mechanisms preserve every supplied E/M/A cell after
+summing over U and Z. The active conclusion separates the observed female
+advantage within departments from zero gender effect with department held fixed.
+Easy/hard intervention risks are 2/3 and 1/3. Unconditional gender effects can
+still operate through department choice (7/13 versus 6/13).
+
+This supersedes both unpublished three-node drafts. Source attribution,
+department-fixing versus selection semantics, exact arithmetic, regressions and
+publication records are in reviews/pearl_admissions_2026-10-12T21-37-55Z/.
+The scoped default-model implementation gate passed after the exact-decimal
+repair described below. Publication is recorded in the current release record.
+
+
+## Constraint optimization implementation, October 12
+
+Branden requested all four stages agreed in the Claude-Codex design debate,
+plus original-predicate witness validation, followed by checks, commit, push and
+upload. The completed design debate is
+reviews/constraint_optimization_2026-10-12T22-05-42Z/consensus.md. This implements
+inlining/exact folding/sharing, intervention-specific ancestral pruning,
+guarded mechanism cancellation/support simplification, and bounded fraction
+normalization. The selected default remains one polynomial encoding for the
+60-second QF_NRA attempt and explicit NLSat fallback. Entailment directly checks
+premises and failure of the guarded conclusion; there is no consistency preflight.
+Original guarded metadata remains intact and is checked after SAT/countermodels.
+The implementation gate passed after the exact-decimal repair; current evidence is in
+reviews/constraint_implementation_2026-10-12T23-41-52Z/.
+
+Branden additionally requested eight allowed variables. The shared causal graph
+limit and compiler API now accept eight nodes and reject nine. Help and semantics
+reflect up to 256 rows per regime; input/expansion budgets remain in force.
+
+## Approved release, October 12, 2026
+
+Both default-model implementation reviews are PASS: the exact-zero repair in
+reviews/constraint_implementation_2026-10-12T23-41-52Z/recheck_2026-10-13T00-33-52Z/consensus.md
+and the independently approved test cleanup in
+reviews/test_suite_simplification_2026-10-13T00-47-28Z/implementation/consensus.md.
+The reviewed executable is dosat-45ZXtgOV.js. After the cleanup, 1349 unit tests
+pass (one inherited skip and one todo); 108 distinct browser cases passed across
+the recorded runs. Routine browser checks now cover 59 public-page cases, with
+49 retained legacy cases available separately. The 607-case semantic oracle,
+480000 exact differential comparisons and adversarial boundary regressions remain.
+
+The review isolated intermittent native Z3/WASM out-of-memory failures in both
+pre-repair and repaired code, with no incorrect verdict observed. This is a
+separate reliability follow-up; eight allowed variables do not guarantee that
+every model fits the solver's memory budget. See the repair consensus for evidence.
+Publication and live verification will be recorded in
+reviews/constraint_implementation_2026-10-12T23-41-52Z/PUBLICATION.md.

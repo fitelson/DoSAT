@@ -65,7 +65,7 @@ describe('input causal DAG preview', () => {
     ['empty', ''], ['comments only', '  \n# no declarations'], ['self edge', 'A -> A'],
     ['cycle', 'A -> B; B -> A'], ['multi-edge declaration', 'A -> B -> C'],
     ['malformed variable', 'AB -> C'], ['malformed arrow', 'A - B'],
-    ['seven nodes', 'A; B; C; D; E; F; G'], ['unsafe variable index', 'A9007199254740992'],
+    ['nine nodes', 'A; B; C; D; E; F; G; H; I'], ['unsafe variable index', 'A9007199254740992'],
   ])('hides and clears the previous graph for invalid input: %s', (_label, source) => {
     preview.update('X -> Y')
     expect(svg()).not.toBeNull()

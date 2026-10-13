@@ -1,0 +1,37 @@
+[
+  {
+    "file": "package.json",
+    "sha256": "c65f146ca6d7b7025e512404fbc1ef3f1a6095a52ecc07b5752d1d6e8ef616ff",
+    "bytes": 1652
+  },
+  {
+    "file": "TESTING.md",
+    "sha256": "e978d6fc7d3c4c4f5d8b699e1f40ca094e3047096600d5eff568e13819d31a9f",
+    "bytes": 1866
+  },
+  {
+    "file": "src/pr_sat.spec.ts",
+    "sha256": "d2f920a3550cd559817b17d72a6d277d01738d04f2773a42f4ef346d2c7f4619",
+    "bytes": 32152
+  },
+  {
+    "file": "reference-tests/exponent-probes/tmp_exponent_e2e.spec.ts",
+    "sha256": "59bce5b9fe973aa5d1cae37aeef9f230d70c23f71c5255db54ee188a7e030020",
+    "bytes": 916
+  },
+  {
+    "file": "reference-tests/exponent-probes/tmp_exponent_repro.spec.ts",
+    "sha256": "ca5eb8cdb32bb1480aa17e54c08fe019120b197ec142114a0d66de189aa145b0",
+    "bytes": 1745
+  },
+  {
+    "file": "reference-tests/exponent-probes/tmp_repro_claim.spec.ts",
+    "sha256": "5236e80a4df3db918c8cef44429d6aac2c9eba3251a780cdcd9ec1278b7fde0f",
+    "bytes": 1170
+  },
+  {
+    "file": "reference-tests/exponent-probes/README.md",
+    "sha256": "a8474af83c1b6be54760bb75def292aaf65235a465958046787f4c01cd2e2ff3",
+    "bytes": 598
+  }
+]

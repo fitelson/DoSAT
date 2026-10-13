@@ -27,13 +27,12 @@ export type CausalDecisionResult =
   | { status: 'not-entailed', witness: DecisionWitness }
   | { status: 'unsat' }
   | { status: 'entailed' }
-  | { status: 'inconsistent-premises' }
   | { status: 'unknown', stage: DecisionStage, reason: string }
   | { status: 'cancelled', stage: DecisionStage, reason: string }
   | { status: 'error', stage: DecisionStage, message: string }
 
 export type CausalDecisionOptions = {
-  /** Zero is unbounded. A positive requested deadline covers both stages and extraction.
+  /** Zero is unbounded. A positive requested deadline covers the query and extraction.
    * Native interruption and settlement can finish after that deadline. */
   timeout_ms?: number
   /** Finite QF_NRA attempt budget per stage; UNKNOWN/expiry falls back to NLSat. */
@@ -48,6 +47,7 @@ export interface DecisionSession {
   load(input: string, timeout_ms: number): void
   check(): Promise<'sat' | 'unsat' | 'unknown'>
   reasonUnknown(): string
+  validateOriginal(compiled: CompiledDecisionProblem): Promise<boolean>
   evaluateExact(expression: RealExpr): Promise<ExactDecisionValue>
   interrupt(): void
   release(): void
@@ -75,6 +75,20 @@ const qfnra_sessions = (z3: Z3HighLevel): DecisionSessionFactory => {
       },
       check: () => solver.check(),
       reasonUnknown: () => solver.reasonUnknown(),
+      async validateOriginal(compiled) {
+        model ??= solver.model()
+        const original = [...compiled.causal.constraints.slice(0, compiled.causal.mechanisms.length * 2), ...compiled.premiseConstraints]
+        for (const constraint of original) {
+          const value = await usedContext.simplify(model.eval(constraint_to_bool(usedContext, model, constraint), true))
+          if (!usedContext.isTrue(value)) return false
+        }
+        if (compiled.task === 'entailment') {
+          if (!compiled.conclusionConstraint) return false
+          const value = await usedContext.simplify(model.eval(constraint_to_bool(usedContext, model, compiled.conclusionConstraint), true))
+          return usedContext.isFalse(value)
+        }
+        return true
+      },
       async evaluateExact(expression) {
         model ??= solver.model()
         for (const guard of div0_conditions_in_constraint_or_real_expr({ tag: 'real_expr', real_expr: expression })) {
@@ -110,7 +124,7 @@ export class CausalDecisionSolver {
   }
 
   async decide(compiled: CompiledDecisionProblem, options: CausalDecisionOptions = {}): Promise<CausalDecisionResult> {
-    let stage: DecisionStage = 'premises'
+    let stage: DecisionStage = is_compiled_decision_problem(compiled) && compiled.task === 'entailment' ? 'counterexample' : 'premises'
     const signal = options.abort_signal
     if (signal?.aborted) return { status: 'cancelled', stage, reason: 'Cancelled before the decision run started.' }
     if (this.running) return { status: 'error', stage, message: 'This decision solver is already running.' }
@@ -185,6 +199,10 @@ export class CausalDecisionSolver {
       }
     }
     const snapshot = async (session: DecisionSession): Promise<DecisionWitness> => {
+      if (stoppedResult()) throw new Error('Decision witness preparation interrupted.')
+      const valid = await awaitOperation(() => session.validateOriginal(compiled))
+      if (stoppedResult()) throw new Error('Decision witness preparation interrupted.')
+      if (!valid) throw new Error('The returned model failed validation of the original guarded constraints.')
       const exact = async (expression: RealExpr): Promise<ExactDecisionValue> => {
         if (stoppedResult()) throw new Error('Decision witness preparation interrupted.')
         const value = await awaitOperation(() => session.evaluateExact(expression))
@@ -302,13 +320,13 @@ export class CausalDecisionSolver {
     }
 
     try {
-      changeStage('premises')
-      const premises = await checkStage(compiled.premisesSmt, compiled.task === 'satisfiability', 'premises')
-      const afterPremises = stoppedResult()
-      if (afterPremises) return afterPremises
-      if (premises.status === 'unknown' || premises.status === 'cancelled') return premises
-      if (premises.status === 'unsat') return { status: compiled.task === 'entailment' ? 'inconsistent-premises' : 'unsat' }
       if (compiled.task === 'satisfiability') {
+        changeStage('premises')
+        const premises = await checkStage(compiled.premisesSmt, true, 'premises')
+        const afterPremises = stoppedResult()
+        if (afterPremises) return afterPremises
+        if (premises.status === 'unknown' || premises.status === 'cancelled') return premises
+        if (premises.status === 'unsat') return { status: 'unsat' }
         if (!premises.witness) throw new Error('The satisfiable decision run did not produce an exact witness.')
         return { status: 'sat', witness: premises.witness }
       }

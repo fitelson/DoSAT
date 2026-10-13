@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest'
-import { parse_constraint } from './parser'
-import { TruthTable, translate, enrich_constraints, eliminate_state_variable_index, constraints_to_smtlib_lines, variables_in_constraints } from './pr_sat'
-import { s_to_string } from './s'
+import { parse_constraint } from '../../src/parser'
+import { TruthTable, translate, enrich_constraints, eliminate_state_variable_index, constraints_to_smtlib_lines, variables_in_constraints } from '../../src/pr_sat'
+import { s_to_string } from '../../src/s'
 
 test('repro: literal >= 1e21 serializes in exponent notation', () => {
   const parsed = parse_constraint('Pr(A) < 10000000000000000000000')

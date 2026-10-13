@@ -11,6 +11,7 @@ export interface DecisionExample extends DecisionProblemInput {
 }
 
 const pearlOverview = { title: 'Pearl: Causal inference in statistics', url: 'https://ftp.cs.ucla.edu/pub/stat_ser/r350.pdf' }
+const pearlAdmissions = { title: 'Pearl: Causality, §4.5.3 and Figure 4.9', url: 'https://web.cs.ucla.edu/~kaoru/ch4-final.pdf#page=23' }
 const whatIf = { title: 'Hernán and Robins: Causal Inference: What If', url: 'https://miguelhernan.org/whatifbook' }
 
 /** Constructed exact Boolean illustrations of the cited literature, not empirical data. */
@@ -85,12 +86,28 @@ export const DECISION_EXAMPLES: readonly DecisionExample[] = [
     ],
   },
   {
-    name: 'Simpson’s paradox: E, M and A', task: 'entailment', regular: true,
-    graph: 'E -> M; E -> A; M -> A',
-    premises: 'Pr(E) = 130/260\nPr(M | E) = 80/130\nPr(M | ~E) = 50/130\nPr(A | M & E) = 60/80\nPr(A | ~M & E) = 40/50\nPr(A | M & ~E) = 10/50\nPr(A | ~M & ~E) = 20/80',
-    conclusion: '(Pr(A | M) > Pr(A | ~M)) & (Pr(A | do(M)) < Pr(A | do(~M)))',
-    description: 'The supplied E/M/A table has a positive overall M–A association (7/13 versus 6/13), but a negative association in each E group. The displayed DAG treats E as a common cause of M and A. Under that causal assumption, the intervention rates are 19/40 versus 21/40; the conclusion states the reversal. The counts alone do not determine the DAG.',
-    dataNote: 'Probabilities reproduce the supplied E/M/A table.',
-    source: pearlOverview, expectedStatus: 'ENTAILS', evaluations: [],
+    name: 'Simpson’s paradox: admissions and aptitude', task: 'entailment', regular: true,
+    graph: 'M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A',
+    premises: 'Pr(M) = 1/2\nPr(U) = 1/2\nPr(Z | ~M & ~U) = 1/16\nPr(Z | ~M & U) = 161/208\nPr(Z | M & ~U) = 47/208\nPr(Z | M & U) = 15/16\nPr(E | ~M & ~Z) = 1/20\nPr(E | ~M & Z) = 17/20\nPr(E | M & ~Z) = 3/20\nPr(E | M & Z) = 19/20\nPr(A | E & ~U) = 18/37\nPr(A | E & U) = 94/111\nPr(A | ~E & ~U) = 17/111\nPr(A | ~E & U) = 19/37',
+    conclusion: '(Pr(A | M) > Pr(A | ~M)) & (Pr(A | M & E) < Pr(A | ~M & E)) & (Pr(A | M & ~E) < Pr(A | ~M & ~E)) & (Pr(A | do(M, E)) = Pr(A | do(~M, E))) & (Pr(A | do(M, ~E)) = Pr(A | do(~M, ~E))) & (Pr(A | do(E)) > Pr(A | do(~E))) & (Pr(M | do(E)) = Pr(M)) & (Pr(M | do(~E)) = Pr(M))',
+    description: 'A means admission, E applying to the easy department, and M male. U is higher admissions-relevant aptitude; Z is a career objective favoring the easy department. This Boolean adaptation of Pearl’s Figure 4.9 removes the direct M -> A arrow to represent no direct gender effect. E is the applicant’s choice; M is background. Selection by department produces the observed female advantage, although changing gender while holding department fixed has zero effect. Choosing E raises admission probability from 1/3 to 2/3. An unconditional gender intervention can still affect admission through department choice: 7/13 under do(M), 6/13 under do(~M). U is unrecorded in the admissions story but explicitly included with specified mechanisms in this illustration.',
+    dataNote: 'The constructed positive Boolean mechanisms preserve every cell of the supplied E/M/A table after summing over U and Z. They are not Pearl’s published numerical example or an empirical inference from the table. The app specifies the expanded DAG; it does not identify effects from an unspecified latent-variable model. Department-fixed comparisons use joint interventions, not conditioning on a department selected after a gender intervention.',
+    source: pearlAdmissions,
+    expectedStatus: 'ENTAILS', evaluations: [
+      { expression: 'Pr(A)', value: '1/2' },
+      { expression: 'Pr(E)', value: '1/2' },
+      { expression: 'Pr(A | ~M & E) - Pr(A | M & E)', value: '1/20' },
+      { expression: 'Pr(A | ~M & ~E) - Pr(A | M & ~E)', value: '1/20' },
+      { expression: 'Pr(A | do(M, E))', value: '2/3' },
+      { expression: 'Pr(A | do(~M, E))', value: '2/3' },
+      { expression: 'Pr(A | do(M, ~E))', value: '1/3' },
+      { expression: 'Pr(A | do(~M, ~E))', value: '1/3' },
+      { expression: 'Pr(A | do(E))', value: '2/3' },
+      { expression: 'Pr(A | do(~E))', value: '1/3' },
+      { expression: 'Pr(A | do(M))', value: '7/13' },
+      { expression: 'Pr(E | do(M))', value: '8/13' },
+      { expression: 'Pr(M | do(E))', value: '1/2' },
+      { expression: 'Pr(M | do(~E))', value: '1/2' },
+    ],
   },
 ]

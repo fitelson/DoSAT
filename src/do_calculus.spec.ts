@@ -244,8 +244,8 @@ describe('do-calculus step validation', () => {
     const input = parse_do_step('Y; Z', 1, '', 'Y=1', 'Z=1', '')
     input.graph = { nodes: ['Y', 'Z'], parents: { Y: ['Z'], Z: ['Y'] } }
     expect(() => check_do_step(input)).toThrow(/acyclic|cycle/)
-    input.graph = { nodes: ['A', 'B', 'C', 'D', 'E', 'Y', 'Z'], parents: { A: [], B: [], C: [], D: [], E: [], Y: [], Z: [] } }
-    expect(() => check_do_step(input)).toThrow(/6/)
+    input.graph = { nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'Y', 'Z'], parents: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], Y: [], Z: [] } }
+    expect(() => check_do_step(input)).toThrow(/8/)
   })
 
   test('bounds assignment strings before splitting large input', () => {

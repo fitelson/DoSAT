@@ -1,0 +1,80 @@
+[
+  {
+    "task": "entailment",
+    "repeat": 0,
+    "compileMs": 15.216125000000005,
+    "parseMs": 12.290458000000001,
+    "solveMs": 20.723833000000013,
+    "originalValidationMs": 0,
+    "validationAndWitnessMs": 0,
+    "status": "unsat",
+    "bytes": 3619,
+    "reals": 14,
+    "aux": 0
+  },
+  {
+    "task": "entailment",
+    "repeat": 1,
+    "compileMs": 5.851167000000004,
+    "parseMs": 2.157666000000006,
+    "solveMs": 2.1048749999999927,
+    "originalValidationMs": 0,
+    "validationAndWitnessMs": 0,
+    "status": "unsat",
+    "bytes": 3619,
+    "reals": 14,
+    "aux": 0
+  },
+  {
+    "task": "entailment",
+    "repeat": 2,
+    "compileMs": 4.592624999999998,
+    "parseMs": 2.0869579999999814,
+    "solveMs": 2.099625000000003,
+    "originalValidationMs": 0,
+    "validationAndWitnessMs": 0,
+    "status": "unsat",
+    "bytes": 3619,
+    "reals": 14,
+    "aux": 0
+  },
+  {
+    "task": "satisfiability",
+    "repeat": 0,
+    "compileMs": 2.0294580000000053,
+    "parseMs": 0.6949169999999754,
+    "solveMs": 7.895208999999966,
+    "originalValidationMs": 69.87429099999997,
+    "validationAndWitnessMs": 172.62774999999993,
+    "status": "sat",
+    "bytes": 1474,
+    "reals": 14,
+    "aux": 0
+  },
+  {
+    "task": "satisfiability",
+    "repeat": 1,
+    "compileMs": 3.191917000000103,
+    "parseMs": 1.1086660000000848,
+    "solveMs": 4.799541999999974,
+    "originalValidationMs": 68.48287500000004,
+    "validationAndWitnessMs": 173.08304099999998,
+    "status": "sat",
+    "bytes": 1474,
+    "reals": 14,
+    "aux": 0
+  },
+  {
+    "task": "satisfiability",
+    "repeat": 2,
+    "compileMs": 2.6587079999999332,
+    "parseMs": 0.8287500000000136,
+    "solveMs": 3.801917000000003,
+    "originalValidationMs": 73.95691599999998,
+    "validationAndWitnessMs": 178.72287499999993,
+    "status": "sat",
+    "bytes": 1474,
+    "reals": 14,
+    "aux": 0
+  }
+]

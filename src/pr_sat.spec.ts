@@ -2,8 +2,11 @@ import { describe, expect, test } from "vitest"
 
 import { Random } from "./random"
 import { assert, assert_exists } from "./utils"
-import { evaluate_constraint_2, a2eid, combine_inverse, constraint_builder, constraint_to_smtlib, constraints_to_smtlib_lines, eliminate_state_variable_index_in_svs, enrich_constraints, evaluate_real_expr, evaluate_real_expr_2, evaluate_sentence, parse_s, random_letters_and_assignments, real_expr_to_smtlib, real_expr_to_string, RealExprFuzzer, recursively_evaluate_sentence, SentenceFuzzer, state_from_index, translate, translate_constraint, translate_real_expr, TruthTable, constraint_to_string, evaluate_constraint, ConstraintFuzzer, free_real_variables_in_constraint_or_real_expr, variables_in_constraints, MAX_ABS_SOLVER_EXPONENT, MAX_TRUTH_TABLE_LETTERS } from "./pr_sat"
+import { evaluate_constraint_2, a2eid, combine_inverse, constraint_builder, constraint_to_smtlib, constraints_to_smtlib_lines, eliminate_state_variable_index, eliminate_state_variable_index_in_svs, enrich_constraints, evaluate_real_expr, evaluate_real_expr_2, evaluate_sentence, parse_s, random_letters_and_assignments, real_expr_to_smtlib, real_expr_to_string, RealExprFuzzer, recursively_evaluate_sentence, SentenceFuzzer, state_from_index, translate, translate_constraint, translate_real_expr, TruthTable, constraint_to_string, evaluate_constraint, ConstraintFuzzer, free_real_variables_in_constraint_or_real_expr, variables_in_constraints, MAX_ABS_SOLVER_EXPONENT, MAX_TRUTH_TABLE_LETTERS } from "./pr_sat"
 import { PrSat, PrSatFuncs as PrSatUtils, SentenceMap } from "./types"
+
+import { parse_constraint } from "./parser"
+import { s_to_string } from "./s"
 
 type Sentence = PrSat['Sentence']
 type RealExpr = PrSat['RealExpr']
@@ -617,4 +620,20 @@ describe('free_variables', () => {
       expect(fvs.has('a')).toBeTruthy()
     })
   })
+})
+
+
+test('large integer literals retain decimal spelling through SMT serialization', () => {
+  const parsed = parse_constraint('Pr(A) < 10000000000000000000000')
+  expect(parsed[0]).toBe(true)
+  if (!parsed[0]) throw new Error('Expected a valid probability comparison.')
+  const constraints = [parsed[1]]
+  const tt = new TruthTable(variables_in_constraints(constraints))
+  const translated = translate(tt, constraints)
+  const eliminated = tt.n_states() - 1
+  const enriched = enrich_constraints(tt, eliminated, true, translated)
+  const [, reduced] = eliminate_state_variable_index(tt.n_states(), eliminated, enriched)
+  const smt = constraints_to_smtlib_lines(tt, eliminated, reduced).map(s => s_to_string(s, false)).join('\n')
+  expect(smt).toContain('10000000000000000000000')
+  expect(smt).not.toContain('1e+22')
 })

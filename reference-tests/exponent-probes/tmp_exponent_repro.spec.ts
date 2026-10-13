@@ -1,6 +1,6 @@
 import { describe, test } from 'vitest'
-import { assert_parse_constraint } from './parser'
-import { variables_in_constraints, TruthTable, translate, constraint_to_string, constraints_to_smtlib_lines, letter_string } from './pr_sat'
+import { assert_parse_constraint } from '../../src/parser'
+import { variables_in_constraints, TruthTable, translate, constraint_to_string, constraints_to_smtlib_lines, letter_string } from '../../src/pr_sat'
 
 describe('exponent letter dropping repro', () => {
   test('2^Pr(B) = 2 alone', () => {

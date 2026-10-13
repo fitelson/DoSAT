@@ -16,7 +16,7 @@ const deferred = <T>() => {
 const fake = (status: 'sat' | 'unsat' | 'unknown' = 'sat') => {
   const session: DecisionSession = {
     load: vi.fn(), check: vi.fn().mockResolvedValue(status), reasonUnknown: vi.fn(() => 'incomplete mock search'),
-    evaluateExact: vi.fn().mockResolvedValue({ defined: true, value: '(/ 1.0 2.0)' }), interrupt: vi.fn(), release: vi.fn(),
+    evaluateExact: vi.fn().mockResolvedValue({ defined: true, value: '(/ 1.0 2.0)' }), validateOriginal: vi.fn().mockResolvedValue(true), interrupt: vi.fn(), release: vi.fn(),
   }
   return session
 }
@@ -70,42 +70,69 @@ describe('causal decision orchestration and ownership', () => {
     expect(session.release).toHaveBeenCalledOnce()
     expect(JSON.parse(JSON.stringify(result))).toEqual(result)
   })
+  test('failed original-predicate validation returns ERROR and permits reuse', async () => {
+    const bad = fake(), reuse = fake('unsat')
+    bad.validateOriginal = vi.fn().mockResolvedValue(false)
+    const { solver } = using(bad, reuse)
+    expect(await solver.decide(problem())).toMatchObject({ status: 'error', stage: 'witness', message: expect.stringContaining('original guarded constraints') })
+    expect(bad.evaluateExact).not.toHaveBeenCalled()
+    expect(bad.release).toHaveBeenCalledOnce()
+    expect(await solver.decide(problem())).toEqual({ status: 'unsat' })
+    expect(reuse.validateOriginal).not.toHaveBeenCalled()
+  })
+  test('cancellation during original-predicate validation waits for settlement before reuse', async () => {
+    const pending = deferred<boolean>(), session = fake(), reuse = fake('unsat')
+    session.validateOriginal = vi.fn(() => pending.promise)
+    const { solver } = using(session, reuse), abort = new AbortController()
+    let done = false
+    const running = solver.decide(problem('entailment'), { abort_signal: abort.signal }).then(result => { done = true; return result })
+    await vi.waitFor(() => expect(session.validateOriginal).toHaveBeenCalledOnce())
+    abort.abort()
+    expect(session.interrupt).toHaveBeenCalled()
+    expect(session.release).not.toHaveBeenCalled()
+    expect(done).toBe(false)
+    expect(await solver.decide(problem())).toMatchObject({ status: 'error', message: expect.stringContaining('already running') })
+    pending.resolve(true)
+    expect(await running).toMatchObject({ status: 'cancelled', stage: 'witness' })
+    expect(session.evaluateExact).not.toHaveBeenCalled()
+    expect(session.release).toHaveBeenCalledOnce()
+    expect(await solver.decide(problem())).toEqual({ status: 'unsat' })
+  })
   test('satisfiability UNSAT does not try to obtain a model', async () => {
     const session = fake('unsat')
     expect(await using(session).solver.decide(problem())).toEqual({ status: 'unsat' })
     expect(session.evaluateExact).not.toHaveBeenCalled()
     expect(session.release).toHaveBeenCalledOnce()
   })
-  test('inconsistent premises are reported distinctly and skip the second stage', async () => {
+  test('entailment submits only the counterexample formula and reports UNSAT as entailed', async () => {
     const session = fake('unsat')
     const { solver, create } = using(session)
-    expect(await solver.decide(problem('entailment'))).toEqual({ status: 'inconsistent-premises' })
+    const compiled = problem('entailment')
+    expect(await solver.decide(compiled)).toEqual({ status: 'entailed' })
+    expectFastLoad(session, compiled.counterexampleSmt!)
     expect(create).toHaveBeenCalledOnce()
     expect(session.evaluateExact).not.toHaveBeenCalled()
   })
-  test('entailment checks consistency, then the exact compiled complement', async () => {
-    const first = fake(), second = fake('unsat')
-    const { solver } = using(first, second)
-    const compiled = problem('entailment')
+  test('inconsistent premises use the same direct consequence query', async () => {
+    const session = fake('unsat'), { solver, create } = using(session)
+    const compiled = compile_decision_problem({ graph: 'X', premises: 'Pr(X)=0\nPr(X)=1', conclusion: 'Pr(X | X)=1', regular: false, task: 'entailment' })
     expect(await solver.decide(compiled)).toEqual({ status: 'entailed' })
-    expectFastLoad(first, compiled.premisesSmt)
-    expectFastLoad(second, compiled.counterexampleSmt!)
-    expect(first.evaluateExact).not.toHaveBeenCalled()
-    expect(first.release).toHaveBeenCalledOnce()
-    expect(second.release).toHaveBeenCalledOnce()
+    expectFastLoad(session, compiled.counterexampleSmt!)
+    expect(create).toHaveBeenCalledOnce()
+    expect(session.release).toHaveBeenCalledOnce()
   })
   test('a satisfiable complement returns a countermodel', async () => {
-    const first = fake(), second = fake()
-    const result = await using(first, second).solver.decide(problem('entailment'))
+    const session = fake(), compiled = problem('entailment')
+    const result = await using(session).solver.decide(compiled)
     expect(result.status).toBe('not-entailed')
-    expect(first.evaluateExact).not.toHaveBeenCalled()
-    expect(second.evaluateExact).toHaveBeenCalled()
-    expect(second.release).toHaveBeenCalledOnce()
+    expectFastLoad(session, compiled.counterexampleSmt!)
+    expect(session.evaluateExact).toHaveBeenCalled()
+    expect(session.release).toHaveBeenCalledOnce()
   })
   test.each(['premises', 'counterexample'] as const)('unknown at %s remains unresolved', async (stage) => {
     const unknown = fake('unknown'), completeUnknown = fake('unknown')
-    const { solver } = stage === 'premises' ? using(unknown, completeUnknown) : using(fake(), unknown, completeUnknown)
-    expect(await solver.decide(problem('entailment'))).toEqual({ status: 'unknown', stage, reason: 'incomplete mock search' })
+    const { solver } = using(unknown, completeUnknown)
+    expect(await solver.decide(problem(stage === 'premises' ? 'satisfiability' : 'entailment'))).toEqual({ status: 'unknown', stage, reason: 'incomplete mock search' })
     expect(unknown.release).toHaveBeenCalledOnce()
     expect(completeUnknown.release).toHaveBeenCalledOnce()
   })
@@ -122,25 +149,22 @@ describe('causal decision orchestration and ownership', () => {
     expect(result.status).toBe('cancelled')
     expect(create).not.toHaveBeenCalled()
   })
-  test('between-stage abort does not start a counterexample search', async () => {
-    const first = fake(), abort = new AbortController()
-    const { solver, create } = using(first)
+  test('abort at counterexample entry does no solver work', async () => {
+    const abort = new AbortController()
+    const { solver, create } = using()
     const result = await solver.decide(problem('entailment'), { abort_signal: abort.signal, on_stage: stage => { if (stage === 'counterexample') abort.abort() } })
     expect(result).toMatchObject({ status: 'cancelled', stage: 'counterexample' })
-    expect(create).toHaveBeenCalledOnce()
-    expect(first.release).toHaveBeenCalledOnce()
+    expect(create).not.toHaveBeenCalled()
   })
   test('a queued counterexample-stage abort is delivered before the next native operation', async () => {
-    const first = fake(), abort = new AbortController()
-    const { solver, create } = using(first)
+    const abort = new AbortController()
+    const { solver, create } = using()
     const result = await solver.decide(problem('entailment'), {
       abort_signal: abort.signal,
       on_stage: stage => { if (stage === 'counterexample') queueMicrotask(() => abort.abort()) },
     })
     expect(result).toMatchObject({ status: 'cancelled', stage: 'counterexample' })
-    expect(create).toHaveBeenCalledOnce()
-    expect(first.release).toHaveBeenCalledOnce()
-    expect(first.interrupt).not.toHaveBeenCalled()
+    expect(create).not.toHaveBeenCalled()
   })
   test('interruption waits for the check to settle before release or subsequent reuse', async () => {
     const check = deferred<'sat' | 'unsat' | 'unknown'>(), session = fake(), abort = new AbortController()
@@ -268,13 +292,13 @@ describe('causal decision orchestration and ownership', () => {
     expect(session.evaluateExact).not.toHaveBeenCalled()
     expect(vi.getTimerCount()).toBe(0)
   })
-  test('the counterexample stage uses the remaining whole-run time budget', async () => {
+  test('counterexample fallback uses the remaining whole-run time budget', async () => {
     vi.useFakeTimers()
-    const first = fake(), second = fake('unsat')
-    first.check = vi.fn(async () => { await vi.advanceTimersByTimeAsync(40); return 'sat' as const })
+    const first = fake('unknown'), second = fake('unsat')
+    first.check = vi.fn(async () => { await vi.advanceTimersByTimeAsync(40); return 'unknown' as const })
     const compiled = problem('entailment')
     expect(await using(first, second).solver.decide(compiled, { timeout_ms: 100 })).toEqual({ status: 'entailed' })
-    expect(first.load).toHaveBeenCalledWith(compiled.premisesSmt, 100)
+    expect(first.load).toHaveBeenCalledWith(compiled.counterexampleSmt, 100)
     expect(second.load).toHaveBeenCalledWith(compiled.counterexampleSmt, 60)
     expect(vi.getTimerCount()).toBe(0)
   })
@@ -287,6 +311,11 @@ describe('causal decision orchestration and ownership', () => {
     const compiled = problem()
     const { solver, create } = using()
     expect(await solver.decide({ ...compiled, premisesSmt: '(set-logic ALL)' })).toMatchObject({ status: 'error', message: 'Expected a problem returned by compile_decision_problem.' })
+    expect(create).not.toHaveBeenCalled()
+  })
+  test.each([null, {}])('an untrusted envelope %j is rejected before reading its task', async value => {
+    const { solver, create } = using()
+    expect(await solver.decide(value as CompiledDecisionProblem)).toMatchObject({ status: 'error', message: 'Expected a problem returned by compile_decision_problem.' })
     expect(create).not.toHaveBeenCalled()
   })
   test.each(['load', 'check', 'evaluateExact'] as const)('a %s exception is reported and resources are released', async (operation) => {
@@ -314,7 +343,7 @@ describe('causal decision orchestration and ownership', () => {
     const second = fake()
     second.evaluateExact = vi.fn(async (expression): Promise<ExactDecisionValue> => expression.tag === 'divide' ? { defined: false } : { defined: true, value: '0.0' })
     const compiled = compile_decision_problem({ graph: 'X', premises: 'Pr(X) = 0', conclusion: 'Pr(X | X) = 1', regular: false, task: 'entailment' })
-    const result = await using(fake(), second).solver.decide(compiled)
+    const result = await using(second).solver.decide(compiled)
     expect(result).toMatchObject({ status: 'not-entailed', witness: { queries: expect.arrayContaining([{ source: 'Pr(X | X)', defined: false }]) } })
   })
   test.each(['sat', 'unsat'] as const)('fast UNKNOWN falls back to explicit complete search returning %s', async (status) => {
@@ -331,11 +360,11 @@ describe('causal decision orchestration and ownership', () => {
     expect(complete.release).toHaveBeenCalledOnce()
     expect(fast.evaluateExact).not.toHaveBeenCalled()
   })
-  test('each entailment stage independently gets a finite fast attempt and complete fallback', async () => {
-    const sessions = [fake('unknown'), fake(), fake('unknown'), fake('unsat')]
+  test('the direct entailment query gets a finite fast attempt and complete fallback', async () => {
+    const sessions = [fake('unknown'), fake('unsat')]
     const { solver, create } = using(...sessions)
     expect(await solver.decide(problem('entailment'))).toEqual({ status: 'entailed' })
-    expect(create.mock.calls).toEqual([['fast'], ['complete'], ['fast'], ['complete']])
+    expect(create.mock.calls).toEqual([['fast'], ['complete']])
     sessions.forEach(session => expect(session.release).toHaveBeenCalledOnce())
     expect(sessions[1].evaluateExact).not.toHaveBeenCalled()
   })
@@ -585,8 +614,8 @@ describe('native QF_NRA causal decisions', () => {
     const result = await run('Pr(X) = 0', 'Pr(X | X) = 1')
     expect(result).toMatchObject({ status: 'not-entailed', witness: { queries: expect.arrayContaining([{ source: 'Pr(X | X)', defined: false }]) } })
   })
-  test('inconsistent premises are distinguished from a substantive entailment', async () => {
-    expect(await run('Pr(X) = 0\nPr(X) = 1', 'Pr(X) > 0')).toEqual({ status: 'inconsistent-premises' })
+  test('inconsistent premises entail directly without a separate consistency decision', async () => {
+    expect(await run('Pr(X) = 0\nPr(X) = 1', 'Pr(X) > 0')).toEqual({ status: 'entailed' })
   })
   test('a real context interrupted before witness extraction remains reusable', async () => {
     const abort = new AbortController()
@@ -597,7 +626,7 @@ describe('native QF_NRA causal decisions', () => {
   test('a counterexample-start microtask abort settles the six-node repro and permits reuse', async () => {
     const nodes = ['A', 'B', 'C', 'D', 'E', 'F']
     const graph = nodes.flatMap((from, index) => nodes.slice(index + 1).map(to => `${from} -> ${to}`)).join('\n')
-    const compiled = compile_decision_problem({ graph, premises: '', conclusion: 'Pr(F | do(A=1)) = Pr(F | A)', regular: true, task: 'entailment' })
+    const compiled = compile_decision_problem({ graph, premises: '', conclusion: 'Pr(F | do(C=1)) = Pr(F | C)', regular: true, task: 'entailment' })
     const abort = new AbortController()
     let cancelledAt: number | undefined
     const result = await solver.decide(compiled, {
@@ -614,7 +643,7 @@ describe('native QF_NRA causal decisions', () => {
   test('cancellation of an already running six-node native check settles and permits reuse', async () => {
     const nodes = ['A', 'B', 'C', 'D', 'E', 'F']
     const graph = nodes.flatMap((from, index) => nodes.slice(index + 1).map(to => `${from} -> ${to}`)).join('\n')
-    const compiled = compile_decision_problem({ graph, premises: '', conclusion: 'Pr(F | do(A=1)) = Pr(F | A)', regular: true, task: 'entailment' })
+    const compiled = compile_decision_problem({ graph, premises: '', conclusion: 'Pr(F | do(C=1)) = Pr(F | C)', regular: true, task: 'entailment' })
     const abort = new AbortController()
     let cancelledAt: number | undefined, cancelTimer: ReturnType<typeof setTimeout> | undefined
     try {
@@ -645,7 +674,7 @@ describe('native QF_NRA causal decisions', () => {
   test('a real explicit fallback can be cancelled while pending and reused afterward', async () => {
     const nodes = ['A', 'B', 'C', 'D', 'E', 'F']
     const graph = nodes.flatMap((from, index) => nodes.slice(index + 1).map(to => `${from} -> ${to}`)).join('\n')
-    const compiled = compile_decision_problem({ graph, premises: '', conclusion: 'Pr(F | do(A=1)) = Pr(F | A)', regular: true, task: 'entailment' })
+    const compiled = compile_decision_problem({ graph, premises: '', conclusion: 'Pr(F | do(C=1)) = Pr(F | C)', regular: true, task: 'entailment' })
     const abort = new AbortController(), engines: string[] = []
     let cancelledAt: number | undefined, cancelTimer: ReturnType<typeof setTimeout> | undefined
     try {
@@ -663,17 +692,18 @@ describe('native QF_NRA causal decisions', () => {
       expect(await run('Pr(X) = 0\nPr(X) = 1')).toEqual({ status: 'unsat' })
     } finally { if (cancelTimer !== undefined) clearTimeout(cancelTimer) }
   }, 15_000)
-  test('the whole-run deadline settles a pending real explicit fallback as UNKNOWN', async () => {
+  test('the whole-run deadline rejects unfinished real fallback or witness work as UNKNOWN', async () => {
     const nodes = ['A', 'B', 'C', 'D', 'E', 'F']
     const graph = nodes.flatMap((from, index) => nodes.slice(index + 1).map(to => `${from} -> ${to}`)).join('\n')
-    const compiled = compile_decision_problem({ graph, premises: '', conclusion: 'Pr(F | do(A=1)) = Pr(F | A)', regular: true, task: 'entailment' })
+    const compiled = compile_decision_problem({ graph, premises: '', conclusion: 'Pr(F | do(C=1)) = Pr(F | C)', regular: true, task: 'entailment' })
     const engines: string[] = []
     const result = await solver.decide(compiled, {
-      fast_timeout_ms: 1, timeout_ms: 5000,
+      fast_timeout_ms: 1, timeout_ms: 100,
       on_engine: (engine, stage) => engines.push(`${stage}:${engine}`),
     })
     expect(engines).toContain('counterexample:complete')
-    expect(result).toEqual({ status: 'unknown', stage: 'counterexample', reason: 'The decision time limit was reached.' })
+    expect(result).toMatchObject({ status: 'unknown', reason: 'The decision time limit was reached.' })
+    expect(['counterexample', 'witness']).toContain('stage' in result ? result.stage : '')
     expect(await run('Pr(X) = 0\nPr(X) = 1')).toEqual({ status: 'unsat' })
   }, 15_000)
 })

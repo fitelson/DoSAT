@@ -1,0 +1,132 @@
+[
+  {
+    "file": "src/causal.ts",
+    "bytes": 17626,
+    "sha256": "cd6e99f1ddd1948ed45ce074b62f91003496ebf6e51e7ae87ac44ae3341c2de9"
+  },
+  {
+    "file": "src/causal_syntax.ts",
+    "bytes": 13196,
+    "sha256": "71052c450cd5e539bb7d67faa07bc6f6eb33b4ebc4d975781cd2f537c95b8432"
+  },
+  {
+    "file": "src/causal_decision.ts",
+    "bytes": 6774,
+    "sha256": "8750edeff3c7775119b899a1fc6606683562ec625da36f7d9f0751c2d9bac3bf"
+  },
+  {
+    "file": "src/causal_decision_optimization.ts",
+    "bytes": 24232,
+    "sha256": "adb284ed14d30c8d52400f919663079e80ed23af9a82b9c1249cee4dba5eb90b"
+  },
+  {
+    "file": "src/causal_smt_budget.ts",
+    "bytes": 1885,
+    "sha256": "ef26a375df4ae3a5e3b2f6c36d1e2c2653259703885313ea6f1041c6731aefc3"
+  },
+  {
+    "file": "src/causal_decision_solver.ts",
+    "bytes": 19472,
+    "sha256": "3359fc2074df8a6e74ce2539dcf2cd9d4fb6087dc36f74d2a69140d8249fcb3d"
+  },
+  {
+    "file": "src/causal_decision_examples.ts",
+    "bytes": 9847,
+    "sha256": "964661055b050131a86dd54543482e65e404720e47c903230ef435c1243cef3b"
+  },
+  {
+    "file": "src/causal_decision_ui.ts",
+    "bytes": 24770,
+    "sha256": "f964d4c343d1dbafb8f4df43a394a61688beffc32383bbf779b339ae653899b2"
+  },
+  {
+    "file": "src/causal_ui.ts",
+    "bytes": 14318,
+    "sha256": "029e04c3799c4c185c5e105c00cfcd8df16b54fbed0a0198e099602881b27b96"
+  },
+  {
+    "file": "src/do_calculus_ui.ts",
+    "bytes": 12311,
+    "sha256": "eb3d553a0407e3000b583cde124e6b6d4ee43bcf9f535b56a53a752f60769046"
+  },
+  {
+    "file": "src/causal_decision_optimization.spec.ts",
+    "bytes": 6112,
+    "sha256": "68c3b9ae08816906a227b2300a7e89ba1ee905dc31d3ecbb317abb980f26453d"
+  },
+  {
+    "file": "src/causal_decision.spec.ts",
+    "bytes": 14653,
+    "sha256": "44bfeae755b031f9db894265cd3a7664b05950b958121f0722629258de6ee598"
+  },
+  {
+    "file": "src/causal_decision_solver.spec.ts",
+    "bytes": 41612,
+    "sha256": "a2db753e6f141c88edaa434da27e7046908a4b1758df50cb98347778162ab6a9"
+  },
+  {
+    "file": "src/causal_decision_audit.spec.ts",
+    "bytes": 21270,
+    "sha256": "e32512a461bb78fe924767090e8a2c9201a6129c81aaec7deaf1f59dbe306001"
+  },
+  {
+    "file": "src/causal_decision_ui.spec.ts",
+    "bytes": 59220,
+    "sha256": "71ed2e84defbf732b845e7b21ebff02379624d3d942414ad3cb5bf1ec948f8f2"
+  },
+  {
+    "file": "src/causal_syntax.spec.ts",
+    "bytes": 15552,
+    "sha256": "6cd3f9969e92536a2c714e159e47ffad64e40682214a8c3dcd997a0bdd63a609"
+  },
+  {
+    "file": "src/causal_graph.spec.ts",
+    "bytes": 10135,
+    "sha256": "3d8c811e94b9ee7b4011f3fd5bca5130003117e68fad4f7aa051a52b19119c2b"
+  },
+  {
+    "file": "src/causal_graph_preview.spec.ts",
+    "bytes": 8576,
+    "sha256": "5c651deb3b506e50f85a330e605872e6ad2d581f5dd6455a16d12278df026029"
+  },
+  {
+    "file": "src/causal.spec.ts",
+    "bytes": 19020,
+    "sha256": "6ca09350c3c268548322949b3422e3506110e324237a619bb5ff5016ac4615b3"
+  },
+  {
+    "file": "src/do_calculus.spec.ts",
+    "bytes": 12067,
+    "sha256": "f1447967150637658facce783829de74c2c3654da9773528e4de58682d1f586f"
+  },
+  {
+    "file": "tests/causal_decision.spec.ts",
+    "bytes": 32910,
+    "sha256": "819922ced05497bbcd6e166d9f8f198394613031341ee13238bf9615a6ba09ac"
+  },
+  {
+    "file": "tests/causal_literature_examples.spec.ts",
+    "bytes": 4149,
+    "sha256": "5d367bdf574e11a0612e5b187eea5680ab9e9e196047b0d8624c597565852516"
+  },
+  {
+    "file": "DECISION_SEMANTICS.md",
+    "bytes": 24540,
+    "sha256": "bb5cd6d9adb0485d7958fa7e586a60ddd50b43d00899f917e34cac55e10e8698"
+  },
+  {
+    "file": "CAUSAL_SEMANTICS.md",
+    "bytes": 7878,
+    "sha256": "9ab67c9afa764813972259600833e8daed904a75127f8446f3b3a51012bb0d48"
+  },
+  {
+    "file": "dist/index.html",
+    "bytes": 955,
+    "sha256": "dae298c685988ddab2cdd5cf95d5e27f58dd1837f4d90e9455bd865c310aa1af"
+  },
+  {
+    "file": "dist/assets/dosat-CtGY0ufx.js",
+    "bytes": 292336,
+    "sha256": "fa21b48cacd759aa5213962010052eaf8b9c68c9f955346ff623ef35700bad44"
+  }
+]

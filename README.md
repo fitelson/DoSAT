@@ -4,39 +4,54 @@ A Decision Procedure for Do Calculus.
 
 The single public app is [DoSAT 1.0](https://fitelson.org/DoSAT/), with one production entry, index.html. Read [PROJECT.md](PROJECT.md) and [FORK_PROVENANCE.json](FORK_PROVENANCE.json) for scope and provenance. The earlier model-finder, rule-checker and classical entry pages are preserved under reference-ui/ for development and regression tests; they are not published as separate apps. Old public URLs redirect to the single page.
 
-## Phase 3 decision procedure
+## Current decision procedure
 
-The main page provides causal satisfiability and entailment using exact polynomial
-real arithmetic. Each stage tries Z3's QF_NRA strategy with a finite 60-second
-budget, then falls back to explicit NLSat if needed. Default decision mode has no
-overall time limit; cancellation or resource failure remains unresolved. Entailment includes
-countermodels with required undefined conclusion terms and distinguishes
-inconsistent premises. See DECISION_SEMANTICS.md. The required
-[scoped consensus recheck](reviews/phase3_final_recheck_consensus.md) gives
-**Phase gate: PASS**. Final checks: 1,041 unit tests and 72 Chromium tests pass;
-native Z3 matches all 607 semantic audit cases. Requested deadlines govern
-accepted verdicts; native interruption and cleanup can finish later.
+The main page checks causal satisfiability and entailment using exact polynomial
+real arithmetic over up to eight Boolean graph variables. Entailment directly
+searches for premises together with failure of the guarded conclusion; no
+separate premise-consistency search runs. Inconsistent premises entail vacuously,
+and undefined required conclusion terms can supply countermodels. SAT checks the
+active constraints directly. See [DECISION_SEMANTICS.md](DECISION_SEMANTICS.md).
+
+Each query first tries Z3's QF_NRA strategy with a finite 60-second budget and
+falls back to explicit NLSat if needed. The default has no overall time limit.
+Cancellation, timeout or resource failure remains unresolved. Both engines
+receive the same optimized polynomial input: ordinary arithmetic is inline,
+constants stay exact, irrelevant graph factors are removed, and cancellation
+and bounded fraction normalization retain the original definedness guards.
+Returned SAT models and countermodels are validated against the original
+constraints before their exact witnesses are displayed.
 
 Boolean interventions use `do(X)` and `do(~X)` to set X true or false.
 Simultaneous interventions use `do(X, ~Y)`. Numeric forms such as `do(X=1)`
 remain supported. `Pr(Y | do(X), Z)` conditions on Z in the intervened model.
 
-Two built-in examples test Simpson's paradox and the back-door adjustment law.
-For `Z -> X; Z -> Y; X -> Y`, let X mean treatment, Y recovery and Z severity.
-The illustrative Simpson example gives observed recovery of 63% with treatment
-versus 77% without treatment. Intervention gives 75% versus 65%. DoSAT checks
-that the premises entail this reversal. These are constructed values, not a
-claim about an empirical treatment study. The second example tests the general
-adjustment identity with positive support and no numerical premises:
+The seven presets cover Berkson selection, M-bias, instrument bias amplification,
+treatment–confounder feedback, front-door adjustment, positivity failure and
+Simpson admissions. The admissions case adapts Pearl's Figure 4.9 with explicit
+aptitude U and career objectives Z, removing direct M->A. It preserves the
+supplied E/M/A table. Choosing the easy department gives admission risk 2/3,
+versus 1/3 for the hard department; fixing department makes gender causally
+irrelevant to admission, despite the observed female advantage within each
+selected department. Numbers are constructed mechanisms, not empirical effects
+inferred from the table. No latent-variable identification engine is added.
 
-```text
-Pr(Y | do(X)) = Pr(Y | X & Z)*Pr(Z) + Pr(Y | X & ~Z)*Pr(~Z)
-```
+The optimized admissions entailment has 14 causal parameters and no arithmetic
+auxiliaries, using 3619 bytes instead of the former 73407 bytes and 718 reals.
+The current verification and scoped review are recorded in
+[VERIFICATION.md](reviews/constraint_implementation_2026-10-12T23-41-52Z/VERIFICATION.md).
+The recorded checks pass 1349 unit tests and 108 distinct Chromium cases, including the independent
+607-case semantic oracle and 480000 exact differential comparisons with zero
+mismatches. Eight-node acceptance and ninth-node rejection are tested. Existing
+source and expansion budgets still apply; graph size alone does not guarantee
+that every input completes within a particular runtime.
+See [TESTING.md](TESTING.md) for the public-page and retained legacy browser commands.
+Intermittent native Z3/WASM memory failures remain a documented reliability follow-up.
 
-See [Pearl's discussion](https://www.cs.ucla.edu/~kaoru/r385.pdf) for how the
-causal graph resolves Simpson's paradox. Saved solver input uses explicit
-`check-sat-using qfnra-nlsat` as a complete reference route; the application
-also tries its finite QF_NRA optimization first.
+Saved solver input contains one selected query with explicit
+`check-sat-using qfnra-nlsat` as a complete reference route. The application
+also tries its finite QF_NRA optimization first. Earlier core/UI phase review
+records below are historical and remain preserved.
 
 Public repository: [fitelson/DoSAT](https://github.com/fitelson/DoSAT).
 Live website: [DoSAT 1.0](https://fitelson.org/DoSAT/). The
@@ -49,12 +64,9 @@ Node 26.11.1 and npm 12.2.0, then run
 strict development port 5173. See [TOOLS.md](TOOLS.md) for the TypeScript 7
 compiler and separate compatible typed-lint toolchain.
 
-Some hard queries become much slower when one Z3 context is reused. Controlled
-review probes solved the six-node example in about 29 seconds with a fresh
-context, while repeated use reached the finite cap and remained unresolved in
-NLSat for several minutes. These are instance-specific observations. Save the
-problem and reload the page to obtain a fresh context when useful; this does
-not guarantee a particular runtime. See the review for details.
+Earlier reviews recorded sensitivity to Z3 context reuse before the current
+compiler optimization. Current measured instance timings are in the verification
+record above; they are observations, not general runtime guarantees.
 
 ## PrSAT-style decision interface
 

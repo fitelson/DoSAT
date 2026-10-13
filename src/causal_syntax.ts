@@ -28,7 +28,7 @@ export interface CausalDocument {
 
 /** Bounds cover the input as well as the later exponential graph enumeration. */
 export const CAUSAL_LIMITS = {
-  max_nodes: 6,
+  max_nodes: 8,
   max_constraints: 64,
   max_probabilities: 64,
   max_input_characters: 50_000,

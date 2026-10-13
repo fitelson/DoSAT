@@ -1,0 +1,750 @@
+[
+ {
+  "name": "Berkson’s paradox: selection creates an association",
+  "regular": false,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 1012,
+    "reals": 6,
+    "aux": 0,
+    "asserts": 16
+   },
+   "sat": {
+    "bytes": 705,
+    "reals": 6,
+    "aux": 0,
+    "asserts": 15
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 1012,
+    "reals": 6,
+    "aux": 0,
+    "asserts": 16
+   },
+   "sat": {
+    "bytes": 705,
+    "reals": 6,
+    "aux": 0,
+    "asserts": 15
+   },
+   "differential": {
+    "checks": 16000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "M-bias: a harmful pretreatment adjustment",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 2303,
+    "reals": 10,
+    "aux": 0,
+    "asserts": 31
+   },
+   "sat": {
+    "bytes": 1030,
+    "reals": 10,
+    "aux": 0,
+    "asserts": 30
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 2303,
+    "reals": 10,
+    "aux": 0,
+    "asserts": 31
+   },
+   "sat": {
+    "bytes": 1030,
+    "reals": 10,
+    "aux": 0,
+    "asserts": 30
+   },
+   "differential": {
+    "checks": 44000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "Bias amplification: controlling an instrument",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 2965,
+    "reals": 16,
+    "aux": 6,
+    "asserts": 37
+   },
+   "sat": {
+    "bytes": 1052,
+    "reals": 10,
+    "aux": 0,
+    "asserts": 30
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 2965,
+    "reals": 16,
+    "aux": 6,
+    "asserts": 37
+   },
+   "sat": {
+    "bytes": 1052,
+    "reals": 10,
+    "aux": 0,
+    "asserts": 30
+   },
+   "differential": {
+    "checks": 44000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "Treatment–confounder feedback",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 1624,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 28
+   },
+   "sat": {
+    "bytes": 923,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 27
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 1624,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 28
+   },
+   "sat": {
+    "bytes": 923,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 27
+   },
+   "differential": {
+    "checks": 40000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "Front-door adjustment",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 1391,
+    "reals": 10,
+    "aux": 1,
+    "asserts": 29
+   },
+   "sat": {
+    "bytes": 923,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 27
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 1391,
+    "reals": 10,
+    "aux": 1,
+    "asserts": 29
+   },
+   "sat": {
+    "bytes": 923,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 27
+   },
+   "differential": {
+    "checks": 40000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "Positivity failure: an unseen treatment branch",
+  "regular": false,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 369,
+    "reals": 3,
+    "aux": 0,
+    "asserts": 9
+   },
+   "sat": {
+    "bytes": 336,
+    "reals": 3,
+    "aux": 0,
+    "asserts": 8
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 369,
+    "reals": 3,
+    "aux": 0,
+    "asserts": 9
+   },
+   "sat": {
+    "bytes": 336,
+    "reals": 3,
+    "aux": 0,
+    "asserts": 8
+   },
+   "differential": {
+    "checks": 12000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "Simpson’s paradox: admissions and aptitude",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 3619,
+    "reals": 14,
+    "aux": 0,
+    "asserts": 43
+   },
+   "sat": {
+    "bytes": 1474,
+    "reals": 14,
+    "aux": 0,
+    "asserts": 42
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 3619,
+    "reals": 14,
+    "aux": 0,
+    "asserts": 43
+   },
+   "sat": {
+    "bytes": 1474,
+    "reals": 14,
+    "aux": 0,
+    "asserts": 42
+   },
+   "differential": {
+    "checks": 60000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "S1-partial-nonregular",
+  "regular": false,
+  "task": "satisfiability",
+  "baseline": {
+   "sat": {
+    "bytes": 1796,
+    "reals": 10,
+    "aux": 6,
+    "asserts": 22
+   }
+  },
+  "production": {
+   "sat": {
+    "bytes": 1796,
+    "reals": 10,
+    "aux": 6,
+    "asserts": 22
+   },
+   "differential": {
+    "checks": 40000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "S2-chain-nonregular",
+  "regular": false,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 2069,
+    "reals": 8,
+    "aux": 1,
+    "asserts": 22
+   },
+   "sat": {
+    "bytes": 1549,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 20
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 2069,
+    "reals": 8,
+    "aux": 1,
+    "asserts": 22
+   },
+   "sat": {
+    "bytes": 1549,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 20
+   },
+   "differential": {
+    "checks": 28000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "S3-chain-regular",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 1468,
+    "reals": 8,
+    "aux": 1,
+    "asserts": 20
+   },
+   "sat": {
+    "bytes": 1154,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 18
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 1468,
+    "reals": 8,
+    "aux": 1,
+    "asserts": 20
+   },
+   "sat": {
+    "bytes": 1154,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 18
+   },
+   "differential": {
+    "checks": 28000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "H1-frontdoor-identity",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 1130,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 19
+   },
+   "sat": {
+    "bytes": 669,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 18
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 1130,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 19
+   },
+   "sat": {
+    "bytes": 669,
+    "reals": 9,
+    "aux": 0,
+    "asserts": 18
+   },
+   "differential": {
+    "checks": 4000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "H2-backdoor-identity",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 648,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 15
+   },
+   "sat": {
+    "bytes": 529,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 14
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 648,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 15
+   },
+   "sat": {
+    "bytes": 529,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 14
+   },
+   "differential": {
+    "checks": 4000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "H3-backdoor-nonregular",
+  "regular": false,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 722,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 15
+   },
+   "sat": {
+    "bytes": 543,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 14
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 722,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 15
+   },
+   "sat": {
+    "bytes": 543,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 14
+   },
+   "differential": {
+    "checks": 4000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "H4-confounded-nonidentity",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 712,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 15
+   },
+   "sat": {
+    "bytes": 529,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 14
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 712,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 15
+   },
+   "sat": {
+    "bytes": 529,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 14
+   },
+   "differential": {
+    "checks": 4000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "H5-frontdoor-6node",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 1965,
+    "reals": 14,
+    "aux": 0,
+    "asserts": 29
+   },
+   "sat": {
+    "bytes": 1040,
+    "reals": 14,
+    "aux": 0,
+    "asserts": 28
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 1965,
+    "reals": 14,
+    "aux": 0,
+    "asserts": 29
+   },
+   "sat": {
+    "bytes": 1040,
+    "reals": 14,
+    "aux": 0,
+    "asserts": 28
+   },
+   "differential": {
+    "checks": 4000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "N1-stratum-no-transfer",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 702,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 17
+   },
+   "sat": {
+    "bytes": 669,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 16
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 702,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 17
+   },
+   "sat": {
+    "bytes": 669,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 16
+   },
+   "differential": {
+    "checks": 12000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "N2-sure-thing-do",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 702,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 17
+   },
+   "sat": {
+    "bytes": 583,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 16
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 702,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 17
+   },
+   "sat": {
+    "bytes": 583,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 16
+   },
+   "differential": {
+    "checks": 12000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "N3-simpson-observational",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 854,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 17
+   },
+   "sat": {
+    "bytes": 583,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 16
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 854,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 17
+   },
+   "sat": {
+    "bytes": 583,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 16
+   },
+   "differential": {
+    "checks": 12000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "N4-sure-thing-do-nonregular",
+  "regular": false,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 836,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 17
+   },
+   "sat": {
+    "bytes": 717,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 16
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 836,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 17
+   },
+   "sat": {
+    "bytes": 717,
+    "reals": 7,
+    "aux": 0,
+    "asserts": 16
+   },
+   "differential": {
+    "checks": 12000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ },
+ {
+  "name": "N5-mediated-6node",
+  "regular": true,
+  "task": "entailment",
+  "baseline": {
+   "entailment": {
+    "bytes": 2770,
+    "reals": 15,
+    "aux": 0,
+    "asserts": 33
+   },
+   "sat": {
+    "bytes": 2071,
+    "reals": 15,
+    "aux": 0,
+    "asserts": 32
+   }
+  },
+  "production": {
+   "entailment": {
+    "bytes": 2770,
+    "reals": 15,
+    "aux": 0,
+    "asserts": 33
+   },
+   "sat": {
+    "bytes": 2071,
+    "reals": 15,
+    "aux": 0,
+    "asserts": 32
+   },
+   "differential": {
+    "checks": 12000,
+    "mismatches": 0,
+    "examples": []
+   }
+  }
+ }
+]

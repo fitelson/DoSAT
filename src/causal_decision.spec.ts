@@ -15,7 +15,7 @@ const entail = (conclusion: string, premises = '', patch: Partial<DecisionProble
   compile_decision_problem(input({ task: 'entailment', premises, conclusion, ...patch }))
 const assert_polynomial = (smt: string): void => {
   expect(smt).toMatch(/^\(set-logic QF_NRA\)/)
-  expect(smt).not.toMatch(/\((?:\/|\^|pow|div)\s/)
+  expect(smt.replace(/\(\/ [0-9]+ [0-9]+\)/g, 'coefficient')).not.toMatch(/\((?:\/|\^|pow|div)\s/)
   expect(smt).not.toMatch(/\b(?:forall|exists)\b/)
 }
 const final_line = (smt: string): string => smt.split('\n').slice(-1)[0]
@@ -32,9 +32,9 @@ describe('causal decision input boundary', () => {
   })
 
   test('regularity changes only graph bounds', () => {
-    expect(compile('').premisesSmt).toContain('(assert (>= p_X_root 0))')
+    expect(compile('').premisesSmt).toContain('(assert (<= 0 p_X_root))')
     const regular = compile('', { regular: true })
-    expect(regular.premisesSmt).toContain('(assert (> p_X_root 0))')
+    expect(regular.premisesSmt).toContain('(assert (< 0 p_X_root))')
     expect(regular.premisesSmt).toContain('(assert (< p_X_root 1))')
   })
 
@@ -43,7 +43,7 @@ describe('causal decision input boundary', () => {
     const supplied = { ...input(), get regular() { return ++reads === 1 } }
     const compiled = compile_decision_problem(supplied)
     expect(reads).toBe(1)
-    expect(compiled.premisesSmt).toContain('(assert (> p_X_root 0))')
+    expect(compiled.premisesSmt).toContain('(assert (< 0 p_X_root))')
   })
 
   test('joint parsing shares graph, probability registry and conclusion-only free reals', () => {
@@ -103,7 +103,7 @@ describe('causal decision input boundary', () => {
     expect(() => compile('', { graph: 'X -> Y; Y -> X' })).toThrow(/acyclic/)
     expect(() => compile('Pr(Y)=0')).toThrow(/not declared/)
     expect(() => entail('Pr(Y | do(X=1))=0')).toThrow(/not declared/)
-    expect(() => compile('', { graph: 'A; B; C; D; E; F; G' })).toThrow(/At most 6/)
+    expect(() => compile('', { graph: 'A; B; C; D; E; F; G; H; I' })).toThrow(/At most 8/)
   })
 
   test('retains the shared 64-line and 64-query budgets across the conclusion', () => {
@@ -165,9 +165,8 @@ describe('division-free exact polynomial reduction', () => {
 
   test('a signed denominator is used in an equality rather than inequality cross-multiplication', () => {
     const compiled = compile('x/(-y)>1')
-    expect(compiled.premisesSmt).toContain('(= decision_aux_1 (- y))')
-    expect(compiled.premisesSmt).toContain('(= (* decision_aux_2 decision_aux_1) x)')
-    expect(final_line(compiled.premisesSmt)).toContain('(> decision_aux_2 1)')
+    expect(compiled.premisesSmt).toContain('(or (= (- y) 0) (= (* decision_aux_1 (- y)) x))')
+    expect(final_line(compiled.premisesSmt)).toContain('(> decision_aux_1 1)')
   })
 
   test('negative integer powers use a total reciprocal and retain a local base guard', () => {
@@ -180,7 +179,7 @@ describe('division-free exact polynomial reduction', () => {
   test('zero powers preserve guards on an undefined base', () => {
     const compiled = compile('(1/x)^0=1')
     expect(compiled.premisesSmt).toContain('(or (= x 0)')
-    expect(final_line(compiled.premisesSmt)).toContain('(and (not (= x 0)) (= 1 1))')
+    expect(final_line(compiled.premisesSmt)).toBe('(assert (not (= x 0)))')
   })
 
   test('large powers use repeated squaring rather than copying the base 1024 times', () => {
@@ -201,7 +200,9 @@ describe('division-free exact polynomial reduction', () => {
   test('exact input integer and decimal spellings survive JavaScript rounding', () => {
     for (const numeral of ['9007199254740993', '0.10000000000000001', `0.${'0'.repeat(350)}1`, '9'.repeat(350)]) {
       const compiled = compile(`x=${numeral}`)
-      expect(compiled.premisesSmt).toContain(`(= x ${numeral})`)
+      const parts = numeral.split('.')
+      const exact = parts.length === 1 ? numeral : `(/ ${BigInt(parts.join(''))} ${10n ** BigInt(parts[1].length)})`
+      expect(compiled.premisesSmt).toContain(`(= x ${exact})`)
       expect(compiled.premisesSmt).not.toMatch(/Infinity|NaN|[0-9]e[-+]/)
     }
   })
@@ -209,8 +210,9 @@ describe('division-free exact polynomial reduction', () => {
   test('an underflow denominator retains its exact nonzero numeral and tautological source guard', () => {
     const numeral = `0.${'0'.repeat(350)}1`
     const compiled = compile(`1/${numeral}>0`)
-    expect(compiled.premisesSmt).toContain(`(or (= ${numeral} 0)`)
-    expect(compiled.premisesSmt).toContain(`(not (= ${numeral} 0))`)
+    expect(final_line(compiled.premisesSmt)).toBe(`(assert (not (= (/ 1 ${10n ** 351n}) 0)))`)
+    expect(compiled.auxiliaryVariables).toEqual([])
+    expect(compiled.premiseConstraints).toHaveLength(1) // Original exact guarded predicate remains available for validation.
   })
 
   test('free real names similar to internal names are retained and do not collide', () => {
@@ -227,14 +229,14 @@ describe('entailment uses the complement of guarded satisfaction', () => {
     const compiled = entail('Pr(X)>3/4')
     expect(compiled.premiseConstraints).toEqual([])
     expect(final_line(compiled.premisesSmt)).toBe('(assert (<= p_X_root 1))')
-    expect(final_line(compiled.counterexampleSmt!)).toBe('(assert (not (> p_X_root decision_aux_1)))')
+    expect(final_line(compiled.counterexampleSmt!)).toBe('(assert (not (> p_X_root (/ 3 4))))')
     expect(compiled.causal.smtlib).toContain('(assert (> p_X_root (/ 3 4)))')
   })
 
   test('a conditional conclusion is negated outside its nonzero evidence guard', () => {
     const compiled = entail('Pr(X | X)=1', 'Pr(X)=0')
     const satisfaction = s_to_string(compiled.conclusionSatisfaction!, false)
-    expect(satisfaction).toMatch(/^\(and \(not \(= p_X_root 0\)\)/)
+    expect(satisfaction).toBe('(< 0 p_X_root)')
     expect(final_line(compiled.counterexampleSmt!)).toBe(`(assert (not ${satisfaction}))`)
     expect(final_line(compiled.counterexampleSmt!)).not.toMatch(/^\(assert \(and/)
     expect(compiled.conclusionConstraint?.tag).toBe('conjunction')

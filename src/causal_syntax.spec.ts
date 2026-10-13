@@ -36,7 +36,7 @@ describe('causal graph syntax', () => {
     ['X0 -> Y', /Invalid causal variable/],
     ['X01', /Invalid causal variable/],
     ['X9007199254740993', /too large/],
-    ['A; B; C; D; E; F; G', /At most 6/],
+    ['A; B; C; D; E; F; G; H; I', /At most 8/],
   ])('rejects graph %j', (source, error) => {
     expect(() => parse_causal_graph(source)).toThrow(error)
   })

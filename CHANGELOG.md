@@ -2,6 +2,52 @@
 
 > **Note:** This is a local build for deployment to fitelson.org.
 
+## 2026-10-12 — Guard-preserving constraint optimization
+
+- Complete both scoped implementation reviews with PASS. Fix exact-zero
+  classification for accepted nonzero decimals that underflow JavaScript numbers;
+  eleven unit cases and two browser regressions protect this boundary.
+- Simplify routine testing to units plus the 59 public-page browser cases. Keep
+  all 49 legacy browser cases in explicit legacy/all commands, archive five
+  assertion-free probes, and preserve the meaningful large-number regression.
+  See TESTING.md for when legacy coverage is required.
+- Raise the causal graph limit to eight Boolean variables, with up to 256 rows
+  per regime. Existing input and expansion budgets remain.
+- Inline polynomial arithmetic, fold exact rational constants, share total
+  quotient definitions and retain bounded repeated-squaring chains.
+- Prune irrelevant ancestors in each intervention regime, extract and cancel
+  mechanism factors under their original support guards, and normalize bounded
+  mass fractions. Both solver stages use the same polynomial input.
+- Validate SAT models and countermodels against the original guarded constraints
+  before exposing a witness. Cancellation, fallback and solver defaults remain.
+- The Pearl admissions entailment now uses fourteen causal parameters and no
+  arithmetic auxiliaries, below five KB instead of the former 73 KB / 718 reals.
+- Implementation checks and the scoped phase gate are recorded in
+  reviews/constraint_implementation_2026-10-12T23-41-52Z/.
+
+## 2026-10-12 — Pearl-style Simpson admissions model
+
+- At the user's request, entailment now directly checks the premises together
+  with failure of the guarded conclusion, without a preliminary consistency
+  search. ENTAILS includes vacuous entailment and makes no consistency claim.
+  Satisfiability remains a direct check of the active constraints. SMT export
+  contains only the selected query; default QF_NRA/NLSat behavior is preserved.
+
+- Adapted Pearl's Figure 4.9 with aptitude U and career objectives Z, removing
+  the direct M -> A edge to express the intended absence of a direct gender
+  effect. M is male, E the choice of easy department, and A admission.
+- Constructed strictly positive Boolean mechanisms that preserve every cell
+  of the supplied E/M/A table after summing over U and Z. The active conclusion
+  checks the statistical reversal, zero department-fixed gender effect,
+  benefit of choosing E and background invariance of M under both E choices.
+- Added fourteen optional exact model checks and a negative control against
+  interpreting the observed female advantage as a department-fixed causal
+  advantage. Guidance distinguishes fixing a department from conditioning on
+  postintervention selection. U is explicit in the app; no latent-ID engine
+  was added. The other six presets are unchanged; the runtime changes are described above.
+- This supersedes the unpublished three-node candidates. Review and publication
+  records: reviews/pearl_admissions_2026-10-12T21-37-55Z/.
+
 ## 2026-10-12 — Explicit entailment presets and supplied Simpson table
 
 - Added active, saved conclusions to Berkson, M-bias, instrument bias

@@ -95,7 +95,7 @@ describe('decision interface', () => {
       'Choose an example…', 'Berkson’s paradox: selection creates an association',
       'M-bias: a harmful pretreatment adjustment', 'Bias amplification: controlling an instrument',
       'Treatment–confounder feedback', 'Front-door adjustment',
-      'Positivity failure: an unseen treatment branch', 'Simpson’s paradox: E, M and A',
+      'Positivity failure: an unseen treatment branch', 'Simpson’s paradox: admissions and aptitude',
     ])
     sample.value = '3'; sample.dispatchEvent(new dom.window.Event('change'))
     expect(node<HTMLTextAreaElement>('decision-graph').value).toBe('A -> L; L -> B; L -> Y; B -> Y')
@@ -139,19 +139,45 @@ describe('decision interface', () => {
     expect(node<HTMLTextAreaElement>('decision-conclusion').value).toBe(original)
     expect(node<HTMLInputElement>('decision-task-entailment').checked).toBe(true)
   })
-  test('defaults to an unbounded decision and exports both exact queries', async () => {
+  test('the Pearl admissions preset saves aptitude and restores its zero direct-effect conclusion', async () => {
+    const sample = node<HTMLSelectElement>('decision-example')
+    sample.value = '6'; sample.dispatchEvent(new dom.window.Event('change'))
+    const graph = 'M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A'
+    expect(node<HTMLTextAreaElement>('decision-graph').value).toBe(graph)
+    expect(rowValues().split('\n')).toHaveLength(14)
+    expect(rowValues().split('\n').slice(0, 3)).toEqual(['Pr(M) = 1/2', 'Pr(U) = 1/2', 'Pr(Z | ~M & ~U) = 1/16'])
+    const claim = node<HTMLTextAreaElement>('decision-conclusion').value
+    expect(claim).toContain('Pr(M | do(E)) = Pr(M)')
+    expect(claim).toContain('Pr(M | do(~E)) = Pr(M)')
+    expect(claim).toContain('Pr(A | do(M, E)) = Pr(A | do(~M, E))')
+    expect(claim).toContain('Pr(A | do(M, ~E)) = Pr(A | do(~M, ~E))')
+    expect(node('decision-example-guide').textContent).toContain('E is the applicant’s choice; M is background')
+    expect(node('decision-example-guide').textContent).toContain('unrecorded in the admissions story but explicitly included')
+    expect(node('decision-example-guide').querySelector('a')?.getAttribute('href')).toBe('https://web.cs.ucla.edu/~kaoru/ch4-final.pdf#page=23')
+    node<HTMLButtonElement>('decision-save').click()
+    const payload = JSON.parse(mocks.download.mock.calls[0][0]) as { task: string, graph: string, conclusion: string }
+    expect(payload.task).toBe('entailment'); expect(payload.graph).toBe(graph)
+    expect(payload.conclusion).toBe(claim)
+    change('decision-graph', 'A -> M')
+    load(async () => JSON.stringify(payload)); await flush()
+    expect(node<HTMLTextAreaElement>('decision-graph').value).toBe(payload.graph)
+    expect(node<HTMLTextAreaElement>('decision-conclusion').value).toBe(claim)
+    expect(node<HTMLInputElement>('decision-task-entailment').checked).toBe(true)
+  })
+  test('defaults to an unbounded decision and exports only the exact entailment query', async () => {
     expect(node('decision-runtime').dataset.z3Version).toBe('5.1.0')
     expect(node<HTMLInputElement>('decision-seconds').disabled).toBe(true)
     node<HTMLButtonElement>('decision-run').click(); await flush()
     expect(mocks.decide.mock.calls[0][1].timeout_ms).toBe(0)
     expect(node('decision-status').textContent).toContain('ENTAILS')
-    expect(node('decision-results').textContent).toContain('premises are satisfiable')
+    expect(node('decision-results').textContent).toContain('Premise consistency was not checked separately')
+    expect(node('decision-results').textContent).not.toContain('premises are satisfiable')
     node<HTMLButtonElement>('decision-save-smt').click()
     const text = mocks.download.mock.calls[0][0] as string
-    expect(text.match(/\(check-sat-using qfnra-nlsat\)/g)).toHaveLength(2)
+    expect(text.match(/\(check-sat-using qfnra-nlsat\)/g)).toHaveLength(1)
+    expect(text).not.toContain('(reset)')
     expect(text).toContain('time-capped QF_NRA')
-    expect(text).toContain('(reset)')
-    expect(text).not.toMatch(/\(\/|\(\^/)
+    expect(text.replace(/\(\/ [0-9]+ [0-9]+\)/g, 'coefficient')).not.toMatch(/\(\/|\(\^/)
   })
   test('bounded time is an integer and rejected when outside the accepted range', async () => {
     checked('decision-mode', true); change('decision-seconds', '16.1')
@@ -190,7 +216,7 @@ describe('decision interface', () => {
     expect(node('decision-results').textContent).toContain('1/3')
   })
   test.each([
-    [{ status: 'inconsistent-premises' }, 'INCONSISTENT PREMISES', 'vacuously'],
+    [{ status: 'entailed' }, 'ENTAILS', 'Premise consistency was not checked separately'],
     [{ status: 'unknown', stage: 'counterexample', reason: 'resource limit' }, 'UNRESOLVED', ''],
     [{ status: 'error', stage: 'premises', message: 'backend failed' }, 'Solver error', ''],
   ])('keeps outcome %j distinct', async (output, message, detail) => {
@@ -628,11 +654,11 @@ describe('decision interface', () => {
     expect(mocks.download).not.toHaveBeenCalled()
   })
 
-  test('the six-node graph resource limit is unsupported input rather than a non-DAG claim', () => {
-    change('decision-graph', 'A; B; C; D; E; F; G')
+  test('the eight-node graph resource limit is unsupported input rather than a non-DAG claim', () => {
+    change('decision-graph', 'A; B; C; D; E; F; G; H; I')
     const message = dom.window.document.getElementById('decision-graph-error')?.textContent ?? ''
     expect(message).toMatch(/unsupported/i)
-    expect(message).toMatch(/six|6/)
+    expect(message).toMatch(/eight|8/)
     expect(message).not.toContain('not a DAG')
     expect(node('decision-graph-preview').querySelector('svg')).toBeNull()
     expect(node<HTMLButtonElement>('decision-run').disabled).toBe(true)
@@ -740,7 +766,6 @@ describe('decision interface', () => {
   test.each([
     { status: 'unsat' },
     { status: 'entailed' },
-    { status: 'inconsistent-premises' },
     { status: 'unknown', stage: 'premises', reason: 'resource limit' },
     { status: 'cancelled', stage: 'premises', reason: 'user cancelled' },
     { status: 'error', stage: 'premises', message: 'backend failed' },

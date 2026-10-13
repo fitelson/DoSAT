@@ -1,0 +1,256 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "cases": 3,
+  "evaluations": 42,
+  "rows": [
+    {
+      "width": 1280,
+      "eightVariables": true,
+      "entailmentMs": 111.84108399999991,
+      "satisfiabilityAndWitnessMs": 172.9525839999999,
+      "preset_entails": true,
+      "save_load": true,
+      "values": [
+        {
+          "expression": "Pr(A)",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(E)",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | ~M & E) - Pr(A | M & E)",
+          "value": "1/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | ~M & ~E) - Pr(A | M & ~E)",
+          "value": "1/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M, E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~M, E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M, ~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~M, ~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M))",
+          "value": "7/13",
+          "passed": true
+        },
+        {
+          "expression": "Pr(E | do(M))",
+          "value": "8/13",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | do(E))",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | do(~E))",
+          "value": "1/2",
+          "passed": true
+        }
+      ],
+      "department_fixed_female_advantage": "DOES NOT ENTAIL",
+      "department_fixed_difference": "0",
+      "errors": []
+    },
+    {
+      "width": 390,
+      "eightVariables": false,
+      "entailmentMs": 113.38129200000003,
+      "satisfiabilityAndWitnessMs": 169.54112499999974,
+      "preset_entails": true,
+      "save_load": true,
+      "values": [
+        {
+          "expression": "Pr(A)",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(E)",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | ~M & E) - Pr(A | M & E)",
+          "value": "1/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | ~M & ~E) - Pr(A | M & ~E)",
+          "value": "1/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M, E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~M, E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M, ~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~M, ~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M))",
+          "value": "7/13",
+          "passed": true
+        },
+        {
+          "expression": "Pr(E | do(M))",
+          "value": "8/13",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | do(E))",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | do(~E))",
+          "value": "1/2",
+          "passed": true
+        }
+      ],
+      "department_fixed_female_advantage": "DOES NOT ENTAIL",
+      "department_fixed_difference": "0",
+      "errors": []
+    },
+    {
+      "width": 320,
+      "eightVariables": false,
+      "entailmentMs": 146.2860409999994,
+      "satisfiabilityAndWitnessMs": 149.82183300000088,
+      "preset_entails": true,
+      "save_load": true,
+      "values": [
+        {
+          "expression": "Pr(A)",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(E)",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | ~M & E) - Pr(A | M & E)",
+          "value": "1/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | ~M & ~E) - Pr(A | M & ~E)",
+          "value": "1/20",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M, E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~M, E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M, ~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~M, ~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(E))",
+          "value": "2/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(~E))",
+          "value": "1/3",
+          "passed": true
+        },
+        {
+          "expression": "Pr(A | do(M))",
+          "value": "7/13",
+          "passed": true
+        },
+        {
+          "expression": "Pr(E | do(M))",
+          "value": "8/13",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | do(E))",
+          "value": "1/2",
+          "passed": true
+        },
+        {
+          "expression": "Pr(M | do(~E))",
+          "value": "1/2",
+          "passed": true
+        }
+      ],
+      "department_fixed_female_advantage": "DOES NOT ENTAIL",
+      "department_fixed_difference": "0",
+      "errors": []
+    }
+  ]
+}

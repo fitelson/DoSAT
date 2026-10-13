@@ -9,7 +9,7 @@ const open = async (page: import('@playwright/test').Page) => {
   await expect(page.locator('.decision-subtitle')).toHaveText('A Decision Procedure for Do Calculus.')
   await loadDecisionFixture(page, 0)
 }
-for (const [example, answer] of [['0', 'ENTAILS —'], ['1', 'DOES NOT ENTAIL'], ['2', 'DOES NOT ENTAIL'], ['3', 'ENTAILS —'], ['4', 'INCONSISTENT PREMISES'], ['5', 'SAT —'], ['6', 'UNSAT —'], ['7', 'ENTAILS —'], ['8', 'ENTAILS —']] as const) {
+for (const [example, answer] of [['0', 'ENTAILS —'], ['1', 'DOES NOT ENTAIL'], ['2', 'DOES NOT ENTAIL'], ['3', 'ENTAILS —'], ['4', 'ENTAILS —'], ['5', 'SAT —'], ['6', 'UNSAT —'], ['7', 'ENTAILS —'], ['8', 'ENTAILS —']] as const) {
   test(`retained decision regression ${example}: ${answer}`, async ({ page }) => {
     const errors: string[] = []; page.on('pageerror', error => errors.push(error.message))
     await open(page)
@@ -18,7 +18,12 @@ for (const [example, answer] of [['0', 'ENTAILS —'], ['1', 'DOES NOT ENTAIL'],
     await page.getByTestId('decision-run').click()
     await expect(page.getByTestId('decision-status')).toContainText(answer, { timeout: 20_000 })
     if (example === '2') await expect(page.getByTestId('decision-query-table')).toContainText('undefined')
-    if (example === '4') await expect(page.getByTestId('decision-results')).toContainText('vacuously')
+    if (example === '4') {
+      await expect(page.getByTestId('decision-results')).toContainText('Premise consistency was not checked separately')
+      await page.getByTestId('decision-task-satisfiability').check()
+      await page.getByTestId('decision-run').click()
+      await expect(page.getByTestId('decision-status')).toContainText('UNSAT —')
+    }
     expect(errors).toEqual([])
   })
 }
@@ -35,15 +40,15 @@ test('saves and restores a decision problem without trusting its answer', async 
   await expect(page.getByTestId('decision-results')).toBeEmpty()
   await expect(page.getByTestId('decision-save-smt')).toBeDisabled()
 })
-test('solver export contains two polynomial checks and input edits invalidate it', async ({ page }) => {
+test('solver export contains one polynomial entailment check and input edits invalidate it', async ({ page }) => {
   await open(page); await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —')
   const downloading = page.waitForEvent('download'); await page.getByTestId('decision-save-smt').click()
   const path = await (await downloading).path(); if (!path) throw new Error('Missing solver file')
   const text = (await readFile(path)).toString()
-  expect(text.match(/\(check-sat-using qfnra-nlsat\)/g)).toHaveLength(2)
+  expect(text.match(/\(check-sat-using qfnra-nlsat\)/g)).toHaveLength(1)
   expect(text).toContain('time-capped QF_NRA')
-  expect(text).toContain('(reset)'); expect(text).not.toMatch(/\(\/|\(\^/)
+  expect(text).not.toContain('(reset)'); expect(text.replace(/\(\/ [0-9]+ [0-9]+\)/g, 'coefficient')).not.toMatch(/\(\/|\(\^/)
   await page.getByTestId('decision-graph').fill('X -> Y; Y -> X')
   await expect(page.getByTestId('decision-run')).toBeDisabled()
   await expect(page.getByTestId('decision-save-smt')).toBeDisabled()
@@ -54,6 +59,22 @@ test('bounded mode accepts fractional seconds and runs the same decision', async
   await page.getByTestId('decision-seconds').fill('16.1')
   await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —')
+})
+
+test('eight-variable model evaluates interventions and rejects a ninth variable', async ({ page }) => {
+  await open(page)
+  await page.getByTestId('decision-clear').click()
+  await page.getByTestId('decision-graph').fill('A; B; C; D; E; F; G; H')
+  await page.getByTestId('decision-task-satisfiability').check()
+  await page.getByTestId('decision-premise-1').fill('Pr(H)=1/2')
+  await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('SAT —')
+  await page.getByTestId('model-evaluate-input').fill('Pr(H | do(A))')
+  await page.getByTestId('model-evaluate-run').click()
+  await expect(page.locator('.model-evaluation-value')).toHaveText('Exact value in this model: 1/2')
+  await page.getByTestId('decision-graph').fill('A; B; C; D; E; F; G; H; I')
+  await expect(page.getByTestId('decision-run')).toBeDisabled()
+  await expect(page.locator('#decision-graph-error')).toContainText('At most 8')
 })
 test('empty premises test validity and regularity handles support explicitly', async ({ page }) => {
   await open(page)
@@ -98,7 +119,7 @@ for (const timing of ['boundary', 'task'] as const) for (const action of ['cance
           z3_interface.Z3.solver_check_assumptions = (...args) => {
             const number = ++checkNumber;
             const pending = Reflect.apply(originalCheck, z3_interface.Z3, args);
-            if (number === 2) {
+            if (number === 1) {
               document.documentElement.dataset.nativeCheckPending = 'true';
               const settled = () => { document.documentElement.dataset.nativeCheckPending = 'false'; };
               Promise.resolve(pending).then(settled, settled);
@@ -115,7 +136,7 @@ for (const timing of ['boundary', 'task'] as const) for (const action of ['cance
     const graph = nodes.flatMap((parent, index) => nodes.slice(index + 1).map(child => `${parent} -> ${child}`)).join('; ')
     await page.getByTestId('decision-graph').fill(graph)
     await page.getByTestId('decision-clear').click()
-    await page.getByTestId('decision-conclusion').fill('Pr(F | do(A=1)) = Pr(F | A)')
+    await page.getByTestId('decision-conclusion').fill('Pr(F | do(C=1)) = Pr(F | C)')
     await page.getByTestId('decision-regular').check()
     await page.evaluate(({ how, when }) => {
       const status = document.querySelector('[data-testid=decision-status]')!
@@ -156,13 +177,35 @@ for (const timing of ['boundary', 'task'] as const) for (const action of ['cance
   })
 }
 
-test('the E/M/A Simpson example entails the supplied table and its exact intervention rates', async ({ page }) => {
+test('the Pearl admissions example entails the unchanged table and department-fixed gender irrelevance', async ({ page }) => {
+  test.setTimeout(90_000)
   await open(page)
   await page.getByTestId('decision-example').selectOption('6')
-  await expect(page.getByTestId('decision-graph')).toHaveValue('E -> M; E -> A; M -> A')
-  await page.getByTestId('decision-conclusion').fill('(Pr(A | M) = 7/13) & (Pr(A | ~M) = 6/13) & (Pr(A | E) = 10/13) & (Pr(A | ~E) = 3/13) & (Pr(A) = 1/2) & (Pr(A | do(M)) = 19/40) & (Pr(A | do(~M)) = 21/40)')
+  await expect(page.getByTestId('decision-graph')).toHaveValue('M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A')
+  await page.getByTestId('decision-conclusion').fill('(Pr(A | M) = 7/13) & (Pr(A | ~M) = 6/13) & (Pr(A | E) = 10/13) & (Pr(A | ~E) = 3/13) & (Pr(A) = 1/2) & (Pr(A | M & E) = 3/4) & (Pr(A | ~M & E) = 4/5) & (Pr(A | M & ~E) = 1/5) & (Pr(A | ~M & ~E) = 1/4) & (Pr(A | do(M, E)) = 2/3) & (Pr(A | do(~M, E)) = 2/3) & (Pr(A | do(M, ~E)) = 1/3) & (Pr(A | do(~M, ~E)) = 1/3)')
   await page.getByTestId('decision-run').click()
-  await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —', { timeout: 20_000 })
+  await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —', { timeout: 60_000 })
+})
+
+test('the Pearl admissions model rejects a causal female advantage with department held fixed', async ({ page }) => {
+  test.setTimeout(90_000)
+  await open(page)
+  await page.getByTestId('decision-example').selectOption('6')
+  await page.getByTestId('decision-conclusion').fill('Pr(A | do(~M, E)) > Pr(A | do(M, E))')
+  await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL', { timeout: 60_000 })
+  await page.getByTestId('model-evaluate-input').fill('Pr(A | do(~M, E)) - Pr(A | do(M, E))')
+  await page.getByTestId('model-evaluate-run').click()
+  await expect(page.getByTestId('model-evaluate-result').locator('.model-evaluation-value')).toHaveText('Exact value in this model: 0')
+})
+
+test('conditioning on a department after gender intervention differs from fixing that department', async ({ page }) => {
+  test.setTimeout(90_000)
+  await open(page)
+  await page.getByTestId('decision-example').selectOption('6')
+  await page.getByTestId('decision-conclusion').fill('(Pr(A | do(~M), E) = 4/5) & (Pr(A | do(M), E) = 3/4) & (Pr(A | do(~M, E)) = 2/3) & (Pr(A | do(M, E)) = 2/3) & (Pr(A | do(E)) = 2/3) & (Pr(A | do(~E)) = 1/3) & (Pr(M | do(E)) = 1/2) & (Pr(M | do(~E)) = 1/2) & (Pr(E | do(M)) = 8/13)')
+  await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —', { timeout: 60_000 })
 })
 
 test('the PrSAT-style action is reachable and the regression row previews render', async ({ page }) => {
@@ -430,3 +473,20 @@ test('oversized node indices are support errors with no DAG drawing',async({page
  await expect(page.getByTestId('decision-graph-preview').locator('svg')).toHaveCount(0)
  await expect(page.getByTestId('decision-run')).toBeDisabled()
 })
+
+for (const regular of [false, true]) {
+  test(`exact positive decimal underflow yields a countermodel (regular=${regular})`, async ({ page }) => {
+    const tiny = `0.${'0'.repeat(350)}1`
+    await open(page)
+    await page.getByTestId('decision-clear').click()
+    await page.getByTestId('decision-graph').fill('X')
+    await page.getByTestId('decision-regular').setChecked(regular)
+    await page.getByTestId('decision-premise-1').fill(`Pr(X)=${tiny}`)
+    await page.getByTestId('decision-conclusion').fill(`~(Pr(X)=${tiny})`)
+    await page.getByTestId('decision-run').click()
+    await expect(page.getByTestId('decision-status')).toContainText('DOES NOT ENTAIL')
+    await page.getByTestId('model-evaluate-input').fill(`Pr(X)=${tiny}`)
+    await page.getByTestId('model-evaluate-run').click()
+    await expect(page.locator('.model-evaluation-value')).toHaveText('True in this model.')
+  })
+}

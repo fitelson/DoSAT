@@ -10,12 +10,15 @@
     "lint": "eslint src tests *.config.ts --max-warnings=0",
     "preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
     "test:unit": "vitest --run",
-    "test:e2e": "playwright test --project=chromium",
+    "test:e2e": "npm run test:e2e:dosat",
     "test": "npm run test:unit && npm run test:e2e",
     "test-single": "vitest --allowOnly",
     "deploy": "node scripts/deploy-disabled.mjs",
     "prepare:release": "npm run build && node scripts/prepare-dosat-release.mjs",
-    "postinstall": "node scripts/install-lint-toolchain.mjs"
+    "postinstall": "node scripts/install-lint-toolchain.mjs",
+    "test:e2e:dosat": "playwright test --project=chromium tests/causal_decision.spec.ts tests/causal_literature_examples.spec.ts",
+    "test:e2e:legacy": "playwright test --project=chromium tests/simple.spec.ts tests/causal.spec.ts tests/do_calculus.spec.ts",
+    "test:e2e:all": "playwright test --project=chromium"
   },
   "devDependencies": {
     "@playwright/test": "1.64.0",

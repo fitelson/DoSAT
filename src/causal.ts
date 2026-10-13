@@ -1,4 +1,5 @@
-import { validate_causal_query_identifiers, type CausalDocument, type CausalGraph, type CausalProbability, type Intervention } from './causal_syntax'
+import { SmtBudget } from './causal_smt_budget'
+import { CAUSAL_LIMITS, validate_causal_query_identifiers, type CausalDocument, type CausalGraph, type CausalProbability, type Intervention } from './causal_syntax'
 import type { PrSat } from './types'
 import {
   constraint_builder,
@@ -17,7 +18,7 @@ type Sentence = PrSat['Sentence']
 type RealExpr = PrSat['RealExpr']
 type Constraint = PrSat['Constraint']
 
-export const MAX_CAUSAL_NODES = 6
+export const MAX_CAUSAL_NODES = CAUSAL_LIMITS.max_nodes
 export const MAX_CAUSAL_PROBABILITIES = 64
 const MAX_INPUT_AST_NODES = 20_000
 const MAX_INPUT_AST_DEPTH = 128
@@ -130,7 +131,7 @@ const assignments = (nodes: string[]): Record<string, boolean>[] => Array.from(
 )
 
 // Balanced trees keep the original recursive emitter shallow even when all
-// sixty-four valuations contribute to a probability.
+// 256 valuations contribute to a probability.
 const combine = (expressions: RealExpr[], operation: (left: RealExpr, right: RealExpr) => RealExpr, identity: number): RealExpr => {
   if (expressions.length === 0) return lit(identity)
   if (expressions.length === 1) return expressions[0]
@@ -193,7 +194,7 @@ const check_expanded_size = (constraints: Constraint[]): void => {
 }
 
 /** Compile one finite observed-DAG model, with shared mechanisms in every regime. */
-export const compile_causal_document = (document: CausalDocument, options: { regular?: boolean } = {}): CompiledCausalProblem => {
+export const compile_causal_document = (document: CausalDocument, options: { regular?: boolean, smt_character_limit?: number } = {}): CompiledCausalProblem => {
   validate_graph(document.graph)
   check_input_size(document)
   const { graph } = document
@@ -321,8 +322,12 @@ export const compile_causal_document = (document: CausalDocument, options: { reg
     ...variables.map(id => ['declare-fun', id, [], 'Real'] as S),
     ...constraints.map(constraint => ['assert', constraint_to_smtlib(constraint)] as S),
   ]
+  const budget = options.smt_character_limit === undefined ? undefined : new SmtBudget(options.smt_character_limit, variables)
+  if (budget && lines.reduce<number>((total, line) => total + budget.cost(line) + 1, 0) > options.smt_character_limit!) {
+    throw new Error('Decision reduction exceeds the SMT character limit.')
+  }
   return {
-    smtlib: lines.map(line => s_to_string(line, false)).join('\n'),
+    smtlib: lines.map(line => budget ? budget.render(line) : s_to_string(line, false)).join('\n'),
     evaluationTable: new TruthTable({ real: variables, sentence: [] }),
     mechanisms, queries, distributions, constraints, variables,
   }
