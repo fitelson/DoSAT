@@ -1,0 +1,84 @@
+{
+  "base": "https://fitelson.org/DoSAT/",
+  "checks": [
+    {
+      "width": 320,
+      "case": "graph alone, Regular off",
+      "result": "ENTAILS",
+      "milliseconds": 407
+    },
+    {
+      "width": 320,
+      "case": "zero-support premise, Regular off",
+      "result": "ENTAILS",
+      "milliseconds": 87
+    },
+    {
+      "width": 320,
+      "case": "zero-support premises have a model",
+      "result": "SAT",
+      "milliseconds": 148
+    },
+    {
+      "width": 320,
+      "case": "false appended clause is checked",
+      "result": "DOES NOT ENTAIL",
+      "milliseconds": 149
+    },
+    {
+      "width": 390,
+      "case": "graph alone, Regular off",
+      "result": "ENTAILS",
+      "milliseconds": 79
+    },
+    {
+      "width": 390,
+      "case": "zero-support premise, Regular off",
+      "result": "ENTAILS",
+      "milliseconds": 90
+    },
+    {
+      "width": 390,
+      "case": "zero-support premises have a model",
+      "result": "SAT",
+      "milliseconds": 64
+    },
+    {
+      "width": 390,
+      "case": "false appended clause is checked",
+      "result": "DOES NOT ENTAIL",
+      "milliseconds": 143
+    },
+    {
+      "width": 1280,
+      "case": "graph alone, Regular off",
+      "result": "ENTAILS",
+      "milliseconds": 325
+    },
+    {
+      "width": 1280,
+      "case": "zero-support premise, Regular off",
+      "result": "ENTAILS",
+      "milliseconds": 91
+    },
+    {
+      "width": 1280,
+      "case": "zero-support premises have a model",
+      "result": "SAT",
+      "milliseconds": 63
+    },
+    {
+      "width": 1280,
+      "case": "false appended clause is checked",
+      "result": "DOES NOT ENTAIL",
+      "milliseconds": 140
+    }
+  ],
+  "budgetRejections": [
+    "2049 tokens",
+    "129 probability queries"
+  ],
+  "prefixMilliseconds": 1.1200000047683716,
+  "recoversAfterPrefixError": true,
+  "errors": []
+}

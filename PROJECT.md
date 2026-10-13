@@ -565,3 +565,14 @@ FINAL_STATUS.md for 1374 units/68 browser cases, the full nonregular goal,
 zero-support and false-clause evidence, and the measured nonblocking latency
 qualification for contrived accepted nested input. The initial FAIL/pending
 notes are historical. Authorized DoSAT-only commit/push/publication follows.
+
+### Expression limits published and verified
+
+Source e3d3adb is pushed to public DoSAT main and live at
+https://fitelson.org/DoSAT/. All eight remote/six HTTPS file hashes match;
+isolation headers, WASM MIME, five legacy redirects and backup protection pass.
+The fresh live probe passes twelve verdict checks, both overflow errors and
+prompt prefix rejection/toggle/recovery. The original full independence goal
+is ENTAILED with Regular off, including zero support; those premises are SAT
+and a false appended clause gives a countermodel. Read the current recheck
+PUBLICATION.md and FINAL_STATUS.md. Initial FAIL/pending notes are historical.
