@@ -19,9 +19,9 @@ type RealExpr = PrSat['RealExpr']
 type Constraint = PrSat['Constraint']
 
 export const MAX_CAUSAL_NODES = CAUSAL_LIMITS.max_nodes
-export const MAX_CAUSAL_PROBABILITIES = 64
+export const MAX_CAUSAL_PROBABILITIES = CAUSAL_LIMITS.max_probabilities
 const MAX_INPUT_AST_NODES = 20_000
-const MAX_INPUT_AST_DEPTH = 128
+const MAX_INPUT_AST_DEPTH = CAUSAL_LIMITS.max_ast_depth
 // The inherited emitter expands integer powers and Boolean equivalences. Bound
 // that expanded output as well as the input, before allocating S-expressions.
 const MAX_EXPANDED_SMT_UNITS = 1_000_000

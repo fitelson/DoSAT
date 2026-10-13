@@ -284,8 +284,8 @@ describe('Boolean causal compilation', () => {
 
   test('bounds graph size and probability occurrences before expansion', () => {
     expect(() => compile_causal_document(make_document({ nodes: Array.from({ length: MAX_CAUSAL_NODES + 1 }, (_, index) => String.fromCharCode(65 + index)), parents: {} }))).toThrow('between 1 and 8')
-    expect(() => compile_causal_document(make_document(graph, Array.from({ length: MAX_CAUSAL_PROBABILITIES + 1 }, () => query(letter('Y')))))).toThrow('At most 64')
-    expect(() => compile_causal_document(make_document(graph, [query(letter('Y'))], Array.from({ length: MAX_CAUSAL_PROBABILITIES + 1 }, () => eq(vbl('q0'), lit(0)))))).toThrow('At most 64 probability occurrences')
+    expect(() => compile_causal_document(make_document(graph, Array.from({ length: MAX_CAUSAL_PROBABILITIES + 1 }, () => query(letter('Y')))))).toThrow('At most 128')
+    expect(() => compile_causal_document(make_document(graph, [query(letter('Y'))], Array.from({ length: MAX_CAUSAL_PROBABILITIES + 1 }, () => eq(vbl('q0'), lit(0)))))).toThrow('At most 128 probability occurrences')
   })
 
   test('bounds deeply nested input and exponential SMT power/equivalence output', () => {

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { readFile } from 'node:fs/promises'
 import { loadDecisionFixture } from './decision_helpers'
+import { FULL_INDEPENDENCE_PROBLEM } from './fixtures/independence_conclusion'
 const open = async (page: import('@playwright/test').Page) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(page.getByTestId('decision-runtime')).toHaveText('Z3 ready.', { timeout: 20_000 })
@@ -86,6 +87,42 @@ test('empty premises test validity and regularity handles support explicitly', a
   await page.getByTestId('decision-regular').check()
   await page.getByTestId('decision-run').click()
   await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —')
+})
+
+test('the full independence conclusion is entailed without regularity, including zero support', async ({ page }) => {
+  await open(page)
+  await page.getByTestId('decision-clear').click()
+  await page.getByTestId('decision-task-entailment').check()
+  await page.getByTestId('decision-regular').uncheck()
+  await page.getByTestId('decision-graph').fill(FULL_INDEPENDENCE_PROBLEM.graph)
+  await page.getByTestId('decision-conclusion').fill(FULL_INDEPENDENCE_PROBLEM.conclusion)
+  await expect(page.getByTestId('decision-run')).toBeEnabled()
+  await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —')
+  await page.getByTestId('decision-premise-1').fill('Pr(U) = 0')
+  await page.getByTestId('decision-run').click()
+  await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —')
+  await expect(page.getByTestId('decision-regular')).not.toBeChecked()
+  await expect(page.getByTestId('decision-conclusion')).toHaveValue(FULL_INDEPENDENCE_PROBLEM.conclusion)
+})
+
+test('malformed prefix chains reject promptly and regularity remains responsive', async ({ page }) => {
+  await open(page)
+  const milliseconds = await page.evaluate(() => {
+    const conclusion = document.querySelector<HTMLTextAreaElement>('[data-testid=decision-conclusion]')!
+    const regular = document.querySelector<HTMLInputElement>('[data-testid=decision-regular]')!
+    const start = performance.now()
+    conclusion.value = '-'.repeat(2045) + '=0'
+    conclusion.dispatchEvent(new Event('input', { bubbles: true }))
+    regular.checked = !regular.checked
+    regular.dispatchEvent(new Event('input', { bubbles: true }))
+    return performance.now() - start
+  })
+  expect(milliseconds).toBeLessThan(1_000)
+  await expect(page.getByTestId('decision-run')).toBeDisabled()
+  await expect(page.getByText(/limit 128 unary prefix operators per AST root/)).toBeVisible()
+  await page.getByTestId('decision-conclusion').fill('0=0')
+  await expect(page.getByTestId('decision-run')).toBeEnabled()
 })
 for (const width of [320, 390, 1280]) test(`decision results fit a ${width}px viewport`, async ({ page }) => {
   await page.setViewportSize({ width, height: 900 }); await open(page)

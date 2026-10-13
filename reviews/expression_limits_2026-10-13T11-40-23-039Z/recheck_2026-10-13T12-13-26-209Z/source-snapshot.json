@@ -1,0 +1,15 @@
+{
+  "baseline": "80f6a16",
+  "hashes": {
+    "src/causal_syntax.ts": "726d8437ed0c41fae115331b880a113a0c832639cc79a43a2da738e1f9a38bd7",
+    "src/causal.ts": "8537d05c15202c74b8569529dd3e49f1936ad50951f13acc2f843f5c59f215ad",
+    "src/causal_syntax.spec.ts": "a1bd1f4b5dba247df668d7ae107f0b04553cfa632b26d4464b5377acd8e75c1c",
+    "src/causal.spec.ts": "9f65c929ee8af28a946a99b682d096c7321f700f16de8d388dc6088052cae4c5",
+    "src/causal_decision.spec.ts": "382bd748dedae458e541800727af56897ce3175b9107a3b063bb5ce1a062e5b1",
+    "tests/causal_decision.spec.ts": "cd50dc2e8b192a04c16271eefd3425c9ff5dac49c5ac0673f81c329fc46d25d4",
+    "tests/fixtures/independence_conclusion.ts": "80bdc6c18cba6e4e2041604cb533a0aca43c708e7b7ad6941054855f316d2719",
+    "DECISION_SEMANTICS.md": "f89437a319cbd21aa5984144e5c6d7b284e8fe976dda8658341df4c5d6d50bd7",
+    "CAUSAL_SEMANTICS.md": "66c9eb0935a4ec6a93a93b06be8477c02f4e4eef31a026bd63152e36410e39d1",
+    "CHANGELOG.md": "bbf928663777e0ec995bef8a32b1fb4e49653c9e43a763c6952667fd709c960c"
+  }
+}

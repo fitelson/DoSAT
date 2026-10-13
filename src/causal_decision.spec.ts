@@ -6,6 +6,7 @@ import {
 import { CAUSAL_LIMITS } from './causal_syntax'
 import { MAX_ABS_SOLVER_EXPONENT } from './pr_sat'
 import { s_to_string } from './s'
+import { FULL_INDEPENDENCE_PROBLEM } from '../tests/fixtures/independence_conclusion'
 
 const input = (patch: Partial<DecisionProblemInput> = {}): DecisionProblemInput => ({
   graph: 'X', premises: '', regular: false, task: 'satisfiability', ...patch,
@@ -106,14 +107,15 @@ describe('causal decision input boundary', () => {
     expect(() => compile('', { graph: 'A; B; C; D; E; F; G; H; I' })).toThrow(/At most 8/)
   })
 
-  test('retains the shared 64-line and 64-query budgets across the conclusion', () => {
+  test('retains 64-line and shared 128-query budgets across the conclusion', () => {
     const line = 'Pr(X) >= 0'
     const compiled = entail(line, Array(63).fill(line).join('\n'))
     expect(compiled.causal.queries).toHaveLength(64)
     expect(compiled.premiseConstraints).toHaveLength(63)
     expect(() => entail(line, Array(64).fill(line).join('\n'))).toThrow(/At most 64/)
     const doubleQuery = 'Pr(X) = Pr(X)'
-    expect(() => entail(doubleQuery, Array(32).fill(doubleQuery).join('\n'))).toThrow(/At most 64/)
+    expect(entail(doubleQuery, Array(63).fill(doubleQuery).join('\n')).causal.queries).toHaveLength(128)
+    expect(() => entail('Pr(X) + Pr(X) = Pr(X)', Array(63).fill(doubleQuery).join('\n'))).toThrow(/At most 128/)
   })
 
   test('bounds raw text before dropping apparently empty comments', () => {
@@ -125,11 +127,44 @@ describe('causal decision input boundary', () => {
 
   test('keeps existing line, token, parenthesis and reserved-query validation', () => {
     expect(() => compile('x'.repeat(4_097))).toThrow(/4096 characters/)
-    expect(() => compile(`${Array(260).fill('x').join('+')}=0`)).toThrow(/512 tokens/)
+    expect(() => compile(`${Array(CAUSAL_LIMITS.max_tokens_per_line / 2).fill('x').join('+')}=0`)).toThrow(/2048 tokens/)
     expect(() => compile(`${'('.repeat(65)}x${')'.repeat(65)}=0`)).toThrow(/64 nested/)
     expect(() => compile('CausalQueryA=1')).toThrow(/reserved/)
     expect(() => compile('tPr(X)=1')).toThrow()
     expect(() => compile('Pr(X)Pr(X)=1')).toThrow()
+  })
+
+  test('accepts the full independence conclusion with empty premises and regularity off', () => {
+    const parsed = parse_decision_input(FULL_INDEPENDENCE_PROBLEM)
+    const compiled = compile_decision_problem(FULL_INDEPENDENCE_PROBLEM)
+    expect(compiled.premiseConstraints).toEqual([])
+    expect(compiled.causal.mechanisms).toHaveLength(14)
+    expect(Object.values(parsed.document.probabilities).every(query => query.given === undefined)).toBe(true)
+    expect(compiled.premisesSmt).toContain('(assert (<= 0 p_U_root))')
+    expect(compiled.counterexampleSmt).toBeDefined()
+    assert_polynomial(compiled.counterexampleSmt!)
+  })
+
+  test.each([
+    '~'.repeat(2045) + '0=0',
+    `Pr(${'~'.repeat(2042)}X)=1`,
+    '-'.repeat(2045) + '=0',
+    '-'.repeat(100) + '(' + '-'.repeat(100) + '1)=0',
+  ])('rejects deeply prefixed input before recursive parsing: %#', source => {
+    const start = performance.now()
+    expect(() => entail(source)).toThrow(/deeply nested.*unary prefix operators/)
+    expect(performance.now() - start).toBeLessThan(1_000)
+  })
+
+  test('prefix validation preserves infix operators and independent probability roots', () => {
+    expect(() => entail('x - -1 = 0 -> 0=0 <-> -1 != 0')).not.toThrow()
+    expect(() => entail('~'.repeat(100) + `Pr(${'~'.repeat(100)}X)=0`)).not.toThrow()
+  })
+
+  test('the compiler still checks full AST depth after the prefix boundary', () => {
+    const conclusion = '~'.repeat(CAUSAL_LIMITS.max_ast_depth) + '0=0'
+    expect(() => parse_decision_input(input({ task: 'entailment', conclusion }))).not.toThrow()
+    expect(() => entail(conclusion)).toThrow(/depth 128/)
   })
 })
 

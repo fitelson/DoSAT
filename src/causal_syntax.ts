@@ -30,11 +30,12 @@ export interface CausalDocument {
 export const CAUSAL_LIMITS = {
   max_nodes: 8,
   max_constraints: 64,
-  max_probabilities: 64,
+  max_probabilities: 128,
   max_input_characters: 50_000,
   max_line_characters: 4_096,
   max_parenthesis_depth: 64,
-  max_tokens_per_line: 512,
+  max_ast_depth: 128,
+  max_tokens_per_line: 2_048,
 } as const
 
 const QUERY_PREFIX = 'CausalQuery'
@@ -73,7 +74,7 @@ const check_input_length = (length: number): void => {
   }
 }
 
-/** Fail before sending excessively deep or long recursive input to PrSAT's parser. */
+/** Apply lexical, parenthesis and unary-prefix bounds before recursive parsing. */
 const check_expression_size = (source: string): void => {
   if (source.length > CAUSAL_LIMITS.max_line_characters) {
     throw new Error(`Each causal constraint or expression is limited to ${CAUSAL_LIMITS.max_line_characters} characters.`)
@@ -95,6 +96,32 @@ const check_expression_size = (source: string): void => {
     }
   }
   if (depth !== 0) throw new Error('Missing closing parenthesis.')
+  // Count a lower bound on AST depth without invoking the recursive grammar.
+  // Parenthesized operands retain their surrounding prefixes; a probability's
+  // event is a separate AST root in the compiler's input-depth validation.
+  const savedPrefixDepth: number[] = []
+  let prefixBase = 0, prefixRun = 0
+  for (let index = 0; index < tokens.length; index++) {
+    const token = tokens[index]
+    const previous = tokens[index - 1] ?? ''
+    const next = tokens[index + 1]
+    const prefix = token === '~' || token === '¬' ||
+      (token === '!' && next !== '=') ||
+      (token === '-' && !/[A-Za-z0-9.)]$/.test(previous) && next !== '>')
+    if (prefix) {
+      prefixRun++
+      if (prefixBase + prefixRun > CAUSAL_LIMITS.max_ast_depth) {
+        throw new Error(`Causal expressions are too deeply nested (limit ${CAUSAL_LIMITS.max_ast_depth} unary prefix operators per AST root).`)
+      }
+    } else if (token === '(') {
+      savedPrefixDepth.push(prefixBase)
+      prefixBase = /^(Pr|P|p)$/.test(previous) ? 0 : prefixBase + prefixRun
+      prefixRun = 0
+    } else if (token === ')') {
+      prefixBase = savedPrefixDepth.pop() ?? 0
+      prefixRun = 0
+    } else prefixRun = 0
+  }
   if (source.includes(QUERY_PREFIX)) {
     throw new Error(`The prefix ${QUERY_PREFIX} is reserved for causal probability queries.`)
   }
@@ -313,7 +340,11 @@ export const parse_causal_document = (graphText: string, constraintText: string)
       constraints.push(result[1])
       source.push(text)
     } catch (error) {
-      throw new Error(`Constraint line ${lineIndex + 1}: ${error instanceof Error ? error.message : String(error)}`)
+      const recursionOverflow = error instanceof Error &&
+        (error instanceof RangeError || error.name === 'InternalError') && /call stack|too much recursion/i.test(error.message)
+      const detail = recursionOverflow ? 'Causal expression is too deeply nested to parse; simplify it.'
+        : error instanceof Error ? error.message : String(error)
+      throw new Error(`Constraint line ${lineIndex + 1}: ${detail}`)
     }
   }
   return { graph, constraints, probabilities, source }

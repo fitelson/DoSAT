@@ -1,0 +1,26 @@
+/** The user's complete, division-free independence goal, kept as one source line. */
+export const FULL_INDEPENDENCE_PROBLEM = {
+  task: 'entailment' as const,
+  regular: false,
+  graph: 'M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A',
+  premises: '',
+  conclusion: [
+    '(Pr(M & U) = Pr(M) * Pr(U))',
+    '(Pr(U & E & M & Z) * Pr(M & Z) = Pr(U & M & Z) * Pr(E & M & Z))',
+    '(Pr(U & E & M & ~Z) * Pr(M & ~Z) = Pr(U & M & ~Z) * Pr(E & M & ~Z))',
+    '(Pr(U & E & ~M & Z) * Pr(~M & Z) = Pr(U & ~M & Z) * Pr(E & ~M & Z))',
+    '(Pr(U & E & ~M & ~Z) * Pr(~M & ~Z) = Pr(U & ~M & ~Z) * Pr(E & ~M & ~Z))',
+    '(Pr(Z & A & U & E) * Pr(U & E) = Pr(Z & U & E) * Pr(A & U & E))',
+    '(Pr(Z & A & U & ~E) * Pr(U & ~E) = Pr(Z & U & ~E) * Pr(A & U & ~E))',
+    '(Pr(Z & A & ~U & E) * Pr(~U & E) = Pr(Z & ~U & E) * Pr(A & ~U & E))',
+    '(Pr(Z & A & ~U & ~E) * Pr(~U & ~E) = Pr(Z & ~U & ~E) * Pr(A & ~U & ~E))',
+    '(Pr(M & A & U & E & Z) * Pr(U & E & Z) = Pr(M & U & E & Z) * Pr(A & U & E & Z))',
+    '(Pr(M & A & U & E & ~Z) * Pr(U & E & ~Z) = Pr(M & U & E & ~Z) * Pr(A & U & E & ~Z))',
+    '(Pr(M & A & U & ~E & Z) * Pr(U & ~E & Z) = Pr(M & U & ~E & Z) * Pr(A & U & ~E & Z))',
+    '(Pr(M & A & U & ~E & ~Z) * Pr(U & ~E & ~Z) = Pr(M & U & ~E & ~Z) * Pr(A & U & ~E & ~Z))',
+    '(Pr(M & A & ~U & E & Z) * Pr(~U & E & Z) = Pr(M & ~U & E & Z) * Pr(A & ~U & E & Z))',
+    '(Pr(M & A & ~U & E & ~Z) * Pr(~U & E & ~Z) = Pr(M & ~U & E & ~Z) * Pr(A & ~U & E & ~Z))',
+    '(Pr(M & A & ~U & ~E & Z) * Pr(~U & ~E & Z) = Pr(M & ~U & ~E & Z) * Pr(A & ~U & ~E & Z))',
+    '(Pr(M & A & ~U & ~E & ~Z) * Pr(~U & ~E & ~Z) = Pr(M & ~U & ~E & ~Z) * Pr(A & ~U & ~E & ~Z))',
+  ].join(' & '),
+}

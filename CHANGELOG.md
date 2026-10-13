@@ -2,6 +2,18 @@
 
 > **Note:** This is a local build for deployment to fitelson.org.
 
+## 2026-10-13 — Larger compound conclusions
+
+- Raised the shared causal constraint/expression token limit from 512 to 2,048.
+  Raised the probability-occurrence limit from 64 to 128 in both parsing and
+  compilation; the full conclusion contains 67 occurrences.
+  The full division-free independence conclusion now fits on one source line
+  with Regular off. Character, nesting, graph and expansion bounds remain
+  in force. Boundary and browser regressions cover the limit and zero support.
+- Added a linear prefix-depth check before recursive parsing to prevent long
+  malformed negation/minus chains from blocking validation. The existing AST
+  depth limit remains 128; parser recursion errors receive a clear depth message.
+
 ## 2026-10-12 — Expand the graph input
 
 - Apply content sizing to the graph textarea as well as the conclusion, including

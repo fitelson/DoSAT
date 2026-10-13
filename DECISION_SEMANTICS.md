@@ -47,10 +47,12 @@ mechanisms, in consequence. Input and expansion limits define the currently
 accepted implementation fragment; they are not extra mathematical axioms.
 
 The implementation accepts at most eight graph nodes, 64 combined premise and
-conclusion lines, 64 probability occurrences, and 50,000 total source
-characters. Each constraint line has limits of 4,096 characters, 512 tokens,
+conclusion lines, 128 probability occurrences, and 50,000 total source
+characters. Each constraint line has limits of 4,096 characters, 2,048 tokens,
 and 64 nested parentheses. The inherited causal compiler also bounds input to
 20,000 AST nodes and depth 128, and bounds expanded SMT cost to 1,000,000 units.
+Unary-prefix depth is bounded at 128 before recursive parsing; probability
+events are separate AST roots. All these bounds apply together.
 Integer powers have magnitude at most 1,024. The polynomial reduction adds at
 most 20,000 auxiliary variables and emits at most 2,000,000 characters per SMT
 problem. Entailment requires one conclusion line; it may be a compound

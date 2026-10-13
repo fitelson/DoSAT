@@ -1,0 +1,328 @@
+diff --git a/CAUSAL_SEMANTICS.md b/CAUSAL_SEMANTICS.md
+index 7512f9b..2b3a5bc 100644
+--- a/CAUSAL_SEMANTICS.md
++++ b/CAUSAL_SEMANTICS.md
+@@ -161,6 +161,6 @@ substitute for that countermodel search. When all required terms are defined,
+ the familiar assumptions-plus-negated-conclusion test applies.
+ 
+ The current implementation bounds the graph at eight nodes and the document at
+-64 probability occurrences, and bounds input and expanded SMT expressions.
++128 probability occurrences, and bounds input and expanded SMT expressions.
+ These are implementation resource limits, not mathematical restrictions of the
+ parameterization.
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 729ccdd..c5d131d 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -2,6 +2,18 @@
+ 
+ > **Note:** This is a local build for deployment to fitelson.org.
+ 
++## 2026-10-13 — Larger compound conclusions
++
++- Raised the shared causal constraint/expression token limit from 512 to 2,048.
++  Raised the probability-occurrence limit from 64 to 128 in both parsing and
++  compilation; the full conclusion contains 67 occurrences.
++  The full division-free independence conclusion now fits on one source line
++  with Regular off. Character, nesting, graph and expansion bounds remain
++  in force. Boundary and browser regressions cover the limit and zero support.
++- Added a linear prefix-depth check before recursive parsing to prevent long
++  malformed negation/minus chains from blocking validation. The existing AST
++  depth limit remains 128; parser recursion errors receive a clear depth message.
++
+ ## 2026-10-12 — Expand the graph input
+ 
+ - Apply content sizing to the graph textarea as well as the conclusion, including
+diff --git a/DECISION_SEMANTICS.md b/DECISION_SEMANTICS.md
+index 4f5c4cd..cd24f1e 100644
+--- a/DECISION_SEMANTICS.md
++++ b/DECISION_SEMANTICS.md
+@@ -47,10 +47,12 @@ mechanisms, in consequence. Input and expansion limits define the currently
+ accepted implementation fragment; they are not extra mathematical axioms.
+ 
+ The implementation accepts at most eight graph nodes, 64 combined premise and
+-conclusion lines, 64 probability occurrences, and 50,000 total source
+-characters. Each constraint line has limits of 4,096 characters, 512 tokens,
++conclusion lines, 128 probability occurrences, and 50,000 total source
++characters. Each constraint line has limits of 4,096 characters, 2,048 tokens,
+ and 64 nested parentheses. The inherited causal compiler also bounds input to
+ 20,000 AST nodes and depth 128, and bounds expanded SMT cost to 1,000,000 units.
++Unary-prefix depth is bounded at 128 before recursive parsing; probability
++events are separate AST roots. All these bounds apply together.
+ Integer powers have magnitude at most 1,024. The polynomial reduction adds at
+ most 20,000 auxiliary variables and emits at most 2,000,000 characters per SMT
+ problem. Entailment requires one conclusion line; it may be a compound
+diff --git a/src/causal.spec.ts b/src/causal.spec.ts
+index 4fdb7ed..d12df0b 100644
+--- a/src/causal.spec.ts
++++ b/src/causal.spec.ts
+@@ -284,8 +284,8 @@ describe('Boolean causal compilation', () => {
+ 
+   test('bounds graph size and probability occurrences before expansion', () => {
+     expect(() => compile_causal_document(make_document({ nodes: Array.from({ length: MAX_CAUSAL_NODES + 1 }, (_, index) => String.fromCharCode(65 + index)), parents: {} }))).toThrow('between 1 and 8')
+-    expect(() => compile_causal_document(make_document(graph, Array.from({ length: MAX_CAUSAL_PROBABILITIES + 1 }, () => query(letter('Y')))))).toThrow('At most 64')
+-    expect(() => compile_causal_document(make_document(graph, [query(letter('Y'))], Array.from({ length: MAX_CAUSAL_PROBABILITIES + 1 }, () => eq(vbl('q0'), lit(0)))))).toThrow('At most 64 probability occurrences')
++    expect(() => compile_causal_document(make_document(graph, Array.from({ length: MAX_CAUSAL_PROBABILITIES + 1 }, () => query(letter('Y')))))).toThrow('At most 128')
++    expect(() => compile_causal_document(make_document(graph, [query(letter('Y'))], Array.from({ length: MAX_CAUSAL_PROBABILITIES + 1 }, () => eq(vbl('q0'), lit(0)))))).toThrow('At most 128 probability occurrences')
+   })
+ 
+   test('bounds deeply nested input and exponential SMT power/equivalence output', () => {
+diff --git a/src/causal.ts b/src/causal.ts
+index 89080a5..c37d511 100644
+--- a/src/causal.ts
++++ b/src/causal.ts
+@@ -19,9 +19,9 @@ type RealExpr = PrSat['RealExpr']
+ type Constraint = PrSat['Constraint']
+ 
+ export const MAX_CAUSAL_NODES = CAUSAL_LIMITS.max_nodes
+-export const MAX_CAUSAL_PROBABILITIES = 64
++export const MAX_CAUSAL_PROBABILITIES = CAUSAL_LIMITS.max_probabilities
+ const MAX_INPUT_AST_NODES = 20_000
+-const MAX_INPUT_AST_DEPTH = 128
++const MAX_INPUT_AST_DEPTH = CAUSAL_LIMITS.max_ast_depth
+ // The inherited emitter expands integer powers and Boolean equivalences. Bound
+ // that expanded output as well as the input, before allocating S-expressions.
+ const MAX_EXPANDED_SMT_UNITS = 1_000_000
+diff --git a/src/causal_decision.spec.ts b/src/causal_decision.spec.ts
+index 80c200e..3898bb1 100644
+--- a/src/causal_decision.spec.ts
++++ b/src/causal_decision.spec.ts
+@@ -6,6 +6,7 @@ import {
+ import { CAUSAL_LIMITS } from './causal_syntax'
+ import { MAX_ABS_SOLVER_EXPONENT } from './pr_sat'
+ import { s_to_string } from './s'
++import { FULL_INDEPENDENCE_PROBLEM } from '../tests/fixtures/independence_conclusion'
+ 
+ const input = (patch: Partial<DecisionProblemInput> = {}): DecisionProblemInput => ({
+   graph: 'X', premises: '', regular: false, task: 'satisfiability', ...patch,
+@@ -106,14 +107,15 @@ describe('causal decision input boundary', () => {
+     expect(() => compile('', { graph: 'A; B; C; D; E; F; G; H; I' })).toThrow(/At most 8/)
+   })
+ 
+-  test('retains the shared 64-line and 64-query budgets across the conclusion', () => {
++  test('retains 64-line and shared 128-query budgets across the conclusion', () => {
+     const line = 'Pr(X) >= 0'
+     const compiled = entail(line, Array(63).fill(line).join('\n'))
+     expect(compiled.causal.queries).toHaveLength(64)
+     expect(compiled.premiseConstraints).toHaveLength(63)
+     expect(() => entail(line, Array(64).fill(line).join('\n'))).toThrow(/At most 64/)
+     const doubleQuery = 'Pr(X) = Pr(X)'
+-    expect(() => entail(doubleQuery, Array(32).fill(doubleQuery).join('\n'))).toThrow(/At most 64/)
++    expect(entail(doubleQuery, Array(63).fill(doubleQuery).join('\n')).causal.queries).toHaveLength(128)
++    expect(() => entail('Pr(X) + Pr(X) = Pr(X)', Array(63).fill(doubleQuery).join('\n'))).toThrow(/At most 128/)
+   })
+ 
+   test('bounds raw text before dropping apparently empty comments', () => {
+@@ -125,12 +127,45 @@ describe('causal decision input boundary', () => {
+ 
+   test('keeps existing line, token, parenthesis and reserved-query validation', () => {
+     expect(() => compile('x'.repeat(4_097))).toThrow(/4096 characters/)
+-    expect(() => compile(`${Array(260).fill('x').join('+')}=0`)).toThrow(/512 tokens/)
++    expect(() => compile(`${Array(CAUSAL_LIMITS.max_tokens_per_line / 2).fill('x').join('+')}=0`)).toThrow(/2048 tokens/)
+     expect(() => compile(`${'('.repeat(65)}x${')'.repeat(65)}=0`)).toThrow(/64 nested/)
+     expect(() => compile('CausalQueryA=1')).toThrow(/reserved/)
+     expect(() => compile('tPr(X)=1')).toThrow()
+     expect(() => compile('Pr(X)Pr(X)=1')).toThrow()
+   })
++
++  test('accepts the full independence conclusion with empty premises and regularity off', () => {
++    const parsed = parse_decision_input(FULL_INDEPENDENCE_PROBLEM)
++    const compiled = compile_decision_problem(FULL_INDEPENDENCE_PROBLEM)
++    expect(compiled.premiseConstraints).toEqual([])
++    expect(compiled.causal.mechanisms).toHaveLength(14)
++    expect(Object.values(parsed.document.probabilities).every(query => query.given === undefined)).toBe(true)
++    expect(compiled.premisesSmt).toContain('(assert (<= 0 p_U_root))')
++    expect(compiled.counterexampleSmt).toBeDefined()
++    assert_polynomial(compiled.counterexampleSmt!)
++  })
++
++  test.each([
++    '~'.repeat(2045) + '0=0',
++    `Pr(${'~'.repeat(2042)}X)=1`,
++    '-'.repeat(2045) + '=0',
++    '-'.repeat(100) + '(' + '-'.repeat(100) + '1)=0',
++  ])('rejects deeply prefixed input before recursive parsing: %#', source => {
++    const start = performance.now()
++    expect(() => entail(source)).toThrow(/deeply nested.*unary prefix operators/)
++    expect(performance.now() - start).toBeLessThan(1_000)
++  })
++
++  test('prefix validation preserves infix operators and independent probability roots', () => {
++    expect(() => entail('x - -1 = 0 -> 0=0 <-> -1 != 0')).not.toThrow()
++    expect(() => entail('~'.repeat(100) + `Pr(${'~'.repeat(100)}X)=0`)).not.toThrow()
++  })
++
++  test('the compiler still checks full AST depth after the prefix boundary', () => {
++    const conclusion = '~'.repeat(CAUSAL_LIMITS.max_ast_depth) + '0=0'
++    expect(() => parse_decision_input(input({ task: 'entailment', conclusion }))).not.toThrow()
++    expect(() => entail(conclusion)).toThrow(/depth 128/)
++  })
+ })
+ 
+ describe('division-free exact polynomial reduction', () => {
+diff --git a/src/causal_syntax.spec.ts b/src/causal_syntax.spec.ts
+index e4fb2b3..3e6403c 100644
+--- a/src/causal_syntax.spec.ts
++++ b/src/causal_syntax.spec.ts
+@@ -262,7 +262,7 @@ describe('causal probability syntax', () => {
+ 
+ describe('causal input bounds', () => {
+   test('supports every query up to the query bound with alphabetic, unique names', () => {
+-    const source = Array(CAUSAL_LIMITS.max_probabilities).fill('Pr(X)=1/2').join('\n')
++    const source = `${Array(CAUSAL_LIMITS.max_probabilities).fill('Pr(X)').join('+')}=1`
+     const document = parse_causal_document('X', source)
+     const names = Object.keys(document.probabilities)
+     expect(names).toHaveLength(CAUSAL_LIMITS.max_probabilities)
+@@ -274,7 +274,7 @@ describe('causal input bounds', () => {
+ 
+   test('bounds total probability occurrences independently of constraint count', () => {
+     const source = `${Array(CAUSAL_LIMITS.max_probabilities + 1).fill('Pr(X)').join('+')}=1`
+-    expect(() => parse_causal_document('X', source)).toThrow(/At most 64 probability queries/)
++    expect(() => parse_causal_document('X', source)).toThrow(/At most 128 probability queries/)
+   })
+ 
+   test('bounds nonempty constraint lines', () => {
+@@ -297,7 +297,12 @@ describe('causal input bounds', () => {
+   })
+ 
+   test('bounds token chains before invoking the recursive parser', () => {
+-    const source = `${Array(CAUSAL_LIMITS.max_tokens_per_line).fill('1').join('+')}=1`
+-    expect(() => parse_causal_document('X', source)).toThrow(/512 tokens/)
++    const source = `${Array(CAUSAL_LIMITS.max_tokens_per_line / 2).fill('1').join('+')}=1`
++    expect(() => parse_causal_document('X', source)).toThrow(/2048 tokens/)
++  })
++
++  test('accepts exactly the token budget without exceeding the character budget', () => {
++    const source = `-${Array(CAUSAL_LIMITS.max_tokens_per_line / 2 - 1).fill('1').join('+')}=1`
++    expect(() => parse_causal_document('X', source)).not.toThrow()
+   })
+ })
+diff --git a/src/causal_syntax.ts b/src/causal_syntax.ts
+index 33ca1c4..d38d8ad 100644
+--- a/src/causal_syntax.ts
++++ b/src/causal_syntax.ts
+@@ -30,11 +30,12 @@ export interface CausalDocument {
+ export const CAUSAL_LIMITS = {
+   max_nodes: 8,
+   max_constraints: 64,
+-  max_probabilities: 64,
++  max_probabilities: 128,
+   max_input_characters: 50_000,
+   max_line_characters: 4_096,
+   max_parenthesis_depth: 64,
+-  max_tokens_per_line: 512,
++  max_ast_depth: 128,
++  max_tokens_per_line: 2_048,
+ } as const
+ 
+ const QUERY_PREFIX = 'CausalQuery'
+@@ -73,7 +74,7 @@ const check_input_length = (length: number): void => {
+   }
+ }
+ 
+-/** Fail before sending excessively deep or long recursive input to PrSAT's parser. */
++/** Apply lexical, parenthesis and unary-prefix bounds before recursive parsing. */
+ const check_expression_size = (source: string): void => {
+   if (source.length > CAUSAL_LIMITS.max_line_characters) {
+     throw new Error(`Each causal constraint or expression is limited to ${CAUSAL_LIMITS.max_line_characters} characters.`)
+@@ -95,6 +96,32 @@ const check_expression_size = (source: string): void => {
+     }
+   }
+   if (depth !== 0) throw new Error('Missing closing parenthesis.')
++  // Count a lower bound on AST depth without invoking the recursive grammar.
++  // Parenthesized operands retain their surrounding prefixes; a probability's
++  // event is a separate AST root in the compiler's input-depth validation.
++  const savedPrefixDepth: number[] = []
++  let prefixBase = 0, prefixRun = 0
++  for (let index = 0; index < tokens.length; index++) {
++    const token = tokens[index]
++    const previous = tokens[index - 1] ?? ''
++    const next = tokens[index + 1]
++    const prefix = token === '~' || token === '¬' ||
++      (token === '!' && next !== '=') ||
++      (token === '-' && !/[A-Za-z0-9.)]$/.test(previous) && next !== '>')
++    if (prefix) {
++      prefixRun++
++      if (prefixBase + prefixRun > CAUSAL_LIMITS.max_ast_depth) {
++        throw new Error(`Causal expressions are too deeply nested (limit ${CAUSAL_LIMITS.max_ast_depth} unary prefix operators per AST root).`)
++      }
++    } else if (token === '(') {
++      savedPrefixDepth.push(prefixBase)
++      prefixBase = /^(Pr|P|p)$/.test(previous) ? 0 : prefixBase + prefixRun
++      prefixRun = 0
++    } else if (token === ')') {
++      prefixBase = savedPrefixDepth.pop() ?? 0
++      prefixRun = 0
++    } else prefixRun = 0
++  }
+   if (source.includes(QUERY_PREFIX)) {
+     throw new Error(`The prefix ${QUERY_PREFIX} is reserved for causal probability queries.`)
+   }
+@@ -313,7 +340,11 @@ export const parse_causal_document = (graphText: string, constraintText: string)
+       constraints.push(result[1])
+       source.push(text)
+     } catch (error) {
+-      throw new Error(`Constraint line ${lineIndex + 1}: ${error instanceof Error ? error.message : String(error)}`)
++      const recursionOverflow = error instanceof Error &&
++        (error instanceof RangeError || error.name === 'InternalError') && /call stack|too much recursion/i.test(error.message)
++      const detail = recursionOverflow ? 'Causal expression is too deeply nested to parse; simplify it.'
++        : error instanceof Error ? error.message : String(error)
++      throw new Error(`Constraint line ${lineIndex + 1}: ${detail}`)
+     }
+   }
+   return { graph, constraints, probabilities, source }
+diff --git a/tests/causal_decision.spec.ts b/tests/causal_decision.spec.ts
+index 47cf073..5be57be 100644
+--- a/tests/causal_decision.spec.ts
++++ b/tests/causal_decision.spec.ts
+@@ -1,6 +1,7 @@
+ import { test, expect } from '@playwright/test'
+ import { readFile } from 'node:fs/promises'
+ import { loadDecisionFixture } from './decision_helpers'
++import { FULL_INDEPENDENCE_PROBLEM } from './fixtures/independence_conclusion'
+ const open = async (page: import('@playwright/test').Page) => {
+   await page.goto('/', { waitUntil: 'domcontentloaded' })
+   await expect(page.getByTestId('decision-runtime')).toHaveText('Z3 ready.', { timeout: 20_000 })
+@@ -87,6 +88,42 @@ test('empty premises test validity and regularity handles support explicitly', a
+   await page.getByTestId('decision-run').click()
+   await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —')
+ })
++
++test('the full independence conclusion is entailed without regularity, including zero support', async ({ page }) => {
++  await open(page)
++  await page.getByTestId('decision-clear').click()
++  await page.getByTestId('decision-task-entailment').check()
++  await page.getByTestId('decision-regular').uncheck()
++  await page.getByTestId('decision-graph').fill(FULL_INDEPENDENCE_PROBLEM.graph)
++  await page.getByTestId('decision-conclusion').fill(FULL_INDEPENDENCE_PROBLEM.conclusion)
++  await expect(page.getByTestId('decision-run')).toBeEnabled()
++  await page.getByTestId('decision-run').click()
++  await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —')
++  await page.getByTestId('decision-premise-1').fill('Pr(U) = 0')
++  await page.getByTestId('decision-run').click()
++  await expect(page.getByTestId('decision-status')).toContainText('ENTAILS —')
++  await expect(page.getByTestId('decision-regular')).not.toBeChecked()
++  await expect(page.getByTestId('decision-conclusion')).toHaveValue(FULL_INDEPENDENCE_PROBLEM.conclusion)
++})
++
++test('malformed prefix chains reject promptly and regularity remains responsive', async ({ page }) => {
++  await open(page)
++  const milliseconds = await page.evaluate(() => {
++    const conclusion = document.querySelector<HTMLTextAreaElement>('[data-testid=decision-conclusion]')!
++    const regular = document.querySelector<HTMLInputElement>('[data-testid=decision-regular]')!
++    const start = performance.now()
++    conclusion.value = '-'.repeat(2045) + '=0'
++    conclusion.dispatchEvent(new Event('input', { bubbles: true }))
++    regular.checked = !regular.checked
++    regular.dispatchEvent(new Event('input', { bubbles: true }))
++    return performance.now() - start
++  })
++  expect(milliseconds).toBeLessThan(1_000)
++  await expect(page.getByTestId('decision-run')).toBeDisabled()
++  await expect(page.getByText(/limit 128 unary prefix operators per AST root/)).toBeVisible()
++  await page.getByTestId('decision-conclusion').fill('0=0')
++  await expect(page.getByTestId('decision-run')).toBeEnabled()
++})
+ for (const width of [320, 390, 1280]) test(`decision results fit a ${width}px viewport`, async ({ page }) => {
+   await page.setViewportSize({ width, height: 900 }); await open(page)
+   await loadDecisionFixture(page, 2)

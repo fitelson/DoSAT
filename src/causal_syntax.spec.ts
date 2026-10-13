@@ -262,7 +262,7 @@ describe('causal probability syntax', () => {
 
 describe('causal input bounds', () => {
   test('supports every query up to the query bound with alphabetic, unique names', () => {
-    const source = Array(CAUSAL_LIMITS.max_probabilities).fill('Pr(X)=1/2').join('\n')
+    const source = `${Array(CAUSAL_LIMITS.max_probabilities).fill('Pr(X)').join('+')}=1`
     const document = parse_causal_document('X', source)
     const names = Object.keys(document.probabilities)
     expect(names).toHaveLength(CAUSAL_LIMITS.max_probabilities)
@@ -274,7 +274,7 @@ describe('causal input bounds', () => {
 
   test('bounds total probability occurrences independently of constraint count', () => {
     const source = `${Array(CAUSAL_LIMITS.max_probabilities + 1).fill('Pr(X)').join('+')}=1`
-    expect(() => parse_causal_document('X', source)).toThrow(/At most 64 probability queries/)
+    expect(() => parse_causal_document('X', source)).toThrow(/At most 128 probability queries/)
   })
 
   test('bounds nonempty constraint lines', () => {
@@ -297,7 +297,12 @@ describe('causal input bounds', () => {
   })
 
   test('bounds token chains before invoking the recursive parser', () => {
-    const source = `${Array(CAUSAL_LIMITS.max_tokens_per_line).fill('1').join('+')}=1`
-    expect(() => parse_causal_document('X', source)).toThrow(/512 tokens/)
+    const source = `${Array(CAUSAL_LIMITS.max_tokens_per_line / 2).fill('1').join('+')}=1`
+    expect(() => parse_causal_document('X', source)).toThrow(/2048 tokens/)
+  })
+
+  test('accepts exactly the token budget without exceeding the character budget', () => {
+    const source = `-${Array(CAUSAL_LIMITS.max_tokens_per_line / 2 - 1).fill('1').join('+')}=1`
+    expect(() => parse_causal_document('X', source)).not.toThrow()
   })
 })

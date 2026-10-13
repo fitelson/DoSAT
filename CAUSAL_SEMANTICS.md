@@ -161,6 +161,6 @@ substitute for that countermodel search. When all required terms are defined,
 the familiar assumptions-plus-negated-conclusion test applies.
 
 The current implementation bounds the graph at eight nodes and the document at
-64 probability occurrences, and bounds input and expanded SMT expressions.
+128 probability occurrences, and bounds input and expanded SMT expressions.
 These are implementation resource limits, not mathematical restrictions of the
 parameterization.

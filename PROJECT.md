@@ -67,7 +67,7 @@ so the observational distribution is positive. Interventions still introduce
 structural zeros. All witness numbers use raw exact Z3 numerals, including
 rational numerators beyond JavaScript's safe integer range.
 
-Limits: six graph variables, 64 constraint lines, 64 probability occurrences,
+Historical Phase 1 limits: six graph variables, 64 constraint lines, 64 probability occurrences,
 50,000 input characters, 4,096 characters/512 tokens per constraint line,
 64 nested parentheses, and bounded AST/expanded solver size. A search time limit
 can be set from 0.1 to 120 seconds. UNKNOWN or cancellation proves nothing.
@@ -522,3 +522,46 @@ The scoped default-model implementation review is PASS. Full checks pass 1366
 units and 66 public browser cases, plus lint/TypeScript/build. The prepared
 package passes six width transitions with source and returned-model preservation.
 Publication/live evidence is recorded in that folder's PUBLICATION.md.
+
+## Expression limits, October 13, 2026
+
+Branden requested raising the 512-token limit so the complete independence
+conclusion can be checked with Regular off. The shared expression budget is
+now 2,048 tokens. The supplied 17-clause, division-free goal has 770 tokens,
+1,291 characters and 67 probability occurrences; therefore the parser and
+compiler probability-occurrence cap also rises from 64 to 128, using one
+shared constant. The 4,096-character line cap, 64 constraint lines, nesting,
+graph, total-input and expansion budgets remain unchanged. Mathematical,
+solver and returned-model semantics are unchanged.
+
+Boundary regressions cover the exact token/query limits and their overflow;
+the full goal compiles with empty premises and nonregular bounds. All 1,368
+units pass (one inherited skip and todo), lint/build pass, and all 67 public
+Chromium cases pass, including full-goal entailment with no premises and
+with Pr(U)=0. Review and publication evidence is in
+reviews/expression_limits_2026-10-13T11-40-23-039Z/. The scoped default-model
+consensus gate is pending. Existing publication authorization remains DoSAT-only.
+
+### Expression-limit repair checkpoint
+
+The initial consensus reached FAIL on malformed-prefix responsiveness; its
+first raw-error finding was extended to a reproduced multi-second validation
+freeze. The agreed R1–R4 repair adds a linear prefix-depth guard (128 per AST
+root), preserves probability event roots and infix syntax, normalizes residual
+recursion errors, and records that all input bounds apply together. The
+compiler's depth limit remains 128. The old Phase 1 limits are labeled historical.
+
+The final repair candidate passes 1,374 units (one inherited skip/todo), all
+68 public Chromium cases, lint, TypeScript/build and whitespace. The final
+package passes twelve verdict checks, both budget rejections and prompt prefix
+error/recovery checks. The default-model scoped recheck is pending; records
+are in reviews/expression_limits_2026-10-13T11-40-23-039Z/recheck_2026-10-13T12-13-26-209Z/.
+
+### Expression limits approved
+
+The completed default-model repair consensus gives explicit Phase gate: PASS.
+R1–R4 are closed; source and final package hashes match. Read the recheck
+FINAL_STATUS.md for 1374 units/68 browser cases, the full nonregular goal,
+zero-support and false-clause evidence, and the measured nonblocking latency
+qualification for contrived accepted nested input. The initial FAIL/pending
+notes are historical. Authorized DoSAT-only commit/push/publication follows.
