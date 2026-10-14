@@ -584,3 +584,9 @@ Exactly that paragraph is removed from the public header. The prepared package
 passes85 existing interface tests, lint/TypeScript/build and three-width header
 checks. Branden explicitly waived a consensus requirement for this trivial change and
 requested commit, push and upload. Verification records are in reviews/header_line_2026-10-14T18-00-01-870Z/.
+
+### Header removal published
+
+Source 631af60 is committed, pushed and live.8remote/6HTTPS hashes,
+headers/redirects/backup protection and three-width live header checks pass.
+See reviews/header_line_2026-10-14T18-00-01-870Z/PUBLICATION.md.
