@@ -619,3 +619,9 @@ row spacing/minimum height and arc room are increased; preview height cap is
 360px. This supersedes the earlier gutter-routing presentation.119 affected
 units, lint/TypeScript/build and15 built graph/width checks pass, including
 U -> Y clearing X. Records are in reviews/curved_graph_height_2026-10-14T18-39-57-854Z/.
+
+### Curved arrows published
+
+Source 483be0a is pushed and live.8remote/6HTTPS hashes and15 live
+graph/width checks pass; the old curved style has more vertical room and the
+U -> Y curve stays clear of X. See reviews/curved_graph_height_2026-10-14T18-39-57-854Z/PUBLICATION.md.

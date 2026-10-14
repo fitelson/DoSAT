@@ -1,0 +1,112 @@
+{
+  "base": "https://fitelson.org/DoSAT/",
+  "asset": "assets/dosat-LRu4IAGz.js",
+  "checks": [
+    {
+      "width": 320,
+      "graph": "Z -> X; U -> X; U -> Y; X -> Y",
+      "nodes": 4,
+      "edges": 4,
+      "collisions": []
+    },
+    {
+      "width": 320,
+      "graph": "M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A",
+      "nodes": 5,
+      "edges": 6,
+      "collisions": []
+    },
+    {
+      "width": 320,
+      "graph": "A -> B; B -> C; C -> D; D -> E; E -> F; F -> G; G -> H; A -> H",
+      "nodes": 8,
+      "edges": 8,
+      "collisions": []
+    },
+    {
+      "width": 320,
+      "graph": "A -> B; A -> C; A -> D; A -> E; A -> F; A -> G; A -> H; B -> C; B -> D; B -> E; B -> F; B -> G; B -> H; C -> D; C -> E; C -> F; C -> G; C -> H; D -> E; D -> F; D -> G; D -> H; E -> F; E -> G; E -> H; F -> G; F -> H; G -> H",
+      "nodes": 8,
+      "edges": 28,
+      "collisions": []
+    },
+    {
+      "width": 320,
+      "graph": "A9007199254740991; B; C; D; E; F; G; A9007199254740991 -> H; G -> H",
+      "nodes": 8,
+      "edges": 2,
+      "collisions": []
+    },
+    {
+      "width": 390,
+      "graph": "Z -> X; U -> X; U -> Y; X -> Y",
+      "nodes": 4,
+      "edges": 4,
+      "collisions": []
+    },
+    {
+      "width": 390,
+      "graph": "M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A",
+      "nodes": 5,
+      "edges": 6,
+      "collisions": []
+    },
+    {
+      "width": 390,
+      "graph": "A -> B; B -> C; C -> D; D -> E; E -> F; F -> G; G -> H; A -> H",
+      "nodes": 8,
+      "edges": 8,
+      "collisions": []
+    },
+    {
+      "width": 390,
+      "graph": "A -> B; A -> C; A -> D; A -> E; A -> F; A -> G; A -> H; B -> C; B -> D; B -> E; B -> F; B -> G; B -> H; C -> D; C -> E; C -> F; C -> G; C -> H; D -> E; D -> F; D -> G; D -> H; E -> F; E -> G; E -> H; F -> G; F -> H; G -> H",
+      "nodes": 8,
+      "edges": 28,
+      "collisions": []
+    },
+    {
+      "width": 390,
+      "graph": "A9007199254740991; B; C; D; E; F; G; A9007199254740991 -> H; G -> H",
+      "nodes": 8,
+      "edges": 2,
+      "collisions": []
+    },
+    {
+      "width": 1280,
+      "graph": "Z -> X; U -> X; U -> Y; X -> Y",
+      "nodes": 4,
+      "edges": 4,
+      "collisions": []
+    },
+    {
+      "width": 1280,
+      "graph": "M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A",
+      "nodes": 5,
+      "edges": 6,
+      "collisions": []
+    },
+    {
+      "width": 1280,
+      "graph": "A -> B; B -> C; C -> D; D -> E; E -> F; F -> G; G -> H; A -> H",
+      "nodes": 8,
+      "edges": 8,
+      "collisions": []
+    },
+    {
+      "width": 1280,
+      "graph": "A -> B; A -> C; A -> D; A -> E; A -> F; A -> G; A -> H; B -> C; B -> D; B -> E; B -> F; B -> G; B -> H; C -> D; C -> E; C -> F; C -> G; C -> H; D -> E; D -> F; D -> G; D -> H; E -> F; E -> G; E -> H; F -> G; F -> H; G -> H",
+      "nodes": 8,
+      "edges": 28,
+      "collisions": []
+    },
+    {
+      "width": 1280,
+      "graph": "A9007199254740991; B; C; D; E; F; G; A9007199254740991 -> H; G -> H",
+      "nodes": 8,
+      "edges": 2,
+      "collisions": []
+    }
+  ],
+  "errors": []
+}
