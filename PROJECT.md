@@ -576,3 +576,11 @@ prompt prefix rejection/toggle/recovery. The original full independence goal
 is ENTAILED with Regular off, including zero support; those premises are SAT
 and a false appended clause gives a countermodel. Read the current recheck
 PUBLICATION.md and FINAL_STATUS.md. Initial FAIL/pending notes are historical.
+
+## Header line removal, October 14, 2026
+
+Branden requested removing the assumptions summary line beneath the subtitle.
+Exactly that paragraph is removed from the public header. The prepared package
+passes85 existing interface tests, lint/TypeScript/build and three-width header
+checks. Branden explicitly waived a consensus requirement for this trivial change and
+requested commit, push and upload. Verification records are in reviews/header_line_2026-10-14T18-00-01-870Z/.

@@ -1,0 +1,28 @@
+{
+  "base": "http://127.0.0.1:65164/",
+  "asset": "assets/dosat-B13A_x82.js",
+  "checks": [
+    {
+      "width": 320,
+      "lineRemoved": true,
+      "titleAndSubtitlePresent": true,
+      "navigationPresent": true,
+      "noOverflow": true
+    },
+    {
+      "width": 390,
+      "lineRemoved": true,
+      "titleAndSubtitlePresent": true,
+      "navigationPresent": true,
+      "noOverflow": true
+    },
+    {
+      "width": 1280,
+      "lineRemoved": true,
+      "titleAndSubtitlePresent": true,
+      "navigationPresent": true,
+      "noOverflow": true
+    }
+  ],
+  "errors": []
+}

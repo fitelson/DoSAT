@@ -259,7 +259,6 @@ load.addEventListener('change', () => {
 const help = (title: string, text: string): HTMLElement => el('details', { class: 'decision-help' }, el('summary', {}, title), el('p', {}, text))
 root.append(el('main', { class: 'causal-ui decision-ui' },
   el('header', { class: 'header' }, el('h1', {}, 'DoSAT 1.0'), el('p', { class: 'decision-subtitle' }, 'A Decision Procedure for Do Calculus.'),
-    el('p', { class: 'decision-assumptions' }, 'Observed Boolean DAG · independent private disturbances · shared mechanisms across interventions'),
     el('nav', {}, el('a', { href: '#decision-help' }, 'Help'), ' · ', el('a', { href: 'https://github.com/fitelson/DoSAT' }, 'GitHub'))),
   el('section', { class: 'generic-input-block decision-input-panel', 'aria-label': 'Decision problem editor' },
     el('fieldset', { class: 'decision-task' }, el('legend', {}, 'Task'), el('label', {}, entailment, ' Check entailment'), el('label', {}, satisfiability, ' Satisfiability')),

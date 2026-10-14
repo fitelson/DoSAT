@@ -1,0 +1,51 @@
+{
+  "product": "DoSAT 1.0",
+  "subtitle": "A Decision Procedure for Do Calculus.",
+  "target": "https://fitelson.org/DoSAT/",
+  "state": "prepared; publication requires completed phase review",
+  "createdAt": "2026-10-14T18:00:31.851Z",
+  "pages": [
+    "index.html"
+  ],
+  "retiredRoutes": [
+    "/DoSAT/dist/decision.html",
+    "/DoSAT/dist/causal.html",
+    "/DoSAT/dist/do_calculus.html",
+    "/DoSAT/dist/index.html",
+    "/DoSAT/dist/"
+  ],
+  "files": {
+    ".htaccess": {
+      "bytes": 1381,
+      "sha256": "4131dd76a82874996e68b1d8621882aca3be73ea80b0dc45238e73b4534e14d7"
+    },
+    "assets/dosat-B13A_x82.js": {
+      "bytes": 297346,
+      "sha256": "c496a95d84b9340a27cb56f2cde633b5d693ae1ac860bea7c0ca1e30faf710be"
+    },
+    "assets/dosat-DsZ54EQU.css": {
+      "bytes": 16597,
+      "sha256": "9f560363564cc85a0423b1fce7b2bf27bebf229be7b5c6569d337ef81b27713a"
+    },
+    "coi-serviceworker.js": {
+      "bytes": 6027,
+      "sha256": "e35c3d4758ef522584c5608b9ebf7e0b19df4bd6857f8ac16f2e2febde119881"
+    },
+    "index.html": {
+      "bytes": 955,
+      "sha256": "3ed52a34b79159959a1206c55ad82ef7a6392de608ab9aa7f887a8b1359295a8"
+    },
+    "z3-built.js": {
+      "bytes": 353813,
+      "sha256": "0c6cc2a4a8461b0ffa73e792f97c9749a0c7a2ad5c647b43ec7f630c82b16ee1"
+    },
+    "z3-built.wasm": {
+      "bytes": 34938413,
+      "sha256": "2765f5443a5a3a41aace71a82dd954e3b8c885a7d621b50122b1aede0dc8348a"
+    },
+    "dist/.htaccess": {
+      "bytes": 1381,
+      "sha256": "4131dd76a82874996e68b1d8621882aca3be73ea80b0dc45238e73b4534e14d7"
+    }
+  }
+}
