@@ -603,3 +603,10 @@ The initial evaluator timeout and passing isolated/full reruns are retained
 in reviews/graph_edge_visibility_2026-10-14T18-16-47-074Z/final/VERIFICATION.md. This routine presentation
 correction follows Branden’s direction to avoid debates for trivial UI fixes.
 DoSAT-only commit/push/upload follows the direct checks.
+
+### Graph visibility published
+
+Source 6aa13d1 is pushed and live at https://fitelson.org/DoSAT/.
+8remote/6HTTPS hashes, headers/redirects/backup protection and15 live graph/
+width checks pass. The U -> Y arrow is visible above X; sampled arrows avoid
+unrelated node ellipses. See reviews/graph_edge_visibility_2026-10-14T18-16-47-074Z/final/PUBLICATION.md.

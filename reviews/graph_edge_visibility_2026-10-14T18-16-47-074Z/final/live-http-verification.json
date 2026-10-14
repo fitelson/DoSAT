@@ -1,0 +1,72 @@
+{
+  "public_files": 6,
+  "files": [
+    {
+      "file": "assets/dosat-BRUQIccV.js",
+      "bytes": 297843,
+      "sha256": "e026e22890d41456b15d752e9209e220d21a8dd63db6460b85dbfabf2194a0b5",
+      "passed": true
+    },
+    {
+      "file": "assets/dosat-DsZ54EQU.css",
+      "bytes": 16597,
+      "sha256": "9f560363564cc85a0423b1fce7b2bf27bebf229be7b5c6569d337ef81b27713a",
+      "passed": true
+    },
+    {
+      "file": "coi-serviceworker.js",
+      "bytes": 6027,
+      "sha256": "e35c3d4758ef522584c5608b9ebf7e0b19df4bd6857f8ac16f2e2febde119881",
+      "passed": true
+    },
+    {
+      "file": "index.html",
+      "bytes": 955,
+      "sha256": "c277531468a584dca004cffccd33b3474f895c693bc97feb38a6329a5c1b8196",
+      "passed": true
+    },
+    {
+      "file": "z3-built.js",
+      "bytes": 353813,
+      "sha256": "0c6cc2a4a8461b0ffa73e792f97c9749a0c7a2ad5c647b43ec7f630c82b16ee1",
+      "passed": true
+    },
+    {
+      "file": "z3-built.wasm",
+      "bytes": 34938413,
+      "sha256": "2765f5443a5a3a41aace71a82dd954e3b8c885a7d621b50122b1aede0dc8348a",
+      "passed": true
+    }
+  ],
+  "root_status": 200,
+  "root_headers": "HTTP/2 200 \r\ndate: Wed, 14 Oct 2026 18:29:28 GMT\r\ncontent-type: text/html\r\ncontent-length: 955\r\nvary: X-Surecache\r\nlast-modified: Wed, 14 Oct 2026 18:29:19 GMT\r\netag: \"3bb-65dd11bfa14b1\"\r\naccept-ranges: bytes\r\ncross-origin-opener-policy: same-origin\r\ncross-origin-embedder-policy: require-corp\r\ncross-origin-resource-policy: cross-origin\r\ncache-control: no-cache\r\nsurecache-status: MISS\r\nserver: Apache\r\n\r\n",
+  "wasm_headers": "HTTP/2 200 \r\ndate: Wed, 14 Oct 2026 18:29:28 GMT\r\ncontent-type: application/wasm\r\ncontent-length: 34938413\r\nvary: X-Surecache\r\nlast-modified: Mon, 12 Oct 2026 02:22:18 GMT\r\netag: \"2151e2d-65d9b5dff8dff\"\r\naccept-ranges: bytes\r\ncross-origin-opener-policy: same-origin\r\ncross-origin-embedder-policy: require-corp\r\ncross-origin-resource-policy: cross-origin\r\ncache-control: no-cache\r\nsurecache-status: MISS\r\nserver: Apache\r\n\r\n",
+  "redirects": [
+    {
+      "path": "dist/",
+      "status": 301,
+      "passed": true
+    },
+    {
+      "path": "dist/index.html",
+      "status": 301,
+      "passed": true
+    },
+    {
+      "path": "dist/decision.html",
+      "status": 301,
+      "passed": true
+    },
+    {
+      "path": "dist/causal.html",
+      "status": 301,
+      "passed": true
+    },
+    {
+      "path": "dist/do_calculus.html",
+      "status": 301,
+      "passed": true
+    }
+  ],
+  "backup_status": 403
+}
