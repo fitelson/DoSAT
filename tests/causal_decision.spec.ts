@@ -141,6 +141,41 @@ test('the root is the single DoSAT interface with no auxiliary navigation', asyn
   }
 })
 
+test('all graph arrows stay outside unrelated nodes at phone and desktop widths', async ({ page }) => {
+  await open(page)
+  const graphs = [
+    'Z -> X; U -> X; U -> Y; X -> Y',
+    'M -> Z; U -> Z; M -> E; Z -> E; U -> A; E -> A',
+    'A -> B; B -> C; C -> D; D -> E; E -> F; F -> G; G -> H; A -> H',
+    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].flatMap((node, index, all) => all.slice(index + 1).map(child => `${node} -> ${child}`)).join('; '),
+    'A9007199254740991; B; C; D; E; F; G; A9007199254740991 -> H; G -> H',
+  ]
+  for (const width of [320, 390, 1280]) {
+    await page.setViewportSize({ width, height: 900 })
+    for (const graph of graphs) {
+      await page.getByTestId('decision-graph').fill(graph)
+      const collisions = await page.getByTestId('decision-graph-preview').evaluate(element => {
+        const nodes = [...element.querySelectorAll('[data-node]')].map(node => {
+          const ellipse = node.querySelector('ellipse')!
+          return { name: node.getAttribute('data-node')!, x: Number(ellipse.getAttribute('cx')), y: Number(ellipse.getAttribute('cy')), rx: Number(ellipse.getAttribute('rx')), ry: Number(ellipse.getAttribute('ry')) }
+        })
+        const collisions: string[] = []
+        for (const path of element.querySelectorAll<SVGPathElement>('[data-edge]')) {
+          const edge = path.getAttribute('data-edge')!, endpoints = edge.split('->'), length = path.getTotalLength()
+          for (let distance = 0; distance <= length; distance += 1) {
+            const point = path.getPointAtLength(distance)
+            for (const node of nodes) if (!endpoints.includes(node.name) &&
+              ((point.x - node.x) / (node.rx + 2)) ** 2 + ((point.y - node.y) / (node.ry + 2)) ** 2 <= 1) collisions.push(`${edge} hits ${node.name}`)
+          }
+        }
+        return [...new Set(collisions)]
+      })
+      expect(collisions, graph).toEqual([])
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+    }
+  }
+})
+
 for (const timing of ['boundary', 'task'] as const) for (const action of ['cancel', 'edit'] as const) {
   test(`a ${timing}-scheduled ${action} at countermodel search settles and allows reuse`, async ({ page }) => {
     if (timing === 'task') {

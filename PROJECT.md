@@ -590,3 +590,16 @@ requested commit, push and upload. Verification records are in reviews/header_li
 Source 631af60 is committed, pushed and live.8remote/6HTTPS hashes,
 headers/redirects/backup protection and three-width live header checks pass.
 See reviews/header_line_2026-10-14T18-00-01-870Z/PUBLICATION.md.
+
+## Graph edge visibility, October 14, 2026
+
+Branden identified U -> Y disappearing behind X and requested every path be
+visible. Arrows now use clear column gutters and separate upper lanes for
+long edges, with distinct node attachment points and smooth turns. Accepted
+graphs and their semantics are unchanged. Direct verification covers1374 full
+units on retry,119 final affected units, eight targeted browser cases, and15
+final package graph/width combinations with independent path/ellipse sampling.
+The initial evaluator timeout and passing isolated/full reruns are retained
+in reviews/graph_edge_visibility_2026-10-14T18-16-47-074Z/final/VERIFICATION.md. This routine presentation
+correction follows Branden’s direction to avoid debates for trivial UI fixes.
+DoSAT-only commit/push/upload follows the direct checks.

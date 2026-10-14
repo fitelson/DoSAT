@@ -127,7 +127,7 @@ describe('input causal DAG preview', () => {
     }
   })
 
-  test.each(graphCases)('has finite cropped bounds containing ellipses and all quadratic control points: $label', ({ source }) => {
+  test.each(graphCases)('has finite cropped bounds containing ellipses and all edge control points: $label', ({ source }) => {
     preview.update(source)
     const image = svg()!
     const viewBox = image.getAttribute('viewBox')!.trim().split(/\s+/).map(Number)
@@ -152,9 +152,10 @@ describe('input causal DAG preview', () => {
     }
     for (const edge of image.querySelectorAll('[data-edge]')) {
       const path = edge.getAttribute('d')!
-      expect(path).toMatch(/^M .+ Q /)
+      expect(path).toMatch(/^M .+ L /)
       const points = (path.match(/[-+]?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/gi) ?? []).map(Number)
-      expect(points).toHaveLength(6)
+      expect(points.length).toBeGreaterThanOrEqual(12)
+      expect(points.length % 2).toBe(0)
       expect(points.every(Number.isFinite)).toBe(true)
       for (let index = 0; index < points.length; index += 2) inside(points[index], points[index + 1], 8)
     }

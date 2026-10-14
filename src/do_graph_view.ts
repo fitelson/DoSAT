@@ -31,7 +31,7 @@ export const render_causal_graph = (
   layoutGraph.nodes.forEach(rank)
   const maximum = Math.max(...ranks.values())
   const layers = Array.from({ length: maximum + 1 }, (_, level) => layoutGraph.nodes.filter(node => ranks.get(node) === level))
-  const labelWidths = new Map(graph.nodes.map(node => [node, Math.max(compact ? 42 : 46, node.length * 8.6 + 22)]))
+  const labelWidths = new Map(layoutGraph.nodes.map(node => [node, Math.max(compact ? 42 : 46, node.length * 8.6 + 22)]))
   const widest = Math.max(...labelWidths.values())
   const spacing = widest + (compact ? 64 : 95)
   const padding = widest / 2 + (compact ? 20 : 30)
@@ -44,6 +44,11 @@ export const render_causal_graph = (
   layers.forEach((layer, level) => layer.forEach((node, index) => positions.set(node, {
     x: padding + level * spacing, y: arcPadding + (index + 1) * baseHeight / (layer.length + 1),
   })))
+  const layoutEdges = layoutGraph.nodes.flatMap(child => (layoutGraph.parents[child] ?? []).map(parent => [parent, child] as const))
+  const longEdges = layoutEdges.filter(([parent, child]) => ranks.get(child)! - ranks.get(parent)! > 1)
+  const top = Math.min(...[...positions.values()].map(point => point.y)) - radiusY
+  const portOffset = (index: number, count: number): number => count > 1 ? (2 * index / (count - 1) - 1) * radiusY * 0.65 : 0
+  const routeTop = longEdges.length ? Math.min(0, top - 24 - (longEdges.length - 1) * 14 - 8) : 0
   const id = `do-arrow-${diagramId++}`
   const svg = svgNode('svg', { viewBox: `0 0 ${width} ${height}`, width: String(width), height: String(height), role: 'img', 'aria-label': 'Directed causal graph', class: 'do-graph-svg' })
   const defs = svgNode('defs', {})
@@ -54,17 +59,26 @@ export const render_causal_graph = (
     for (const parent of graph.parents[child] ?? []) {
       const from = positions.get(parent)!, to = positions.get(child)!
       const span = ranks.get(child)! - ranks.get(parent)!
-      const control = { x: (from.x + to.x) / 2, y: Math.min(from.y, to.y) - Math.max(0, span - 1) * 30 }
-      const startAngle = Math.atan2(control.y - from.y, control.x - from.x)
-      const endAngle = Math.atan2(control.y - to.y, control.x - to.x)
-      const radius = (node: string, angle: number) => 1 / Math.sqrt(Math.cos(angle) ** 2 / (labelWidths.get(node)! / 2) ** 2 + Math.sin(angle) ** 2 / radiusY ** 2)
-      const startRadius = radius(parent, startAngle)
-      const endRadius = radius(child, endAngle) + 4
-      const x1 = from.x + startRadius * Math.cos(startAngle), y1 = from.y + startRadius * Math.sin(startAngle)
-      const x2 = to.x + endRadius * Math.cos(endAngle), y2 = to.y + endRadius * Math.sin(endAngle)
+      const outgoing = layoutEdges.filter(([node]) => node === parent).map(([, node]) => node)
+      const incoming = layoutGraph.parents[child] ?? []
+      const fromOffset = portOffset(outgoing.indexOf(child), outgoing.length)
+      const toOffset = portOffset(incoming.indexOf(parent), incoming.length)
+      const x1 = from.x + labelWidths.get(parent)! / 2 * Math.sqrt(1 - (fromOffset / radiusY) ** 2), y1 = from.y + fromOffset
+      const x2 = to.x - labelWidths.get(child)! / 2 * Math.sqrt(1 - (toOffset / radiusY) ** 2) - 4, y2 = to.y + toOffset
+      // Leave each node's column horizontally before changing height. The
+      // control hulls then stay in the clear gutters, outside every node box.
+      const exit = from.x + widest / 2 + 12, entry = to.x - widest / 2 - 12
+      const outGutter = from.x + spacing / 2, inGutter = to.x - spacing / 2
+      let route: string
+      if (span === 1) {
+        route = `M ${x1} ${y1} L ${exit} ${y1} C ${outGutter} ${y1} ${inGutter} ${y2} ${entry} ${y2} L ${x2} ${y2}`
+      } else {
+        const lane = top - 24 - longEdges.findIndex(([a, b]) => a === parent && b === child) * 14
+        route = `M ${x1} ${y1} L ${exit} ${y1} C ${outGutter} ${y1} ${exit} ${lane} ${outGutter} ${lane} L ${inGutter} ${lane} C ${entry} ${lane} ${inGutter} ${y2} ${entry} ${y2} L ${x2} ${y2}`
+      }
       const cut = highlightedEdges.some(([a, b]) => a === parent && b === child)
       const path = svgNode('path', {
-        d: `M ${x1} ${y1} Q ${control.x} ${control.y} ${x2} ${y2}`, fill: 'none',
+        d: route, fill: 'none',
         stroke: cut ? '#b23b3b' : '#34495e', 'stroke-width': '2', 'stroke-dasharray': cut ? '7 4' : '',
         'marker-end': `url(#${id})`, 'data-edge': `${parent}->${child}`, 'data-cut': String(cut),
       })
@@ -81,5 +95,9 @@ export const render_causal_graph = (
     group.append(svgNode('text', { x: String(point.x), y: String(point.y + 5), 'text-anchor': 'middle', 'font-size': compact ? '14' : '15', fill: '#1e2527' }, node))
     svg.append(group)
   }
+  // The rule-checker also uses this renderer without the preview's crop pass.
+  // Include all detour lanes in its canvas so no path is clipped at the top.
+  svg.setAttribute('viewBox', `0 ${routeTop} ${width} ${height - routeTop}`)
+  svg.setAttribute('height', String(height - routeTop))
   return svg
 }

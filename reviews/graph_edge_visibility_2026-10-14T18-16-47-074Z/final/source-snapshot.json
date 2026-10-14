@@ -1,0 +1,8 @@
+{
+  "baseline": "b10f83a",
+  "hashes": {
+    "src/do_graph_view.ts": "904b5e9e3e602bbe58759a9945ca76992c1f7dcba92a269f4d8211a5dc8438db",
+    "src/causal_graph_preview.spec.ts": "4cecbcde477f27a93e9d0fc4a3f246333cd7bd3fa5c67076dad7ed079ffc2050",
+    "tests/causal_decision.spec.ts": "cad7ae515ccf7cf8c9b04645fc0071c8d5ca237ac4b95503462b8a82e610af97"
+  }
+}
