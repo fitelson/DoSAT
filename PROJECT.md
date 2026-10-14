@@ -610,3 +610,12 @@ Source 6aa13d1 is pushed and live at https://fitelson.org/DoSAT/.
 8remote/6HTTPS hashes, headers/redirects/backup protection and15 live graph/
 width checks pass. The U -> Y arrow is visible above X; sampled arrows avoid
 unrelated node ellipses. See reviews/graph_edge_visibility_2026-10-14T18-16-47-074Z/final/PUBLICATION.md.
+
+## Original curves with more height, October 14, 2026
+
+Branden preferred the original arrow style and requested added height. Single
+quadratic curves and their original ellipse attachment are restored. Compact
+row spacing/minimum height and arc room are increased; preview height cap is
+360px. This supersedes the earlier gutter-routing presentation.119 affected
+units, lint/TypeScript/build and15 built graph/width checks pass, including
+U -> Y clearing X. Records are in reviews/curved_graph_height_2026-10-14T18-39-57-854Z/.

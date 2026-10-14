@@ -1,0 +1,8 @@
+{
+  "baseline": "f59cf12",
+  "hashes": {
+    "src/do_graph_view.ts": "083494aaf599ce92cdc0a82530ec14cb11b5aa1959b931fa42b9f05394177651",
+    "src/causal_decision_style.css": "d23550f9fdaebebe5cadb75b9c682e0a20e5a4d70f495978d900488252d9adf2",
+    "src/causal_graph_preview.spec.ts": "cda084d2cfd0cfd2752234c7adf7b002661d8d169661b1be2bd935b6ed575f4f"
+  }
+}

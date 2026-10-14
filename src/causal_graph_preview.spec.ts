@@ -152,10 +152,9 @@ describe('input causal DAG preview', () => {
     }
     for (const edge of image.querySelectorAll('[data-edge]')) {
       const path = edge.getAttribute('d')!
-      expect(path).toMatch(/^M .+ L /)
+      expect(path).toMatch(/^M .+ Q /)
       const points = (path.match(/[-+]?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/gi) ?? []).map(Number)
-      expect(points.length).toBeGreaterThanOrEqual(12)
-      expect(points.length % 2).toBe(0)
+      expect(points).toHaveLength(6)
       expect(points.every(Number.isFinite)).toBe(true)
       for (let index = 0; index < points.length; index += 2) inside(points[index], points[index + 1], 8)
     }
