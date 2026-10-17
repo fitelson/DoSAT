@@ -1,0 +1,42 @@
+{
+  "key": "dosat",
+  "target": "DoSAT",
+  "source": "/Users/fitelson/Library/CloudStorage/Dropbox/non-MUSIC/todo/PrSAT/do-calculus",
+  "package": "/Users/fitelson/Library/CloudStorage/Dropbox/non-MUSIC/todo/PrSAT/upgrades/z3-5.3.1-2026-10-17T01-24-54Z/packages-final/dosat",
+  "z3Package": "5.3.1",
+  "engine": "5.3.1.0",
+  "files": {
+    ".htaccess": {
+      "bytes": 1381,
+      "sha256": "4131dd76a82874996e68b1d8621882aca3be73ea80b0dc45238e73b4534e14d7"
+    },
+    "assets/dosat-CPdW62Th.css": {
+      "bytes": 16597,
+      "sha256": "74c0b4f57fd18a8ce0a7398832bd2e322bd864e00e925bfebdae7f73b25598b6"
+    },
+    "assets/dosat-v3h5OQ8Q.js": {
+      "bytes": 298546,
+      "sha256": "4a35e333e4f95caa7c0c55874769cb6b64bfe828d2b040457ea00e755488f6d9"
+    },
+    "coi-serviceworker.js": {
+      "bytes": 6027,
+      "sha256": "e35c3d4758ef522584c5608b9ebf7e0b19df4bd6857f8ac16f2e2febde119881"
+    },
+    "dist/.htaccess": {
+      "bytes": 1381,
+      "sha256": "4131dd76a82874996e68b1d8621882aca3be73ea80b0dc45238e73b4534e14d7"
+    },
+    "index.html": {
+      "bytes": 955,
+      "sha256": "01a243962260d013e4c4274d83c4fcc49344e550a3ed86fef1788ba7f10f0a66"
+    },
+    "z3-built.js": {
+      "bytes": 358187,
+      "sha256": "9838f5428af10edaa56cf28fe490c502eab7e54050821effa9a31eb022b6ec6b"
+    },
+    "z3-built.wasm": {
+      "bytes": 34580492,
+      "sha256": "dadc8051d994f42664f4400ff9d1bd87fb11d2150fac9de49597f20cd84a6fcc"
+    }
+  }
+}

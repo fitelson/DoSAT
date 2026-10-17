@@ -625,3 +625,16 @@ U -> Y clearing X. Records are in reviews/curved_graph_height_2026-10-14T18-39-5
 Source 483be0a is pushed and live.8remote/6HTTPS hashes and15 live
 graph/width checks pass; the old curved style has more vertical room and the
 U -> Y curve stays clear of X. See reviews/curved_graph_height_2026-10-14T18-39-57-854Z/PUBLICATION.md.
+
+## Z3 5.3.1 upgrade, October 16, 2026
+
+The npm wrapper and public/dist JS/WASM are now pinned to official Z3 5.3.1;
+the actual engine reports 5.3.1.0. Only the dependency, generated application
+assets and the browser readiness version assertion changed. Solver strategies,
+causal semantics, exact evaluation, limits and graph/UI behavior are unchanged.
+The scoped Opus5.5/xhigh–GPT6.1Sol/xhigh consensus phase gate is PASS, with no
+blockers. Build, lint, 1374 unit cases and 69 public Chromium cases pass. A
+manifest-only package probe verified the actual engine, causal SAT, exact model
+evaluation and interventional entailment. See Z3_UPDATE_2026-10-16.md and
+reviews/z3_upgrade_2026-10-16/FINAL_STATUS.md. Authorized commit/push/publication
+follows this completed gate; final live evidence will be added separately.

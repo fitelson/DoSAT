@@ -5,7 +5,7 @@ import { FULL_INDEPENDENCE_PROBLEM } from './fixtures/independence_conclusion'
 const open = async (page: import('@playwright/test').Page) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(page.getByTestId('decision-runtime')).toHaveText('Z3 ready.', { timeout: 20_000 })
-  await expect(page.getByTestId('decision-runtime')).toHaveAttribute('data-z3-version', '5.1.0')
+  await expect(page.getByTestId('decision-runtime')).toHaveAttribute('data-z3-version', '5.3.1')
   await expect(page.getByRole('heading', { name: 'DoSAT 1.0', exact: true })).toBeVisible()
   await expect(page.locator('.decision-subtitle')).toHaveText('A Decision Procedure for Do Calculus.')
   await loadDecisionFixture(page, 0)

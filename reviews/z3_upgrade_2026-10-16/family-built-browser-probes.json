@@ -1,0 +1,124 @@
+[
+  {
+    "key": "classical",
+    "base": "http://127.0.0.1:63726/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "SAT, returned model",
+      "exact 1/3 evaluation",
+      "UNSAT"
+    ],
+    "passed": true
+  },
+  {
+    "key": "experimental",
+    "base": "http://127.0.0.1:63748/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "SAT, returned model",
+      "exact 1/3 evaluation",
+      "trivalent-toggle SAT",
+      "trivalent-cck-toggle SAT",
+      "Random Search worker SAT",
+      "UNSAT"
+    ],
+    "passed": true
+  },
+  {
+    "key": "public",
+    "base": "http://127.0.0.1:63764/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "SAT, returned model",
+      "exact 1/3 evaluation",
+      "trivalent-toggle SAT",
+      "trivalent-cck-toggle SAT",
+      "UNSAT"
+    ],
+    "passed": true
+  },
+  {
+    "key": "popper",
+    "base": "http://127.0.0.1:63793/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "SAT, returned model",
+      "exact 1/3 evaluation",
+      "UNSAT"
+    ],
+    "passed": true
+  },
+  {
+    "key": "twist",
+    "base": "http://127.0.0.1:63803/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "SAT, returned model",
+      "exact 1/3 evaluation",
+      "UNSAT"
+    ],
+    "passed": true
+  },
+  {
+    "key": "dosat",
+    "base": "http://127.0.0.1:63813/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "causal SAT, exact evaluation in returned model",
+      "interventional entailment"
+    ],
+    "passed": true
+  },
+  {
+    "key": "ho",
+    "base": "http://127.0.0.1:63823/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "HO SAT exact frame",
+      "HO bounded UNSAT"
+    ],
+    "passed": true
+  },
+  {
+    "key": "classical-dirty",
+    "base": "http://127.0.0.1:63836/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "SAT, returned model",
+      "exact 1/3 evaluation",
+      "UNSAT"
+    ],
+    "passed": true
+  },
+  {
+    "key": "public-dirty",
+    "base": "http://127.0.0.1:63847/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "SAT, returned model",
+      "exact 1/3 evaluation",
+      "trivalent-toggle SAT",
+      "trivalent-cck-toggle SAT",
+      "UNSAT"
+    ],
+    "passed": true
+  }
+]
