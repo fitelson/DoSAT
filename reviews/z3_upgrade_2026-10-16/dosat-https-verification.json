@@ -1,0 +1,60 @@
+{
+  "key": "dosat",
+  "files": [
+    {
+      "file": "assets/dosat-CPdW62Th.css",
+      "bytes": 16597,
+      "sha256": "74c0b4f57fd18a8ce0a7398832bd2e322bd864e00e925bfebdae7f73b25598b6"
+    },
+    {
+      "file": "assets/dosat-v3h5OQ8Q.js",
+      "bytes": 298546,
+      "sha256": "4a35e333e4f95caa7c0c55874769cb6b64bfe828d2b040457ea00e755488f6d9"
+    },
+    {
+      "file": "coi-serviceworker.js",
+      "bytes": 6027,
+      "sha256": "e35c3d4758ef522584c5608b9ebf7e0b19df4bd6857f8ac16f2e2febde119881"
+    },
+    {
+      "file": "index.html",
+      "bytes": 955,
+      "sha256": "01a243962260d013e4c4274d83c4fcc49344e550a3ed86fef1788ba7f10f0a66"
+    },
+    {
+      "file": "z3-built.js",
+      "bytes": 358187,
+      "sha256": "9838f5428af10edaa56cf28fe490c502eab7e54050821effa9a31eb022b6ec6b"
+    },
+    {
+      "file": "z3-built.wasm",
+      "bytes": 34580492,
+      "sha256": "dadc8051d994f42664f4400ff9d1bd87fb11d2150fac9de49597f20cd84a6fcc"
+    }
+  ],
+  "headers": "HTTP/2 200 \r\ndate: Sat, 17 Oct 2026 01:49:56 GMT\r\ncontent-type: text/html\r\ncontent-length: 955\r\nvary: X-Surecache\r\nlast-modified: Sat, 17 Oct 2026 01:49:54 GMT\r\netag: \"3bb-65dff7f59d4be\"\r\naccept-ranges: bytes\r\ncross-origin-opener-policy: same-origin\r\ncross-origin-embedder-policy: require-corp\r\ncross-origin-resource-policy: cross-origin\r\ncache-control: no-cache\r\nsurecache-status: MISS\r\nserver: Apache\r\n\r\n",
+  "wasmHeaders": "HTTP/2 200 \r\ndate: Sat, 17 Oct 2026 01:49:56 GMT\r\ncontent-type: application/wasm\r\ncontent-length: 34580492\r\nvary: X-Surecache\r\nlast-modified: Sat, 17 Oct 2026 01:49:54 GMT\r\netag: \"20fa80c-65dff7f52a8e4\"\r\naccept-ranges: bytes\r\ncross-origin-opener-policy: same-origin\r\ncross-origin-embedder-policy: require-corp\r\ncross-origin-resource-policy: cross-origin\r\ncache-control: no-cache\r\nsurecache-status: MISS\r\nserver: Apache\r\n\r\n",
+  "backupStatus": 403,
+  "redirects": [
+    {
+      "path": "dist/",
+      "status": 301
+    },
+    {
+      "path": "dist/index.html",
+      "status": 301
+    },
+    {
+      "path": "dist/decision.html",
+      "status": 301
+    },
+    {
+      "path": "dist/causal.html",
+      "status": 301
+    },
+    {
+      "path": "dist/do_calculus.html",
+      "status": 301
+    }
+  ]
+}

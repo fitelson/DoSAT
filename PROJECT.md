@@ -632,9 +632,17 @@ The npm wrapper and public/dist JS/WASM are now pinned to official Z3 5.3.1;
 the actual engine reports 5.3.1.0. Only the dependency, generated application
 assets and the browser readiness version assertion changed. Solver strategies,
 causal semantics, exact evaluation, limits and graph/UI behavior are unchanged.
-The scoped Opus5.5/xhigh–GPT6.1Sol/xhigh consensus phase gate is PASS, with no
+The scoped Opus 5.5/xhigh–GPT-6.1 Sol/xhigh consensus phase gate is PASS, with no
 blockers. Build, lint, 1374 unit cases and 69 public Chromium cases pass. A
 manifest-only package probe verified the actual engine, causal SAT, exact model
 evaluation and interventional entailment. See Z3_UPDATE_2026-10-16.md and
 reviews/z3_upgrade_2026-10-16/FINAL_STATUS.md. Authorized commit/push/publication
 follows this completed gate; final live evidence will be added separately.
+
+### Z3 update published and verified
+
+Runtime source `77b1bbe` is pushed and live at https://fitelson.org/DoSAT/.
+All 8 remote/6 HTTPS file hashes, isolation/MIME headers, 5 legacy redirects
+and protected backups pass. Actual HTTPS Chromium engine 5.3.1.0, causal SAT,
+exact returned-model evaluation and entailment pass without page errors.
+See reviews/z3_upgrade_2026-10-16/PUBLICATION.md.

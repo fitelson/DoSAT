@@ -1,0 +1,22 @@
+[
+  {
+    "key": "dosat",
+    "base": "https://fitelson.org/DoSAT/",
+    "version": "5.3.1.0 ac9156f97cb44e56472e1c841f7a2beb1e976b24 z3-5.3.1",
+    "runtimeRequests": [
+      "https://fitelson.org/DoSAT/z3-built.js",
+      "https://fitelson.org/DoSAT/z3-built.wasm",
+      "https://fitelson.org/DoSAT/z3-built.js",
+      "https://fitelson.org/DoSAT/z3-built.js",
+      "https://fitelson.org/DoSAT/z3-built.js",
+      "https://fitelson.org/DoSAT/z3-built.js"
+    ],
+    "checks": [
+      "loaded engine 5.3.1.0",
+      "cross-origin isolation",
+      "causal SAT, exact evaluation in returned model",
+      "interventional entailment"
+    ],
+    "passed": true
+  }
+]

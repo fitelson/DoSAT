@@ -8,7 +8,7 @@ strategies are unchanged.
 
 Build and configured lint pass. 1374 unit cases and 69 Chromium cases pass,
 with inherited unit skip/todo unchanged. Built-package checks verified loaded
-engine5.3.1.0, cross-origin isolation, causal SAT, exact frozen-model evaluation
+engine 5.3.1.0, cross-origin isolation, causal SAT, exact frozen-model evaluation
 and interventional entailment without page errors. Wrapper and runtime files
 match the official npm tarball, including registry integrity.
 
@@ -18,3 +18,5 @@ are preserved. Raw streamed journals remain private.
 
 Publication is the next authorized step. Its final remote/HTTPS hashes, headers,
 redirects and live actual-engine/solver results will be recorded in PUBLICATION.md.
+
+Publication is complete and verified; see PUBLICATION.md. The preceding pending-publication text records the state when the gate closed.
