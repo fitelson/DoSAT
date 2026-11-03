@@ -2,8 +2,8 @@
 
 Main compiler: TypeScript7.0.2. Node26.11.1 is pinned by .nvmrc. Package manager:
 npm12.2.0. Application/build/test packages are pinned to current releases in
-package.json and package-lock.json. The browser engine is Z3 5.3.1 (full5.3.1.0)
-from the exact z3-solver5.3.1 pin; native Z3 is a separate optional audit executable.
+package.json and package-lock.json. The browser engine is Z3 5.3.3 (full5.3.3.0)
+from the exact z3-solver5.3.3 pin; native Z3 is a separate optional audit executable.
 
 Install through npm12, for example `npx --yes npm@12.2.0 ci`. The root postinstall
 script uses that same npm CLI to install the independently locked tools/lint

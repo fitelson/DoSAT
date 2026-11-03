@@ -2,6 +2,23 @@
 
 A Decision Procedure for Do Calculus.
 
+## Z3 5.3.3 release, November 3, 2026
+
+The browser dependency is pinned to z3-solver 5.3.3 and the loaded native engine
+reports 5.3.3.0. The scoped default-model consensus review found no blockers;
+both participants explicitly approved the phase gate. The compiler, solver
+settings, semantics, exact evaluator and other dependency entries are unchanged.
+Build and configured lint pass, along with 1,374 unit and 69 Chromium cases.
+The prepared package also passed exact frozen-model evaluation of 7/18,
+nontrivial entailment and contradictory UNSAT from interventional premises.
+
+See [release review](reviews/z3_upgrade_2026-11-03/FINAL_STATUS.md) and
+[review transcript](reviews/z3_upgrade_2026-11-03/consensus.md). Publication
+verification is retained in the shared PrSAT hub under
+`upgrades/z3-5.3.3-2026-11-03/`.
+
+## Earlier Phase History
+
 Updated October 11, 2026. **Phase 3 complete. Consensus phase gate: PASS
 (Opus 5.5 / xhigh; GPT-6.1 Sol / xhigh).**
 The PrSAT-style UI phase is also complete with scoped consensus **PASS**. Latest checks: 1,123 unit tests and 81 Chromium tests pass; the unchanged Phase 3 reduction/solver retain their 607-case native audit approval. See [UI_FINAL_STATUS.md](reviews/ui_implementation_2026-10-11T22-41-54Z/UI_FINAL_STATUS.md). Public repository: https://github.com/fitelson/DoSAT.
