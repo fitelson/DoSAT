@@ -1,0 +1,12 @@
+{
+  "base": "https://fitelson.org/DoSAT/",
+  "engine": "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e z3-5.3.3",
+  "checks": [
+    "SAT",
+    "exact Pr(Y)=7/18",
+    "nontrivial entailment",
+    "contradictory UNSAT"
+  ],
+  "pageErrors": [],
+  "passed": true
+}

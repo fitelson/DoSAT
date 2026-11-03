@@ -17,6 +17,10 @@ See [release review](reviews/z3_upgrade_2026-11-03/FINAL_STATUS.md) and
 verification is retained in the shared PrSAT hub under
 `upgrades/z3-5.3.3-2026-11-03/`.
 
+Publication is complete at https://fitelson.org/DoSAT/. Remote and HTTPS
+hashes, isolation/MIME headers, legacy redirects and real engine/model/entailment
+checks pass; see [publication record](reviews/z3_upgrade_2026-11-03/PUBLICATION.md).
+
 ## Earlier Phase History
 
 Updated October 11, 2026. **Phase 3 complete. Consensus phase gate: PASS

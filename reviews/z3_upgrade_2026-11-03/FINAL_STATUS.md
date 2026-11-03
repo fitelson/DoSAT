@@ -21,3 +21,5 @@ backups, retained older bundles and atomic replacement after assets. Final
 remote/HTTPS hashes, headers, redirects and browser probes are retained under
 PrSAT/upgrades/z3-5.3.3-2026-11-03/ in the shared workspace. These post-upload
 checks are required before recording publication as complete.
+
+Publication is now complete and verified. See PUBLICATION.md and live-values.json.
