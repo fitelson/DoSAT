@@ -2,6 +2,16 @@
 
 A Decision Procedure for Do Calculus.
 
+## Z3 5.4.1 release, November 12, 2026
+
+The browser dependency is pinned to z3-solver 5.4.1 and the loaded engine reports
+5.4.1.0. The scoped default-model consensus review (Opus 5.5/xhigh vs. GPT-6.1
+Sol/xhigh) is PASS with no blockers; see reviews/z3_upgrade_2026-11-12/. Checks:
+1374 units and 69 DoSAT Chromium cases pass, with lint and build; the prepared
+package passed actual-engine causal SAT, exact 7/18 evaluation, entailment and
+UNSAT probes. Family evidence:  in the PrSAT hub,
+produced by the reusable pipeline in .
+
 ## Z3 5.3.3 release, November 3, 2026
 
 The browser dependency is pinned to z3-solver 5.3.3 and the loaded native engine
