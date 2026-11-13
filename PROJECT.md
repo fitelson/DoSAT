@@ -9,8 +9,8 @@ The browser dependency is pinned to z3-solver 5.4.1 and the loaded engine report
 Sol/xhigh) is PASS with no blockers; see reviews/z3_upgrade_2026-11-12/. Checks:
 1374 units and 69 DoSAT Chromium cases pass, with lint and build; the prepared
 package passed actual-engine causal SAT, exact 7/18 evaluation, entailment and
-UNSAT probes. Family evidence:  in the PrSAT hub,
-produced by the reusable pipeline in .
+UNSAT probes. Family evidence: `upgrades/z3-5.4.1-2026-11-12/` in the PrSAT hub,
+produced by the reusable pipeline in `PrSAT/tools/z3-update/`.
 
 ## Z3 5.3.3 release, November 3, 2026
 
